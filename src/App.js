@@ -5,6 +5,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Divider from '@material-ui/core/Divider';
 import { Evidence } from './features/evidence/Evidence';
 import { Ghosts } from './features/ghosts/Ghosts';
+import GhostName from './features/ghostname/GhostName';
 import Header from './features/header/Header';
 
 import './App.css';
@@ -33,6 +34,7 @@ function App() {
       <div className='App'>
         <header className='App-header'>
           <Header />
+          <GhostName />
         </header>
         <main className="App-main">
         <Evidence />

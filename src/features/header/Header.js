@@ -7,6 +7,7 @@ import ReplayIcon from "@material-ui/icons/Replay";
 
 import { resetGhosts } from "../ghosts/ghostsSlice";
 import { resetEvidence } from "../evidence/evidenceSlice";
+import { resetGhostName } from '../ghostname/ghostNameSlice';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +29,7 @@ export default function Header() {
   const reset = () => {
     dispatch(resetEvidence());
     dispatch(resetGhosts());
+    dispatch(resetGhostName());
   }
 
   return (
