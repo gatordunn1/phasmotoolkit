@@ -16,7 +16,7 @@
     "react-redux": "^7.2.3",
     "react-scripts": "4.0.3"
   },
-  "homepage": "./",
+  "homepage": "./phasmotoolkit",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
