@@ -18,6 +18,11 @@ function App() {
         palette: {
           type: 'dark',
         },
+        typography: {
+          fontFamily: [
+            'Indie Flower'
+          ].join(','),
+        }
       }),
     []
   );

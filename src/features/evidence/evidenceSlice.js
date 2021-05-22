@@ -5,42 +5,9 @@ import FingerprintIcon from '@material-ui/icons/Fingerprint';
 import MenuBookIcon from '@material-ui/icons/MenuBook';
 import AcUnitIcon from '@material-ui/icons/AcUnit';
 import VideocamIcon from '@material-ui/icons/Videocam';
-
-const evidence = [
-  {
-    id: 'emflevel5',
-    long: 'EMF Level 5',
-    short: 'EMF 5',
-  },
-  {
-    id: 'fingerprints',
-    long: 'Fingerprints',
-    short: 'Fingerprints',
-  },
-  {
-    id: 'freezingtemperatures',
-    long: 'Freezing Temperatures',
-    short: 'Freezing',
-  },
-  {
-    id: 'ghostorbs',
-    long: 'Ghost Orbs',
-    short: 'Orbs',
-  },
-  {
-    id: 'ghostwriting',
-    long: 'Ghost Writing',
-    short: 'Writing',
-  },
-  {
-    id: 'spiritbox',
-    long: 'Spirit Box',
-    short: 'Spirit Box',
-  },
-];
+import { initialState } from './constants';
 
 export const iconMap = (id) => {
-  console.log('iconmap', id)
   const map = {
     emflevel5: () => <SettingsInputAntennaIcon />,
     fingerprints: () => <FingerprintIcon />,
@@ -51,12 +18,6 @@ export const iconMap = (id) => {
   };
 
   return map[id]();
-};
-
-const initialState = {
-  included: [],
-  excluded: [],
-  all: evidence,
 };
 
 export const evidenceSlice = createSlice({
@@ -84,10 +45,14 @@ export const evidenceSlice = createSlice({
         );
       }
     },
+    resetEvidence: (state) => {
+      state.included = [];
+      state.excluded = [];
+    }
   },
 });
 
-export const { cycle } = evidenceSlice.actions;
+export const { cycle, resetEvidence } = evidenceSlice.actions;
 
 export const selectIncluded = (state) => state.evidence.included;
 export const selectExcluded = (state) => state.evidence.excluded;
