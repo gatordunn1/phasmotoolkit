@@ -2,13 +2,12 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
-import MoodBadIcon from "@material-ui/icons/MoodBad";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
 
 import { selectFirstname, selectLastname, selectIsVisible, resetGhostName } from "../ghostname/ghostNameSlice";
-import SiteMenu from "../sitemenu/SiteMenu";
 import GhostNameMenu from "../ghostnamemenu/GhostNameMenu";
+import SiteMenu from "../sitemenu/SiteMenu";
 
 const useStyles = makeStyles((theme) => ({
   button: {

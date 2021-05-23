@@ -1,9 +1,11 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { mdiMagnifyClose } from "@mdi/js";
 import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import FormatPaintIcon from "@material-ui/icons/FormatPaint";
+import Icon from "@mdi/react";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -14,25 +16,30 @@ import MoodBadIcon from "@material-ui/icons/MoodBad";
 import React from "react";
 import ReplayIcon from "@material-ui/icons/Replay";
 import SearchIcon from "@material-ui/icons/Search";
-import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
 import Switch from "@material-ui/core/Switch";
 
-import { resetEvidence } from "../evidence/evidenceSlice";
+import { resetApp, selectViews, toggleModule } from "../../appSlice";
+import { resetEvidence, selectIsPristine } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
-import { resetGhosts } from "../ghosts/ghostsSlice";
 import { selectThemeType, toggleTheme } from "../theme/themeSlice";
-import { selectViews, toggleModule } from "../../appSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
-    justifyContent: "space-between",
-    margin: "10px 0 15px 0",
-    width: "100vw",
-    backgroundColor: theme.palette.primary.dark,
-    color: theme.palette.text.primary,
-    "& > span ": {
-      alignSelf: "center",
+    "& > span": {
+      alignSelf: "baseline",
+      margin: 0,
+    },
+  },
+  clearInactive: {
+    color: theme.palette.text.disabled,
+    pointerEvents: "none",
+  },
+  clearActive: {
+    color: theme.palette.error.main,
+    cursor: "pointer",
+    "&:hover": {
+      color: theme.palette.error.dark,
     },
   },
   disabled: {
@@ -43,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     padding: "5px 0 10px 0",
   },
-  reset: {
+  menu: {
     margin: 0,
     alignSelf: "center",
     color: theme.palette.text.primary,
@@ -65,6 +72,7 @@ export default function SiteMenu() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const themeType = useSelector(selectThemeType);
+  const evidenceIsPristine = useSelector(selectIsPristine);
   const views = useSelector(selectViews);
   const [state, setState] = React.useState({
     top: false,
@@ -73,10 +81,15 @@ export default function SiteMenu() {
     right: false,
   });
 
-  const resetApp = () => {
+  const reset = () => {
     dispatch(resetEvidence());
-    dispatch(resetGhosts());
     dispatch(resetGhostName());
+    dispatch(resetApp());
+    setState({ ...state, right: false });
+  };
+
+  const clearEvidence = () => {
+    dispatch(resetEvidence());
   };
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -102,7 +115,7 @@ export default function SiteMenu() {
         icon: <MoodBadIcon />,
       },
     ],
-    [dispatch, themeType]
+    [dispatch]
   );
 
   const menuActionItems = [
@@ -115,7 +128,7 @@ export default function SiteMenu() {
     {
       id: "reset",
       display: "Reset App",
-      onClick: () => resetApp(),
+      onClick: () => reset(),
       icon: <ReplayIcon />,
     },
   ];
@@ -132,7 +145,7 @@ export default function SiteMenu() {
       <div className={classes.label}>Toolkit</div>
       <Divider />
       <List>
-        {menuToggleItems.map((item, index) => (
+        {menuToggleItems.map((item) => (
           <ListItem
             className={clsx({ [classes.disabled]: !views[item.id] })}
             button
@@ -151,7 +164,7 @@ export default function SiteMenu() {
       </List>
       <Divider />
       <List>
-        {menuActionItems.map((item, index) => (
+        {menuActionItems.map((item) => (
           <ListItem button key={item.id} onClick={item.onClick}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.display} />
@@ -162,21 +175,28 @@ export default function SiteMenu() {
   );
 
   return (
-    <div>
-      <React.Fragment>
-        <IconButton
-          className={classes.reset}
-          color="default"
-          aria-label="side drawer"
-          component="span"
-          onClick={toggleDrawer("right", true)}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Drawer anchor={"right"} open={state["right"]} onClose={toggleDrawer("right", false)}>
-          {list("right")}
-        </Drawer>
-      </React.Fragment>
+    <div className={classes.root}>
+      <span
+        onClick={clearEvidence}
+        className={clsx({
+          [classes.clearActive]: evidenceIsPristine,
+          [classes.clearInactive]: !evidenceIsPristine,
+        })}
+      >
+        <Icon path={mdiMagnifyClose} title="Clear Evidence" size={1} />
+      </span>
+      <IconButton
+        className={classes.menu}
+        color="default"
+        aria-label="side drawer"
+        component="span"
+        onClick={toggleDrawer("right", true)}
+      >
+        <MenuIcon />
+      </IconButton>
+      <Drawer anchor={"right"} open={state["right"]} onClose={toggleDrawer("right", false)}>
+        {list("right")}
+      </Drawer>
     </div>
   );
 }

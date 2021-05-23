@@ -4,7 +4,6 @@ import AcUnitIcon from "@material-ui/icons/AcUnit";
 import FingerprintIcon from "@material-ui/icons/Fingerprint";
 import Icon from '@mdi/react'
 import MenuBookIcon from "@material-ui/icons/MenuBook";
-import RadioIcon from "@material-ui/icons/Radio";
 import SettingsInputAntennaIcon from "@material-ui/icons/SettingsInputAntenna";
 import VideocamIcon from "@material-ui/icons/Videocam";
 
@@ -58,5 +57,6 @@ export const { cycle, resetEvidence } = evidenceSlice.actions;
 export const selectIncluded = (state) => state.evidence.included;
 export const selectExcluded = (state) => state.evidence.excluded;
 export const selectEvidence = (state) => state.evidence.all;
+export const selectIsPristine = (state) => state.evidence.included.length > 0 || state.evidence.excluded.length > 0;
 
 export default evidenceSlice.reducer;
