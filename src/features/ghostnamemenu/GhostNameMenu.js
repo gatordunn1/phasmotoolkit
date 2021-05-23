@@ -91,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "10px",
     margin: "0 0 15px 0",
     justifyContent: "center",
+    userSelect: "none",
   },
   instructions: {
     alignSelf: "center",
