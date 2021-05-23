@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
   },
   root: {
-    display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
     "& > *": {
@@ -49,6 +48,8 @@ const useStyles = makeStyles((theme) => ({
   ghosts: {
     alignContent: "space-between",
     alignItems: "center",
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
     backgroundColor: theme.palette.background.paper,
     margin: "10px 0 10px 0",
     padding: "10px 0 10px 0",

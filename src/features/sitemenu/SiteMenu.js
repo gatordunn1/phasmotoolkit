@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SideDrawer() {
+export default function SiteMenu() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const themeType = useSelector(selectThemeType);
@@ -89,12 +89,6 @@ export default function SideDrawer() {
 
   const menuToggleItems = React.useMemo(
     () => [
-      {
-        id: "ghostName",
-        display: "Ghost Name",
-        onClick: () => dispatch(toggleModule("ghostName")),
-        icon: <SortByAlphaIcon />,
-      },
       {
         id: "evidence",
         display: "Evidence",
@@ -168,25 +162,21 @@ export default function SideDrawer() {
   );
 
   return (
-      <div>
-        <React.Fragment>
-          <IconButton
-            className={classes.reset}
-            color="default"
-            aria-label="side drawer"
-            component="span"
-            onClick={toggleDrawer("right", true)}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Drawer
-            anchor={"right"}
-            open={state["right"]}
-            onClose={toggleDrawer("right", false)}
-          >
-            {list("right")}
-          </Drawer>
-        </React.Fragment>
-      </div>
+    <div>
+      <React.Fragment>
+        <IconButton
+          className={classes.reset}
+          color="default"
+          aria-label="side drawer"
+          component="span"
+          onClick={toggleDrawer("right", true)}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Drawer anchor={"right"} open={state["right"]} onClose={toggleDrawer("right", false)}>
+          {list("right")}
+        </Drawer>
+      </React.Fragment>
+    </div>
   );
 }

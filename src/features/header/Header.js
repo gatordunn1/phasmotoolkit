@@ -2,16 +2,22 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
+import MoodBadIcon from "@material-ui/icons/MoodBad";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
 
-import { selectFirstname, selectLastname, resetGhostName } from "../ghostname/ghostNameSlice";
-import SideDrawer from "../sidedrawer/SideDrawer";
+import { selectFirstname, selectLastname, selectIsVisible, resetGhostName } from "../ghostname/ghostNameSlice";
+import SiteMenu from "../sitemenu/SiteMenu";
+import GhostNameMenu from "../ghostnamemenu/GhostNameMenu";
 
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
     color: theme.palette.text.primary,
+    '&:hover': {
+      backgroundColor: 'transparent',
+      color: theme.palette.error.dark,
+    }
   },
   container: {
     display: "flex",
@@ -59,15 +65,16 @@ export default function Header() {
   const dispatch = useDispatch();
   const firstname = useSelector(selectFirstname);
   const lastname = useSelector(selectLastname);
+  const isVisible = useSelector(selectIsVisible);
 
   return (
     <Paper square className={classes.container}>
       <span>
         <span className={classes.title}>PhasmoKit</span>
       </span>
-      {firstname && (
+      {!isVisible ? (
         <Button
-          variant="outlined"
+          variant="text"
           color="primary"
           className={classes.button}
           onClick={() => dispatch(resetGhostName())}
@@ -75,9 +82,11 @@ export default function Header() {
         >
           {firstname} {lastname}
         </Button>
+      ) : (
+        <GhostNameMenu />
       )}
       <span className={classes.menu}>
-        <SideDrawer />
+        <SiteMenu />
       </span>
     </Paper>
   );

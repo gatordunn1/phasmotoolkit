@@ -1,6 +1,6 @@
 export const initialState = {
   views: {
-    ghostName: true,
+    ghostName: false,
     evidence: true,
     ghosts: true,
   },
