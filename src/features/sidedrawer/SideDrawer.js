@@ -10,15 +10,18 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
+import MoodBadIcon from "@material-ui/icons/MoodBad";
 import React from "react";
 import ReplayIcon from "@material-ui/icons/Replay";
 import SearchIcon from "@material-ui/icons/Search";
 import SortByAlphaIcon from "@material-ui/icons/SortByAlpha";
+import Switch from "@material-ui/core/Switch";
 
 import { resetEvidence } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
 import { resetGhosts } from "../ghosts/ghostsSlice";
 import { selectThemeType, toggleTheme } from "../theme/themeSlice";
+import { selectViews, toggleModule } from "../../appSlice";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     "& > span ": {
       alignSelf: "center",
     },
+  },
+  disabled: {
+    opacity: 0.25,
   },
   label: {
     fontSize: "1.3rem",
@@ -58,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
 export default function SideDrawer() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const themeType = useSelector(selectThemeType)
+  const themeType = useSelector(selectThemeType);
+  const views = useSelector(selectViews);
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -83,28 +90,34 @@ export default function SideDrawer() {
   const menuToggleItems = React.useMemo(
     () => [
       {
-        id: "theme",
-        display: `${themeType === 'dark' ? 'Light' : 'Dark'} Theme`,
-        onClick: () => dispatch(toggleTheme()),
-        icon: <FormatPaintIcon />,
-      },
-      {
-        id: "ghostname",
+        id: "ghostName",
         display: "Ghost Name",
-        onClick: () => console.log("Toggle Ghost Name"),
+        onClick: () => dispatch(toggleModule("ghostName")),
         icon: <SortByAlphaIcon />,
       },
       {
-        id: "secondaryevidence",
-        display: "Secondary Evidence",
-        onClick: () => console.log("Toggle Secondary Evidence"),
+        id: "evidence",
+        display: "Evidence",
+        onClick: () => dispatch(toggleModule("evidence")),
         icon: <SearchIcon />,
+      },
+      {
+        id: "ghosts",
+        display: "Ghosts",
+        onClick: () => dispatch(toggleModule("ghosts")),
+        icon: <MoodBadIcon />,
       },
     ],
     [dispatch, themeType]
   );
 
   const menuActionItems = [
+    {
+      id: "theme",
+      display: `${themeType === "dark" ? "Light" : "Dark"} Theme`,
+      onClick: () => dispatch(toggleTheme()),
+      icon: <FormatPaintIcon />,
+    },
     {
       id: "reset",
       display: "Reset App",
@@ -119,23 +132,33 @@ export default function SideDrawer() {
         [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <div className={classes.label}>Toggle Items</div>
+      <div className={classes.label}>Toolkit</div>
       <Divider />
       <List>
         {menuToggleItems.map((item, index) => (
-          <ListItem button key={item.id} onClick={item.onClick}>
+          <ListItem
+            className={clsx({ [classes.disabled]: !views[item.id] })}
+            button
+            key={item.id}
+            onClick={item.onClick}
+          >
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.display} />
+            <Switch
+              checked={views[item.id]}
+              name={item.id}
+              inputProps={{ "aria-label": "secondary checkbox" }}
+            />
           </ListItem>
         ))}
       </List>
       <Divider />
       <List>
         {menuActionItems.map((item, index) => (
-          <ListItem button key={item.id} onClick={item.onClick} >
+          <ListItem button key={item.id} onClick={item.onClick}>
             <ListItemIcon>{item.icon}</ListItemIcon>
             <ListItemText primary={item.display} />
           </ListItem>
@@ -145,32 +168,25 @@ export default function SideDrawer() {
   );
 
   return (
-    <div>
-      {/* {['left', 'right', 'top', 'bottom'].map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {list(anchor)}
+      <div>
+        <React.Fragment>
+          <IconButton
+            className={classes.reset}
+            color="default"
+            aria-label="side drawer"
+            component="span"
+            onClick={toggleDrawer("right", true)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Drawer
+            anchor={"right"}
+            open={state["right"]}
+            onClose={toggleDrawer("right", false)}
+          >
+            {list("right")}
           </Drawer>
         </React.Fragment>
-      ))} */}
-      <React.Fragment>
-        {/* <Button onClick={toggleDrawer("right", true)}>
-          <Menu />
-        </Button> */}
-        <IconButton
-          className={classes.reset}
-          color="default"
-          aria-label="side drawer"
-          component="span"
-          onClick={toggleDrawer("right", true)}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Drawer anchor={"right"} open={state["right"]} onClose={toggleDrawer("right", false)}>
-          {list("right")}
-        </Drawer>
-      </React.Fragment>
-    </div>
+      </div>
   );
 }

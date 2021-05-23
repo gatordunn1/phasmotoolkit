@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useSelector, useDispatch } from "react-redux";
+import Backdrop from "@material-ui/core/Backdrop";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
 
@@ -8,6 +9,11 @@ import { selectGhosts, selectSelected, setActiveGhost, updateGhosts } from "./gh
 import Ghost from "../ghost/Ghost";
 
 const useStyles = makeStyles((theme) => ({
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: "#fff",
+    cursor: 'pointer',
+  },
   root: {
     display: "flex",
     justifyContent: "center",
@@ -76,16 +82,12 @@ const useStyles = makeStyles((theme) => ({
   },
   selectedGhost: {
     padding: "10px",
-    width: "100vw",
+    // height: "50vh",
     color: theme.palette.text.primary,
     margin: 0,
     "& > * ": {
       fontFamily: "Indie Flower !important",
     },
-  },
-  evidenceBook: {
-    width: "500px",
-    boxShadow: "0 0 8px 8px black inset",
   },
 }));
 
@@ -97,6 +99,14 @@ export function Ghosts() {
   const excluded = useSelector(selectExcluded);
   const selectedGhost = useSelector(selectSelected);
 
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleToggle = () => {
+    setOpen(!open);
+  };
+
   React.useEffect(() => {
     dispatch(updateGhosts({ included, excluded }));
   }, [dispatch, excluded, included]);
@@ -104,8 +114,10 @@ export function Ghosts() {
   const handleClick = (ghost) => {
     if (selectedGhost && selectedGhost.name === ghost.name) {
       dispatch(setActiveGhost(null));
+      setOpen(false);
     } else {
       dispatch(setActiveGhost(ghost));
+      setOpen(true);
     }
   };
 
@@ -121,43 +133,47 @@ export function Ghosts() {
           return <Ghost key={ghost.name} ghost={ghost} handleClick={handleClick} />;
         })}
       </Paper>
-      <div className={classes.selectedGhost}>
-        {selectedGhost && (
-          <div>
-            <div className={classes.ghostHeader}>
-              <span className={classes.ghostName}>{selectedGhost.name}</span>
-              <span className={classes.ghostIcons}>
-                {selectedGhost.evidence.map((ev) => (
-                  <span
-                    key={ev}
-                    className={evidenceIsIncluded(ev) ? classes.included : ""}
-                    title={ev}
-                  >
-                    {iconMap(ev)}
+      <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
+        <Paper>
+          <div className={classes.selectedGhost}>
+            {selectedGhost && (
+              <div>
+                <div className={classes.ghostHeader}>
+                  <span className={classes.ghostName}>{selectedGhost.name}</span>
+                  <span className={classes.ghostIcons}>
+                    {selectedGhost.evidence.map((ev) => (
+                      <span
+                        key={ev}
+                        className={evidenceIsIncluded(ev) ? classes.included : ""}
+                        title={ev}
+                      >
+                        {iconMap(ev)}
+                      </span>
+                    ))}
                   </span>
+                </div>
+                <div className={classes.description}>
+                  <span>{selectedGhost.description}</span>
+                </div>
+                <div className={classes.labeled}>
+                  <span>Unique Strengths:</span>
+                  <span>{selectedGhost.strengths}</span>
+                </div>
+                <div className={classes.labeled}>
+                  <span>Weaknesses:</span>
+                  <span>{selectedGhost.weaknesses}</span>
+                </div>
+                {selectedGhost.secondaryEvidence.map((secondaryEvidence, index) => (
+                  <div key={`secondaryEvidence_${index}`} className={classes.labeled}>
+                    <span>Secondary Evidence:</span>
+                    <span>{secondaryEvidence}</span>
+                  </div>
                 ))}
-              </span>
-            </div>
-            <div className={classes.description}>
-              <span>{selectedGhost.description}</span>
-            </div>
-            <div className={classes.labeled}>
-              <span>Unique Strengths:</span>
-              <span>{selectedGhost.strengths}</span>
-            </div>
-            <div className={classes.labeled}>
-              <span>Weaknesses:</span>
-              <span>{selectedGhost.weaknesses}</span>
-            </div>
-            {selectedGhost.secondaryEvidence.map((secondaryEvidence, index) => (
-              <div key={`secondaryEvidence_${index}`} className={classes.labeled}>
-                <span>Secondary Evidence:</span>
-                <span>{secondaryEvidence}</span>
               </div>
-            ))}
+            )}
           </div>
-        )}
-      </div>
+        </Paper>
+      </Backdrop>
     </div>
   );
 }

@@ -11,6 +11,7 @@ import SideDrawer from "../sidedrawer/SideDrawer";
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
+    color: theme.palette.text.primary,
   },
   container: {
     display: "flex",
