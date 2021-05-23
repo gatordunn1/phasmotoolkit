@@ -12,11 +12,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     userSelect: "none",
     width: "95vw",
+    margin: '10px 0 0 0 ',
   },
   icon: {
     float: "left",
   },
   paper: {
+    backgroundColor: theme.palette.background.paperalt,
     padding: theme.spacing(2),
     textAlign: "center",
     border: "3px solid transparent",
@@ -24,23 +26,33 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
     "&:hover": {
       color: theme.palette.text.primary,
-      backgroundColor: theme.palette.action.hover,
+      backgroundColor: theme.palette.background.default,
     },
   },
   impossible: {
     opacity: 0.25,
-    cursor: 'default',
-    '&:hover': {
-      pointerEvents: 'none !important',
+    cursor: "default",
+    "&:hover": {
+      pointerEvents: "none !important",
     },
   },
   included: {
-    color: `${theme.palette.success.dark}!important`,
+    color: `${theme.palette.text.secondary}!important`,
     border: `3px solid ${theme.palette.success.dark}`,
+    backgroundColor: theme.palette.success.dark,
+    "&:hover": {
+      color: theme.palette.success.light,
+      backgroundColor: theme.palette.success.main,
+    },
   },
   excluded: {
-    color: `${theme.palette.error.dark}!important`,
+    color: `${theme.palette.text.secondary}!important`,
     border: `3px solid ${theme.palette.error.dark}`,
+    backgroundColor: theme.palette.error.dark,
+    "&:hover": {
+      color: theme.palette.error.light,
+      backgroundColor: theme.palette.error.main,
+    },
   },
 }));
 
@@ -57,7 +69,7 @@ export function Evidence() {
 
   const isPossible = React.useCallback(
     (e) => {
-      // Manually excluded by user ignored by isPossible logic for remaining evidences 
+      // Manually excluded by user ignored by isPossible logic for remaining evidences
       if (!!isExcluded(e)) return true;
       const includedGhostEvidence = [
         ...new Set(

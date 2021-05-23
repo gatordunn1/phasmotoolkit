@@ -32,7 +32,18 @@ export const ghostsSlice = createSlice({
           included: true,
         };
       });
-      state.list = updatedGhosts;
+
+      // Split by included state and sort alpha
+      const sortedGhosts = [
+        ...updatedGhosts
+          .filter((ghost) => ghost.included)
+          .sort((a, b) => (a.name > b.name && 1) || -1),
+        ...updatedGhosts
+          .filter((ghost) => !ghost.included)
+          .sort((a, b) => (a.name > b.name && 1) || -1),
+      ];
+
+      state.list = sortedGhosts;
     },
   },
 });

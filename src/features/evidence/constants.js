@@ -35,4 +35,5 @@ export const initialState = {
   included: [],
   excluded: [],
   all: evidence,
+  visible: true,
 };

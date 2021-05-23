@@ -173,4 +173,5 @@ const allGhosts = ghosts.map((ghost) => ({
 export const initialState = {
   list: allGhosts,
   selected: null,
+  visible: true,
 };

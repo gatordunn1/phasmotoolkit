@@ -1,45 +1,83 @@
-import React from "react";
-import { useDispatch } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import ReplayIcon from "@material-ui/icons/Replay";
+import { useDispatch, useSelector } from "react-redux";
+import Button from "@material-ui/core/Button";
+import DeleteIcon from "@material-ui/icons/Delete";
+import Paper from "@material-ui/core/Paper";
+import React from "react";
 
-import { resetGhosts } from "../ghosts/ghostsSlice";
-import { resetEvidence } from "../evidence/evidenceSlice";
-import { resetGhostName } from '../ghostname/ghostNameSlice';
+import { selectFirstname, selectLastname, resetGhostName } from "../ghostname/ghostNameSlice";
+import SideDrawer from "../sidedrawer/SideDrawer";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
+  button: {
+    margin: theme.spacing(1),
+  },
+  container: {
+    display: "flex",
+    justifyContent: "space-between",
+    margin: "0 0 0 0",
+    width: "100vw",
+    padding: "0 10px 0 10px",
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+    "& > span ": {
+      alignSelf: "center",
+    },
+  },
+  ghostname: {
+    borderRadius: "5px",
+    display: "flex",
+    alignContent: "center",
+    justifyContent: "space-evenly",
+    cursor: "pointer",
+    width: "10em",
+    backgroundColor: theme.palette.info.dark,
+    "&:hover": {
+      color: theme.palette.error.main,
+    },
+  },
+  icon: {
+    float: "right",
     alignSelf: "center",
-    margin: "10px 0 15px 0",
+  },
+  menu: {
+    justifySelf: "flex-end",
   },
   reset: {
-    '&:hover': {
-      color: theme.palette.secondary.light,
-      backgroundColor: 'transparent',
-    }
-  }
+    marginLeft: "10px",
+  },
+  title: {
+    fontFamily: "Indie Flower !important",
+    justifySelf: "flex-start",
+    color: theme.palette.text.primary,
+  },
 }));
 
 export default function Header() {
   const classes = useStyles();
   const dispatch = useDispatch();
-
-  const reset = () => {
-    dispatch(resetEvidence());
-    dispatch(resetGhosts());
-    dispatch(resetGhostName());
-  }
+  const firstname = useSelector(selectFirstname);
+  const lastname = useSelector(selectLastname);
 
   return (
-    <div className={classes.root}>
-      <Typography variant="h2" gutterbottom="true">
-        Phasmo Toolkit{" "}
-        <IconButton className={classes.reset} color="default" aria-label="reset page" component="span" onClick={reset}>
-          <ReplayIcon />
-        </IconButton>
-      </Typography>
-    </div>
+    <Paper square className={classes.container}>
+      <span>
+        <span className={classes.title}>PhasmoKit</span>
+      </span>
+      {firstname && (
+        <Button
+          variant="outlined"
+          color="primary"
+          className={classes.button}
+          onClick={() => dispatch(resetGhostName())}
+          startIcon={<DeleteIcon />}
+        >
+          {firstname} {lastname}
+        </Button>
+      )}
+      <span className={classes.menu}>
+        <SideDrawer />
+      </span>
+    </Paper>
   );
 }

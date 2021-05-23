@@ -70,12 +70,11 @@ export const LASTNAME_FIRST_LETTERS = [
   ...new Set(GHOST_NAMES.lastnames.map((name) => name.slice(0, 1))),
 ].sort();
 
-export const HEADER_TEXT = {
-  first: "Select First Letter of Ghost's First Name",
-  second: "Select Ghost's First Name",
-  third: "Select First Letter of Ghost's Last Name",
-  fourth: "Select Ghost's Last Name",
-  fifth: "Ghost Name",
+export const INSTRUCTIONS = {
+  firstnameLetters: "Select First Letter of Ghost's First Name",
+  firstnames: "Select Ghost's First Name",
+  lastnameLetters: "Select First Letter of Ghost's Last Name",
+  lastnames: "Select Ghost's Last Name",
 };
 
 export const initialState = {
@@ -89,7 +88,8 @@ export const initialState = {
   lastnameLetters: LASTNAME_FIRST_LETTERS,
   firstname: "",
   lastname: "",
-  fullname: "",
+  instructions: INSTRUCTIONS,
+  step: 'firstnameLetters',
   views: {
     firstnameLetters: true,
     firstnames: false,
@@ -97,8 +97,8 @@ export const initialState = {
     firstname: false,
     lastname: false,
     lastnames: false,
-    fullname: false,
   },
+  visible: true,
 };
 
 export const falseViews = {

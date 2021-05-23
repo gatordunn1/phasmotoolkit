@@ -1,11 +1,10 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { selectGhosts, selectSelected, setActiveGhost, updateGhosts } from "./ghostsSlice";
-import { iconMap, selectExcluded, selectIncluded } from "../evidence/evidenceSlice";
 import { makeStyles } from "@material-ui/core/styles";
-// import classNames from "classnames";
+import { useSelector, useDispatch } from "react-redux";
 import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
+import React from "react";
+
+import { iconMap, selectExcluded, selectIncluded } from "../evidence/evidenceSlice";
+import { selectGhosts, selectSelected, setActiveGhost, updateGhosts } from "./ghostsSlice";
 import Ghost from "../ghost/Ghost";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,13 +43,13 @@ const useStyles = makeStyles((theme) => ({
   ghosts: {
     alignContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#2b2d42",
+    backgroundColor: theme.palette.background.paper,
     margin: "10px 0 10px 0",
     padding: "10px 0 10px 0",
     width: "100vw",
   },
   included: {
-    color: `${theme.palette.success.dark} !important`,
+    color: `${theme.palette.success.main} !important`,
   },
   labeled: {
     display: "flex",
@@ -78,8 +77,11 @@ const useStyles = makeStyles((theme) => ({
   selectedGhost: {
     padding: "10px",
     width: "100vw",
+    color: theme.palette.text.primary,
     margin: 0,
-    fontFamily: "Indie Flower",
+    "& > * ": {
+      fontFamily: "Indie Flower !important",
+    },
   },
   evidenceBook: {
     width: "500px",
@@ -114,21 +116,15 @@ export function Ghosts() {
 
   return (
     <div className={classes.root}>
-      <Paper className={classes.ghosts}>
+      <Paper square className={classes.ghosts}>
         {ghosts.map((ghost) => {
-          return (
-            <Ghost
-              key={ghost.name}
-              ghost={ghost}
-              handleClick={handleClick}
-            />
-          );
+          return <Ghost key={ghost.name} ghost={ghost} handleClick={handleClick} />;
         })}
       </Paper>
       <div className={classes.selectedGhost}>
         {selectedGhost && (
           <div>
-            <Typography className={classes.ghostHeader} variant="h5" gutterbottom="true">
+            <div className={classes.ghostHeader}>
               <span className={classes.ghostName}>{selectedGhost.name}</span>
               <span className={classes.ghostIcons}>
                 {selectedGhost.evidence.map((ev) => (
@@ -141,28 +137,23 @@ export function Ghosts() {
                   </span>
                 ))}
               </span>
-            </Typography>
-            <Typography className={classes.description} variant="body1" paragraph>
+            </div>
+            <div className={classes.description}>
               <span>{selectedGhost.description}</span>
-            </Typography>
-            <Typography className={classes.labeled} variant="body1" paragraph>
+            </div>
+            <div className={classes.labeled}>
               <span>Unique Strengths:</span>
               <span>{selectedGhost.strengths}</span>
-            </Typography>
-            <Typography className={classes.labeled} variant="body1" paragraph>
+            </div>
+            <div className={classes.labeled}>
               <span>Weaknesses:</span>
               <span>{selectedGhost.weaknesses}</span>
-            </Typography>
+            </div>
             {selectedGhost.secondaryEvidence.map((secondaryEvidence, index) => (
-              <Typography
-                key={`secondaryEvidence_${index}`}
-                className={classes.labeled}
-                variant="body1"
-                paragraph
-              >
+              <div key={`secondaryEvidence_${index}`} className={classes.labeled}>
                 <span>Secondary Evidence:</span>
                 <span>{secondaryEvidence}</span>
-              </Typography>
+              </div>
             ))}
           </div>
         )}

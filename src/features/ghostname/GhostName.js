@@ -1,8 +1,8 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-// import classNames from "classnames";
+import { useDispatch, useSelector } from "react-redux";
 import Paper from "@material-ui/core/Paper";
+import React from "react";
+
 import {
   setFirstname,
   setFirstnames,
@@ -10,32 +10,37 @@ import {
   setLastname,
   selectFirstnameLetters,
   selectFirstnames,
-  selectFirstname,
   selectLastnameLetters,
   selectLastnames,
-  selectLastname,
-  selectFullname,
+  selectIsVisible,
+  selectInstructions,
   selectViews,
 } from "./ghostNameSlice";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    backgroundColor: "#2b2d42",
+    backgroundColor: "transparent",
     display: "flex",
     flexWrap: "nowrap",
     width: "100vw",
     padding: "10px",
-    margin: "10px 0 15px 0",
+    margin: "0 0 15px 0",
     justifyContent: "center",
-    alignItems: "stretch",
+  },
+  instructions: {
+    alignSelf: "center",
+    margin: "0",
+    padding: 0,
+    color: theme.palette.text.primary,
+    width: '100vw',
   },
   item: {
     borderRadius: "5px",
     cursor: "pointer",
-    color: theme.palette.text.secondary,
+    color: theme.palette.text.primary,
     "&:hover": {
       color: theme.palette.secondary.light,
-      backgroundColor: theme.palette.primary.dark,
+      backgroundColor: theme.palette.background.paper,
     },
     width: "100%",
   },
@@ -50,15 +55,15 @@ export default function GhostName({ ghost, handleClick }) {
   const firstnameLetters = useSelector(selectFirstnameLetters);
   const lastnameLetters = useSelector(selectLastnameLetters);
   const firstnames = useSelector(selectFirstnames);
-  const firstname = useSelector(selectFirstname);
   const lastnames = useSelector(selectLastnames);
-  const lastname = useSelector(selectLastname);
-  const fullname = useSelector(selectFullname);
+  const isVisible = useSelector(selectIsVisible);
+  const instructions = useSelector(selectInstructions);
   const views = useSelector(selectViews);
 
-  return (
+  return isVisible ? (
     <React.Fragment>
-      <Paper className={classes.container}>
+      <Paper square elevation={0} className={classes.instructions}>{instructions}</Paper>
+      <div className={classes.container}>
         {views.firstnameLetters &&
           firstnameLetters.map((letter) => (
             <span
@@ -99,17 +104,7 @@ export default function GhostName({ ghost, handleClick }) {
               {lastname}
             </span>
           ))}
-        <div>
-          {views.fullname ? (
-            <span className={classes.name}>{fullname}</span>
-          ) : (
-            <React.Fragment>
-              <span className={classes.name}>{firstname}</span>
-              <span className={classes.name}>{lastname}</span>
-            </React.Fragment>
-          )}
-        </div>
-      </Paper>
+      </div>
     </React.Fragment>
-  );
+  ) : null;
 }

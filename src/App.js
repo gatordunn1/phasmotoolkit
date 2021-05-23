@@ -1,48 +1,29 @@
-import React from 'react';
-// import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Divider from '@material-ui/core/Divider';
-import { Evidence } from './features/evidence/Evidence';
-import { Ghosts } from './features/ghosts/Ghosts';
-import GhostName from './features/ghostname/GhostName';
-import Header from './features/header/Header';
+import Divider from "@material-ui/core/Divider";
+import React from "react";
 
-import './App.css';
+import { Evidence } from "./features/evidence/Evidence";
+import { Ghosts } from "./features/ghosts/Ghosts";
+import GhostName from "./features/ghostname/GhostName";
+import Header from "./features/header/Header";
+import Theme from "./features/theme/Theme";
+
+import "./App.css";
 
 function App() {
-  // const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-  // prefersDarkMode ? 'dark' : 'light'
-  const theme = React.useMemo(
-    () =>
-      createMuiTheme({
-        palette: {
-          type: 'dark',
-        },
-        typography: {
-          fontFamily: [
-            'Indie Flower'
-          ].join(','),
-        }
-      }),
-    []
-  );
-
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <div className='App'>
-        <header className='App-header'>
+    <Theme>
+      <div className="App">
+        <header className="App-header">
           <Header />
           <GhostName />
         </header>
         <main className="App-main">
-        <Evidence />
+          <Evidence />
           <Divider light />
           <Ghosts />
         </main>
       </div>
-    </ThemeProvider>
+    </Theme>
   );
 }
 

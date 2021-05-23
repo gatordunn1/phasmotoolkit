@@ -1,10 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import { useSelector } from "react-redux";
 import classNames from "classnames";
 import Paper from "@material-ui/core/Paper";
-import { selectSelected } from "../ghosts/ghostsSlice";
+import React from "react";
+
 import { iconMap, selectIncluded } from "../evidence/evidenceSlice";
+import { selectSelected } from "../ghosts/ghostsSlice";
 
 const useStyles = makeStyles((theme) => ({
   disabled: {
@@ -14,7 +15,12 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 5px",
     margin: "5px 5px",
     fontSize: "1.2rem",
-    color: "#eb5e28",
+  },
+  iconsValid: {
+    color: theme.palette.text.secondary,
+  },
+  iconsInvalid: {
+    color: theme.palette.text.disabled,
   },
   included: {
     color: `${theme.palette.success.main} !important`,
@@ -35,16 +41,16 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paperInvalid: {
-    backgroundColor: "#5c677d",
+    backgroundColor: theme.palette.ghosts.invalid,
   },
   paperValid: {
-    backgroundColor: theme.palette.primary.dark,
+    backgroundColor: theme.palette.ghosts.valid,
   },
   selected: {
-    color: `${theme.palette.secondary.light} !important`,
+    color: `${theme.palette.info.main} !important`,
   },
   valid: {
-    color: theme.palette.text.primary,
+    color: theme.palette.text.secondary,
   },
 }));
 
@@ -71,7 +77,7 @@ export default function Ghost({ ghost, handleClick }) {
       >
         {ghost.name}
       </div>
-      <div className={classes.icons}>
+      <div className={ghost.included ? classes.iconsValid : classes.iconsInvalid}>
         {ghost.evidence.map((ev) => (
           <span key={ev} className={evidenceIsIncluded(ev) ? classes.included : ""} title={ev}>
             {iconMap(ev)}
