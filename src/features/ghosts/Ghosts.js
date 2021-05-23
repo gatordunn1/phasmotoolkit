@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
   backdrop: {
     zIndex: theme.zIndex.drawer + 1,
     color: "#fff",
-    cursor: 'pointer',
+    cursor: "pointer",
   },
   root: {
     justifyContent: "center",
@@ -103,9 +103,7 @@ export function Ghosts() {
   const [open, setOpen] = React.useState(false);
   const handleClose = () => {
     setOpen(false);
-  };
-  const handleToggle = () => {
-    setOpen(!open);
+    dispatch(setActiveGhost(null));
   };
 
   React.useEffect(() => {
@@ -113,13 +111,8 @@ export function Ghosts() {
   }, [dispatch, excluded, included]);
 
   const handleClick = (ghost) => {
-    if (selectedGhost && selectedGhost.name === ghost.name) {
-      dispatch(setActiveGhost(null));
-      setOpen(false);
-    } else {
-      dispatch(setActiveGhost(ghost));
-      setOpen(true);
-    }
+    dispatch(setActiveGhost(ghost));
+    setOpen(true);
   };
 
   const evidenceIsIncluded = React.useCallback(
