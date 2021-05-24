@@ -22,12 +22,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.contrast,
     textTransform: "capitalize",
   },
-  // listItem: {
-  //   display: "flex",
-  //   "& > * ": {
-  //     alignSelf: "center",
-  //   },
-  // },
   listItem: {
     "&:hover": {
       color: theme.palette.primary.dark,
@@ -35,7 +29,8 @@ const useStyles = makeStyles((theme) => ({
   },
   root: {
     width: "100%",
-    maxWidth: 360,
+    maxWidth: 300,
+    minWidth: 300,
     backgroundColor: theme.palette.background.paper,
   },
   titleBox: {

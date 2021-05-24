@@ -43,7 +43,7 @@ const themes = {
     palette: {
       type: "light",
       action: {
-        hover: "#d1d4b8",
+        hover: "#33a1fd",
       },
       background: {
         default: "#e8decf",
@@ -75,7 +75,7 @@ const themes = {
       text: {
         primary: "#3d718f",
         secondary: "#cae9ff",
-        contrast: "#240b0b",
+        contrast: "#33a1fd",
       },
     },
   },

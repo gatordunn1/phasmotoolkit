@@ -6,6 +6,11 @@ export const categories = {
     categoryDisplay: "Atmospheric",
     categoryDescription: "Lighting, sound, and other ambience related challenges.",
   },
+  collections: {
+    categoryId: "collections",
+    categoryDisplay: "Collections",
+    categoryDescription: "Scavenger hunting for different sorts of items found in the buildings.",
+  },
   evidence: {
     categoryId: "evidence",
     categoryDisplay: "Evidence",
@@ -30,12 +35,12 @@ const challenges = [
     ...categories.evidence,
   },
   {
-    display: "Candle Only (Breaker On)",
+    display: "Candle Only (Easy)",
     description: "Use only the candle and interior house lights.",
     ...categories.atmospheric,
   },
   {
-    display: "Candle Only (Breaker Off)",
+    display: "Candle Only (Hard)",
     description: "Use only the candle for illumination, no interior house lights.",
     ...categories.atmospheric,
   },
@@ -58,6 +63,31 @@ const challenges = [
     display: "No Sprinting",
     description: "Walk, do not run, to an early grave!",
     ...categories.insane,
+  },
+  {
+    display: "Ghost Hunt Photo",
+    description: "You must obtain the ghost photo during a hunt.",
+    ...categories.insane,
+  },
+  {
+    display: "No Hunt Indicators",
+    description: "No flashlights, UV lights, interior lights, or global-talk checks!",
+    ...categories.insane,
+  },
+  {
+    display: "Collect: Electronics",
+    description: "You must bring all electronic items from the building to the truck.",
+    ...categories.collections,
+  },
+  {
+    display: "Collect: Toys",
+    description: "You must bring all bears, bunnies, blocks, dolls, etc from the building to the truck.",
+    ...categories.collections,
+  },
+  {
+    display: "Collect: Dining Items",
+    description: "You must bring all plates, silverware, cups, teapots, etc from the building to the truck.",
+    ...categories.collections,
   },
 ].map((challenge) => ({
   ...challenge,
