@@ -16,8 +16,10 @@ import MoodBadIcon from "@material-ui/icons/MoodBad";
 import React from "react";
 import ReplayIcon from "@material-ui/icons/Replay";
 import SearchIcon from "@material-ui/icons/Search";
+import SportsKabaddiIcon from "@material-ui/icons/SportsKabaddi";
 import Switch from "@material-ui/core/Switch";
 
+import { reset as resetChallenges } from "../randomizers/challenges/challengeRandomizerSlice";
 import { resetApp, selectViews, toggleModule } from "../../appSlice";
 import { resetEvidence, selectIsPristine } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
@@ -55,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "center",
     color: theme.palette.text.primary,
     "&:hover": {
-      color: theme.palette.text.primary,
+      color: theme.palette.action.hover,
       backgroundColor: "transparent",
     },
   },
@@ -85,6 +87,7 @@ export default function SiteMenu() {
     dispatch(resetEvidence());
     dispatch(resetGhostName());
     dispatch(resetApp());
+    dispatch(resetChallenges());
     setState({ ...state, right: false });
   };
 
@@ -113,6 +116,12 @@ export default function SiteMenu() {
         display: "Ghosts",
         onClick: () => dispatch(toggleModule("ghosts")),
         icon: <MoodBadIcon />,
+      },
+      {
+        id: "challenges",
+        display: "Challenges",
+        onClick: () => dispatch(toggleModule("challenges")),
+        icon: <SportsKabaddiIcon />,
       },
     ],
     [dispatch]

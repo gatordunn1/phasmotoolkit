@@ -1,7 +1,8 @@
 export const initialState = {
   views: {
-    ghostName: false,
     evidence: true,
+    ghostName: false,
     ghosts: true,
+    challenges: true,
   },
 };

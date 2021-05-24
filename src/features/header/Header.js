@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: "flex",
     justifyContent: "space-between",
-    margin: "0 0 0 0",
+    margin: "0 0 10px 0",
     width: "100vw",
     padding: "0 10px 0 10px",
     backgroundColor: theme.palette.background.paper,

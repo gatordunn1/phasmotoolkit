@@ -2,6 +2,9 @@ const themes = {
   dark: {
     palette: {
       type: "dark",
+      action: {
+        hover: "#ffb627",
+      },
       primary: {
         main: "#0582ca",
         light: "#00a6fb",
@@ -11,6 +14,7 @@ const themes = {
         default: "#272733",
         paper: "#2b2d42",
         paperalt: "#402f4a",
+        papercontrast: "#2e1f27",
       },
       secondary: {
         main: "#5e548e",
@@ -31,7 +35,7 @@ const themes = {
       text: {
         primary: "#5fa8d3",
         secondary: "#cae9ff",
-        contrast: "#1b4965",
+        contrast: "#ffbc0a",
       },
     },
   },
@@ -45,6 +49,7 @@ const themes = {
         default: "#e8decf",
         paper: "#b1cf9f",
         paperalt: "#6897b0",
+        papercontrast: "#c5d86d",
       },
       primary: {
         main: "#c8d5b9",
