@@ -1,4 +1,4 @@
-import { nanoid } from 'nanoid'
+import { nanoid } from "nanoid";
 
 export const categories = {
   atmospheric: {
@@ -20,7 +20,12 @@ export const categories = {
     categoryId: "insane",
     categoryDisplay: "Insane",
     categoryDescription: "Challenges for those with a deathwish!",
-  },  
+  },
+  roleplaying: {
+    categoryId: "roleplaying",
+    categoryDisplay: "Role-Playing",
+    categoryDescription: "Add some random spice to your team!",
+  },
   silly: {
     categoryId: "silly",
     categoryDisplay: "Silly",
@@ -81,13 +86,45 @@ const challenges = [
   },
   {
     display: "Collect: Toys",
-    description: "You must bring all bears, bunnies, blocks, dolls, etc from the building to the truck.",
+    description:
+      "You must bring all bears, bunnies, blocks, dolls, etc from the building to the truck.",
     ...categories.collections,
   },
   {
     display: "Collect: Dining Items",
-    description: "You must bring all plates, silverware, cups, teapots, etc from the building to the truck.",
+    description:
+      "You must bring all plates, silverware, cups, teapots, etc from the building to the truck.",
     ...categories.collections,
+  },
+  {
+    display: "Collect: Spray Paint",
+    description: "You must bring all spray paint bottles from the building to the truck.",
+    ...categories.collections,
+  },
+  {
+    display: "Behavior: Hunt Freakout",
+    description: "Drop all your items immediately when a hunt starts.",
+    ...categories.roleplaying,
+  },
+  {
+    display: "Behavior: Reckless",
+    description: "If found, ask the Ouija Board five questions.",
+    ...categories.roleplaying,
+  },
+  {
+    display: "Behavior: Chatterbox",
+    description: "You must speak over the mic during a hunt until you reach a hiding spot.",
+    ...categories.roleplaying,
+  },
+  {
+    display: "Obsessive: Doors",
+    description: "Close every door behind you when inside the building.",
+    ...categories.roleplaying,
+  },
+  {
+    display: "Obsessive: Bathrooms",
+    description: "Flush the toilet and run the sink in every bathroom you pass by.",
+    ...categories.roleplaying,
   },
 ].map((challenge) => ({
   ...challenge,
@@ -100,4 +137,4 @@ export const initialState = {
   list: challenges,
   random: null,
   visible: true,
-}
+};

@@ -7,7 +7,8 @@ import { selectViews } from "./appSlice";
 import GhostName from "./features/ghostname/GhostName";
 import Header from "./features/header/Header";
 import Theme from "./features/theme/Theme";
-import ChallengeRandomizer from './features/randomizers/challenges/ChallengeRandomizer';
+import ChallengeRandomizer from "./features/randomizers/challenges/ChallengeRandomizer";
+import PhotoCalculator from "./features/photocalculator/PhotoCalculator";
 
 import "./App.css";
 
@@ -24,6 +25,7 @@ function App() {
           {views.evidence && <Evidence />}
           {views.ghosts && <Ghosts />}
           {views.challenges && <ChallengeRandomizer />}
+          {views.photocalculator && <PhotoCalculator />}
         </main>
       </div>
     </Theme>

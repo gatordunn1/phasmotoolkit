@@ -36,6 +36,7 @@ const themes = {
         primary: "#5fa8d3",
         secondary: "#cae9ff",
         contrast: "#ffbc0a",
+        accent: "#ffbc0a",
       },
     },
   },
@@ -59,7 +60,7 @@ const themes = {
       secondary: {
         main: "#d3bccc",
         dark: "#a167a5",
-        light: "#e8d7f1",
+        light: "#604e69",
       },
       ghostName: {
         background: "#b8bedd",
@@ -76,6 +77,7 @@ const themes = {
         primary: "#3d718f",
         secondary: "#cae9ff",
         contrast: "#33a1fd",
+        accent: "#33a1fd",
       },
     },
   },

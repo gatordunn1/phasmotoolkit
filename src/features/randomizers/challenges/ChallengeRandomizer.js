@@ -10,6 +10,9 @@ import Typography from "@material-ui/core/Typography";
 import Drawer from "@material-ui/core/Drawer";
 
 import ChallengesList from "./ChallengesList";
+import Readable from "../../../common/Readable";
+import Accent from "../../../common/Accent";
+
 
 import {
   resetUsed,
@@ -19,6 +22,9 @@ import {
 } from "./challengeRandomizerSlice";
 
 const useStyles = makeStyles((theme) => ({
+  challengeText: {
+    fontSize: "1.2em",
+  },
   editOptions: {
     alignSelf: "center",
     "&:hover": {
@@ -53,9 +59,6 @@ const useStyles = makeStyles((theme) => ({
   randomChallenge: {
     webkitAnimation: "flip-in-hor-bottom 350ms ease-in-out 1 both",
     animation: "flip-in-hor-bottom 350ms ease-in-out 1 both",
-    "& > span:first-child": {
-      color: theme.palette.text.contrast,
-    },
   },
   used: {
     color: theme.palette.text.disabled,
@@ -115,10 +118,10 @@ export default function ChallengeRandomizer() {
             />
             {randomized && randomized.display ? (
               <span key={randomized.id} className={classes.randomChallenge}>
-                <span>{randomized.display}</span>: <span>{randomized.description}</span>
+                <Readable className={classes.challengeText}><Accent>{randomized.display}</Accent>: <span>{randomized.description}</span></Readable>
               </span>
             ) : (
-              <span>Click here for a random challenge!</span>
+              <Readable className={classes.challengeText}>Click here for a random challenge!</Readable>
             )}
           </span>
         </Typography>

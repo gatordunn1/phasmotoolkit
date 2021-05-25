@@ -4,5 +4,6 @@ export const initialState = {
     ghostName: false,
     ghosts: true,
     challenges: true,
+    photocalculator: true,
   },
 };

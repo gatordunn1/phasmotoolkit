@@ -1,12 +1,14 @@
 import { makeStyles } from "@material-ui/core/styles";
+import { mdiGhost } from "@mdi/js";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
 import clsx from "clsx";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
-import React from "react";
-import { mdiGhost } from "@mdi/js";
 import Icon from "@mdi/react";
+import React from "react";
+
+import Readable from "../../common/Readable";
 
 import {
   setFirstname,
@@ -35,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(1),
+    fontSize: "0.8em",
     color: theme.palette.text.primary,
     "&:hover": {
       background: "transparent",
@@ -81,9 +84,6 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
-  fullList: {
-    // width: "auto",
-  },
   container: {
     backgroundColor: "transparent",
     display: "flex",
@@ -107,7 +107,6 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.secondary.light,
       backgroundColor: theme.palette.background.paper,
     },
-    // width: "100%",
   },
   name: {
     fontSize: "1.4rem",
@@ -158,9 +157,6 @@ export default function GhostNameMenu() {
         })}
       >
         {data.map((item) => (
-          // <ListItem button key={`${keyName}_${item}`} onClick={() => onClick(item)}>
-          //   <ListItemText primary={item} />
-          // </ListItem>
           <span key={`${keyName}_${item}`} onClick={() => onClick(item)}>
             {item}
           </span>
@@ -177,11 +173,11 @@ export default function GhostNameMenu() {
           color="primary"
           className={classes.button}
           startIcon={
-            <Icon path={mdiGhost} title="Ghost Name" size={1} horizontal vertical rotate={180} />
+            <Icon path={mdiGhost} title="Ghost Name" size={1} />
           }
           onClick={toggleDrawer("left", true)}
         >
-          Set Name
+          <Readable>Set Name</Readable>
         </Button>
         {isVisible && (
           <Drawer anchor={"left"} open={state["left"]} variant="persistent">

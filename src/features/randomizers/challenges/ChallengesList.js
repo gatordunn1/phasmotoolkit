@@ -10,17 +10,21 @@ import React from "react";
 
 import { categories } from "./constants";
 import { selectChallenges, toggleCategory, toggleChallenge } from "./challengeRandomizerSlice";
+import Accent from "../../../common/Accent";
+import Readable from "../../../common/Readable";
 
 const useStyles = makeStyles((theme) => ({
   category: {
-    backgroundColor: theme.palette.background.papercontrast,
+    backgroundColor: theme.palette.background.default,
     padding: "10px",
     margin: "10px",
   },
   categoryTitle: {
     fontSize: "1.4em",
-    color: theme.palette.text.contrast,
     textTransform: "capitalize",
+  },
+  challengeText: {
+    fontSize: "1.2em",
   },
   listItem: {
     "&:hover": {
@@ -31,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     maxWidth: 300,
     minWidth: 300,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: theme.palette.secondary.dark,
   },
   titleBox: {
     display: "flex",
@@ -78,7 +82,7 @@ export default function ChallengesList() {
           inputProps={{ "aria-labelledby": `checkbox-category-label-${categoryId}` }}
           onClick={handleToggleCategory(categoryId)}
         />
-        <span className={classes.categoryTitle}>{categoryId}</span>
+        <Accent className={classes.categoryTitle}>{categoryId}</Accent>
       </div>
       <List className={classes.root}>
         {challenges
@@ -94,6 +98,7 @@ export default function ChallengesList() {
                 button
                 onClick={handleToggle(challenge.id)}
                 className={classes.listItem}
+                title={challenge.description}
               >
                 <ListItemIcon>
                   <Checkbox
@@ -107,7 +112,7 @@ export default function ChallengesList() {
                 <ListItemText
                   className={classes.listItemText}
                   id={labelId}
-                  primary={challenge.display}
+                  primary={<Readable className={classes.challengeText}>{challenge.display}</Readable>}
                 />
               </ListItem>
             );

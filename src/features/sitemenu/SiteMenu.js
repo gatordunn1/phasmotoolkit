@@ -13,6 +13,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoodBadIcon from "@material-ui/icons/MoodBad";
+import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import React from "react";
 import ReplayIcon from "@material-ui/icons/Replay";
 import SearchIcon from "@material-ui/icons/Search";
@@ -24,6 +25,8 @@ import { resetApp, selectViews, toggleModule } from "../../appSlice";
 import { resetEvidence, selectIsPristine } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
 import { selectThemeType, toggleTheme } from "../theme/themeSlice";
+import Accent from "../../common/Accent";
+import Readable from "../../common/Readable";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,8 +64,11 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "transparent",
     },
   },
+  menuItem: {
+    fontSize: "1.2em",
+  },
   list: {
-    width: 250,
+    width: 275,
     color: theme.palette.text.primary,
   },
   fullList: {
@@ -123,6 +129,12 @@ export default function SiteMenu() {
         onClick: () => dispatch(toggleModule("challenges")),
         icon: <SportsKabaddiIcon />,
       },
+      {
+        id: "photocalculator",
+        display: "Photo Calculator",
+        onClick: () => dispatch(toggleModule("photocalculator")),
+        icon: <PhotoCameraIcon />,
+      },
     ],
     [dispatch]
   );
@@ -148,10 +160,9 @@ export default function SiteMenu() {
         [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <div className={classes.label}>Toolkit</div>
+      <div className={classes.label}><Accent>Phasmo Toolkit</Accent></div>
       <Divider />
       <List>
         {menuToggleItems.map((item) => (
@@ -162,7 +173,7 @@ export default function SiteMenu() {
             onClick={item.onClick}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.display} />
+            <ListItemText primary={<Readable className={classes.menuItem}>{item.display}</Readable>} />
             <Switch
               checked={views[item.id]}
               name={item.id}
@@ -176,7 +187,7 @@ export default function SiteMenu() {
         {menuActionItems.map((item) => (
           <ListItem button key={item.id} onClick={item.onClick}>
             <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={item.display} />
+            <ListItemText primary={<Readable className={classes.menuItem}>{item.display}</Readable>} />
           </ListItem>
         ))}
       </List>
