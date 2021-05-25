@@ -1,4 +1,4 @@
-const themes = {
+export const palettes = {
   dark: {
     palette: {
       type: "dark",
@@ -86,5 +86,5 @@ const themes = {
 export const initialState = {
   themeTypes: ["dark", "light"],
   themeType: "dark",
-  themes,
+  themes: palettes,
 };

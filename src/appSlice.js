@@ -5,6 +5,9 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
+    hydrate: (state, action) => {
+      return action.payload.app;
+    },
     resetApp: () => initialState,
     toggleModule: (state, action) => ({
       ...state,
@@ -13,11 +16,15 @@ export const appSlice = createSlice({
         [action.payload]: !state.views[action.payload],
       },
     }),
+    toggleTheme: (state) => {
+      state.theme = state.theme === "dark" ? "light" : "dark";
+    },
   },
 });
 
-export const { resetApp, toggleModule } = appSlice.actions;
+export const { hydrate, resetApp, toggleModule, toggleTheme } = appSlice.actions;
 
 export const selectViews = (state) => state.app.views;
+export const selectThemeName = (state) => state.app.theme;
 
 export default appSlice.reducer;

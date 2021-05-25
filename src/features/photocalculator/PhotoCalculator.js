@@ -3,10 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import MoneyOffIcon from "@material-ui/icons/MoneyOff";
-import Paper from "@material-ui/core/Paper";
 import React from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
-import StarIcon from "@material-ui/icons/Star";
 
 import Accent from "../../common/Accent";
 import IconButton from "../../common/IconButton";
@@ -19,7 +17,7 @@ import {
   selectPhotoCounts,
   selectTotalValue,
 } from "./photoCalculatorSlice";
-import { photoDetails, photoTypes } from "./constants";
+import { photoDetails } from "./constants";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
@@ -123,7 +121,7 @@ export default function PhotoCalculator() {
     [photoCounts]
   );
 
-  const totalPhotos = React.useMemo(() => collectedPhotos.length);
+  const totalPhotos = React.useMemo(() => collectedPhotos.length, [collectedPhotos]);
 
   const handleResetClick = () => dispatch(resetPhotoCalculator());
 

@@ -6,7 +6,6 @@ import challengesReducer from "../features/randomizers/challenges/challengeRando
 import evidenceReducer from "../features/evidence/evidenceSlice";
 import ghostNameReducer from "../features/ghostname/ghostNameSlice";
 import ghostsReducer from "../features/ghosts/ghostsSlice";
-import themeReducer from "../features/theme/themeSlice";
 import photoCalculatorReducer from "../features/photocalculator/photoCalculatorSlice";
 
 const randomizerReducers = combineReducers({
@@ -21,6 +20,5 @@ export const store = configureStore({
     ghostName: ghostNameReducer,
     photoCalculator: photoCalculatorReducer,
     randomizers: randomizerReducers,
-    theme: themeReducer,
   },
 });

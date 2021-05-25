@@ -3,7 +3,7 @@ import React from "react";
 
 import { Evidence } from "./features/evidence/Evidence";
 import { Ghosts } from "./features/ghosts/Ghosts";
-import { selectViews } from "./appSlice";
+import { selectThemeName, selectViews } from "./appSlice";
 import GhostName from "./features/ghostname/GhostName";
 import Header from "./features/header/Header";
 import Theme from "./features/theme/Theme";
@@ -14,8 +14,9 @@ import "./App.css";
 
 function App() {
   const views = useSelector(selectViews);
+  const themeName = useSelector(selectThemeName);
   return (
-    <Theme>
+    <Theme themeName={themeName}>
       <div className="App">
         <header className="App-header">
           <Header />

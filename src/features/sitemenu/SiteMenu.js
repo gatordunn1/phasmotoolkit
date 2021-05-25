@@ -13,7 +13,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import MenuIcon from "@material-ui/icons/Menu";
 import MoodBadIcon from "@material-ui/icons/MoodBad";
-import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
+import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import React from "react";
 import ReplayIcon from "@material-ui/icons/Replay";
 import SearchIcon from "@material-ui/icons/Search";
@@ -21,11 +21,10 @@ import SportsKabaddiIcon from "@material-ui/icons/SportsKabaddi";
 import Switch from "@material-ui/core/Switch";
 
 import { reset as resetChallenges } from "../randomizers/challenges/challengeRandomizerSlice";
-import { resetApp, selectViews, toggleModule } from "../../appSlice";
+import { resetApp, selectThemeName, selectViews, toggleModule, toggleTheme } from "../../appSlice";
 import { resetEvidence, selectIsPristine } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
-import { selectThemeType, toggleTheme } from "../theme/themeSlice";
-import { reset as resetPhotoCalculator } from '../photocalculator/photoCalculatorSlice';
+import { reset as resetPhotoCalculator } from "../photocalculator/photoCalculatorSlice";
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
 
@@ -80,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
 export default function SiteMenu() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const themeType = useSelector(selectThemeType);
+  const themeName = useSelector(selectThemeName);
   const evidenceIsPristine = useSelector(selectIsPristine);
   const views = useSelector(selectViews);
   const [state, setState] = React.useState({
@@ -144,7 +143,7 @@ export default function SiteMenu() {
   const menuActionItems = [
     {
       id: "theme",
-      display: `${themeType === "dark" ? "Light" : "Dark"} Theme`,
+      display: `${themeName === "dark" ? "Light" : "Dark"} Theme`,
       onClick: () => dispatch(toggleTheme()),
       icon: <FormatPaintIcon />,
     },
@@ -164,7 +163,9 @@ export default function SiteMenu() {
       role="presentation"
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <div className={classes.label}><Accent>Phasmo Toolkit</Accent></div>
+      <div className={classes.label}>
+        <Accent>Phasmo Toolkit</Accent>
+      </div>
       <Divider />
       <List>
         {menuToggleItems.map((item) => (
@@ -175,7 +176,9 @@ export default function SiteMenu() {
             onClick={item.onClick}
           >
             <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={<Readable className={classes.menuItem}>{item.display}</Readable>} />
+            <ListItemText
+              primary={<Readable className={classes.menuItem}>{item.display}</Readable>}
+            />
             <Switch
               checked={views[item.id]}
               name={item.id}
@@ -189,7 +192,9 @@ export default function SiteMenu() {
         {menuActionItems.map((item) => (
           <ListItem button key={item.id} onClick={item.onClick}>
             <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText primary={<Readable className={classes.menuItem}>{item.display}</Readable>} />
+            <ListItemText
+              primary={<Readable className={classes.menuItem}>{item.display}</Readable>}
+            />
           </ListItem>
         ))}
       </List>

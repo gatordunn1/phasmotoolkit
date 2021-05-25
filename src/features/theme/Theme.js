@@ -5,11 +5,10 @@ import {
   ThemeProvider,
 } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { useSelector } from "react-redux";
-import { selectPalette } from "./themeSlice";
+import { palettes } from "./constants";
 
-export default function Theme({ children }) {
-  const palette = useSelector(selectPalette);
+export default function Theme({ children, themeName }) {
+  const palette = React.useMemo(() => palettes[themeName], [themeName]);
 
   const theme = React.useMemo(
     () =>

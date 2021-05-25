@@ -6,4 +6,7 @@ export const initialState = {
     challenges: true,
     photocalculator: true,
   },
+  theme: "dark",
 };
+
+export const LOCAL_STORAGE_KEY = "phasmoToolkit_state";

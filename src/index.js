@@ -1,10 +1,32 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import { store } from './app/store';
-import { Provider } from 'react-redux';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import { store } from "./app/store";
+import { Provider } from "react-redux";
+import * as serviceWorker from "./serviceWorker";
+import { hydrate } from "./appSlice";
+import { LOCAL_STORAGE_KEY } from "./constants";
+
+store.subscribe(() => {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(store.getState()));
+});
+
+// appSlice.js preferences
+const getPreferencesFromLocalStorage = () => {
+  try {
+    const persistedState = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (persistedState) return JSON.parse(persistedState);
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+const preferences = getPreferencesFromLocalStorage();
+
+if (preferences) {
+  store.dispatch(hydrate(preferences));
+}
 
 ReactDOM.render(
   <React.StrictMode>
@@ -12,7 +34,7 @@ ReactDOM.render(
       <App />
     </Provider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
