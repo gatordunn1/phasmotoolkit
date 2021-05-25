@@ -37,11 +37,16 @@ const useStyles = makeStyles((theme) => ({
   },
   button: {
     margin: theme.spacing(1),
-    fontSize: "0.8em",
     color: theme.palette.text.primary,
     "&:hover": {
-      background: "transparent",
+      background: "none",
       color: theme.palette.text.secondary,
+    },
+  },
+  cancelButton: {
+    color: theme.palette.error.main,
+    "&:hover": {
+      color: theme.palette.error.dark,
     },
   },
   disabled: {
@@ -62,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   list: {
-    width: "250px",
+    width: "300px",
     color: theme.palette.text.primary,
   },
   itemList: {
@@ -72,16 +77,24 @@ const useStyles = makeStyles((theme) => ({
   letterList: {
     flexWrap: "wrap",
     justifyContent: "center",
+    fontSize: "1.5em",
     "& > span": {
-      width: "2.0em",
+      width: "25%",
+      "&:hover": {
+        color: theme.palette.action.hover,
+      },
     },
   },
   nameList: {
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "center",
+    fontSize: "1.5em",
     "& > span": {
       width: "100%",
+      "&:hover": {
+        color: theme.palette.action.hover,
+      },
     },
   },
   container: {
@@ -124,20 +137,7 @@ export default function GhostNameMenu() {
   const instructions = useSelector(selectInstructions);
   const ghostNameViews = useSelector(selectGhostNameViews);
 
-  const [state, setState] = React.useState({
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-  });
-
-  const toggleDrawer = (anchor, open) => (event) => {
-    if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
-      return;
-    }
-
-    setState({ ...state, [anchor]: open });
-  };
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
 
   const list = ({ anchor = "right", data, keyName, onClick, letters }) => (
     <div
@@ -145,8 +145,6 @@ export default function GhostNameMenu() {
         [classes.fullList]: anchor === "top" || anchor === "bottom",
       })}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
     >
       <div className={classes.label}>{instructions}</div>
       <Divider />
@@ -162,6 +160,13 @@ export default function GhostNameMenu() {
           </span>
         ))}
       </div>
+      <Button
+        variant="text"
+        className={classes.cancelButton}
+        onClick={() => setDrawerOpen(!drawerOpen)}
+      >
+        Cancel
+      </Button>
     </div>
   );
 
@@ -172,15 +177,13 @@ export default function GhostNameMenu() {
           variant="text"
           color="primary"
           className={classes.button}
-          startIcon={
-            <Icon path={mdiGhost} title="Ghost Name" size={1} />
-          }
-          onClick={toggleDrawer("left", true)}
+          startIcon={<Icon path={mdiGhost} title="Ghost Name" size={1} />}
+          onClick={() => setDrawerOpen(!drawerOpen)}
         >
           <Readable>Set Name</Readable>
         </Button>
         {isVisible && (
-          <Drawer anchor={"left"} open={state["left"]} variant="persistent">
+          <Drawer anchor={"left"} open={drawerOpen} variant="persistent">
             <div className={classes.container}>
               {ghostNameViews.firstnameLetters &&
                 list({

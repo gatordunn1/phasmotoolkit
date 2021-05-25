@@ -7,6 +7,8 @@ import React from "react";
 import { iconMap, selectExcluded, selectIncluded } from "../evidence/evidenceSlice";
 import { selectGhosts, selectSelected, setActiveGhost, updateGhosts } from "./ghostsSlice";
 import Ghost from "../ghost/Ghost";
+import Accent from '../../common/Accent';
+import Readable from '../../common/Readable';
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -15,11 +17,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
   root: {
-    justifyContent: "center",
-    flexWrap: "wrap",
-    "& > *": {
-      margin: theme.spacing(0.5),
-    },
+    margin: "10px 0 10px 0",
   },
   description: {
     display: "flex",
@@ -32,28 +30,37 @@ const useStyles = makeStyles((theme) => ({
   },
   ghostHeader: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "space-around",
+    alignContent: "center",
+    backgroundColor: theme.palette.secondary.dark,
+    borderBottom: `1px solid ${theme.palette.primary.main}`,
+    padding: "5px 0 0 0",
+    margin: "0 0 5px 0",
+    "& > span": {
+      alignSelf: "center",
+    },
   },
   ghostName: {
-    textAlign: "right",
-    width: "50vw",
+    justifySelf: "flex-start",
+    fontSize: "1.2em",
   },
   ghostIcons: {
     "& > span > svg": {
-      margin: "0 10px 0 10px",
+      margin: "5px 10px 0 10px",
     },
-    textAlign: "left",
-    width: "50vw",
   },
   ghosts: {
-    alignContent: "space-between",
-    alignItems: "center",
     display: "grid",
-    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+    margin: "0 auto",
     backgroundColor: theme.palette.background.paper,
-    margin: "10px 0 10px 0",
-    padding: "10px 0 10px 0",
-    width: "100vw",
+    justifyItems: "stretch",
+    gap: "10px",
+    width: "95vw",
+    gridTemplateColumns: "repeat(2, 1fr)",
+    [theme.breakpoints.up("md")]: {
+      gridTemplateColumns: "repeat(7, 1fr)",
+      gap: "20px",
+    },
   },
   included: {
     color: `${theme.palette.success.main} !important`,
@@ -82,9 +89,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   selectedGhost: {
-    padding: "10px",
-    // height: "50vh",
+    backgroundColor: theme.palette.background.default,
+    padding: "0 10px 10px 10px",
     color: theme.palette.text.primary,
+    borderTop: `2px solid ${theme.palette.primary.main}`,
+    borderBottom: `2px solid ${theme.palette.primary.main}`,
     margin: 0,
     "& > * ": {
       fontFamily: "Indie Flower !important",
@@ -133,7 +142,7 @@ export function Ghosts() {
             {selectedGhost && (
               <div>
                 <div className={classes.ghostHeader}>
-                  <span className={classes.ghostName}>{selectedGhost.name}</span>
+                  <span className={classes.ghostName}><Accent><Readable>{selectedGhost.name}</Readable></Accent></span>
                   <span className={classes.ghostIcons}>
                     {selectedGhost.evidence.map((ev) => (
                       <span

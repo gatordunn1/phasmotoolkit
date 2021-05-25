@@ -5,18 +5,24 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
 
-import { selectFirstname, selectLastname, selectIsVisible, resetGhostName } from "../ghostname/ghostNameSlice";
+import {
+  selectFirstname,
+  selectLastname,
+  selectIsVisible,
+  resetGhostName,
+} from "../ghostname/ghostNameSlice";
 import GhostNameMenu from "../ghostnamemenu/GhostNameMenu";
 import SiteMenu from "../sitemenu/SiteMenu";
+import Readable from "../../common/Readable";
 
 const useStyles = makeStyles((theme) => ({
   button: {
     margin: theme.spacing(1),
     color: theme.palette.text.primary,
-    '&:hover': {
-      backgroundColor: 'transparent',
+    "&:hover": {
+      backgroundColor: "transparent",
       color: theme.palette.error.dark,
-    }
+    },
   },
   container: {
     display: "flex",
@@ -79,7 +85,9 @@ export default function Header() {
           onClick={() => dispatch(resetGhostName())}
           startIcon={<DeleteIcon />}
         >
-          {firstname} {lastname}
+          <Readable>
+            {firstname} {lastname}
+          </Readable>
         </Button>
       ) : (
         <GhostNameMenu />

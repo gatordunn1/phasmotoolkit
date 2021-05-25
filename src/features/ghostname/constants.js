@@ -71,10 +71,10 @@ export const LASTNAME_FIRST_LETTERS = [
 ].sort();
 
 export const INSTRUCTIONS = {
-  firstnameLetters: "Select First Letter of Ghost's First Name",
-  firstnames: "Select Ghost's First Name",
-  lastnameLetters: "Select First Letter of Ghost's Last Name",
-  lastnames: "Select Ghost's Last Name",
+  firstnameLetters: "First Letter of First Name",
+  firstnames: "Ghost's First Name",
+  lastnameLetters: "First Letter of Last Name",
+  lastnames: "Ghost's Last Name",
 };
 
 export const initialState = {

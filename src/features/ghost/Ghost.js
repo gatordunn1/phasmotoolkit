@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#33415c",
   },
   ghost: {
-    padding: "0 5px",
     margin: "5px 5px",
     fontSize: "1.2rem",
   },
@@ -32,10 +31,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#3c1642",
     border: "2px solid transparent",
     cursor: "pointer",
-    minWidth: "125px",
     padding: "5px",
-    display: "inline-block",
-    margin: "10px",
     "&:hover": {
       border: "2px solid lightgrey",
     },

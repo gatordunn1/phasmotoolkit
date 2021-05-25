@@ -25,6 +25,7 @@ import { resetApp, selectViews, toggleModule } from "../../appSlice";
 import { resetEvidence, selectIsPristine } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
 import { selectThemeType, toggleTheme } from "../theme/themeSlice";
+import { reset as resetPhotoCalculator } from '../photocalculator/photoCalculatorSlice';
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
 
@@ -94,6 +95,7 @@ export default function SiteMenu() {
     dispatch(resetGhostName());
     dispatch(resetApp());
     dispatch(resetChallenges());
+    dispatch(resetPhotoCalculator());
     setState({ ...state, right: false });
   };
 
