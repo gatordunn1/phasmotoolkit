@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
 import { initialState, photoValues } from "./constants";
 
@@ -11,6 +11,7 @@ export const photoTotalConverter = (total) => {
   if (total >= 300 && total <= 399) return 30;
   if (total >= 400 && total <= 499) return 35;
   if (total >= 500 && total <= 580) return 40;
+  if (total > 580) return 40;
 };
 
 export const photoCalculatorSlice = createSlice({
@@ -41,12 +42,35 @@ export const photoCalculatorSlice = createSlice({
         [photoTypeId]: state.subtotals[photoTypeId] + newPhotoValue,
       };
 
-      state.collected = [...state.collected, action.payload];
+      state.collected = [...state.collected, { ...action.payload, points: newPhotoValue }];
 
       state.counts = {
         ...state.counts,
         [photoTypeId]: state.counts[photoTypeId] + 1,
       };
+
+      state.count += 1;
+
+      state.photos = state.photos.map((photo) => {
+        if (photo.id === photoTypeId) {
+          const count = photo.count + 1;
+
+          return {
+            ...photo,
+            count,
+            enabled: count < photo.limit,
+          };
+        }
+        return photo;
+      });
+    },
+    disablePhotoType: (state, action) => {
+      console.log('disable', current(state))
+      state.photos = state.photos.map((photo) => ({
+        ...photo,
+        count: photo.id === action.payload ? 0 : photo.count,
+        enabled: photo.id === action.payload ? false : photo.enabled,
+      }));
     },
     removePhoto: (state, action) => {
       const {
@@ -59,11 +83,13 @@ export const photoCalculatorSlice = createSlice({
   },
 });
 
-export const { addPhoto, reset } = photoCalculatorSlice.actions;
+export const { addPhoto, disablePhotoType, reset } = photoCalculatorSlice.actions;
 
 export const selectCollectedPhotos = (state) => state.photoCalculator.collected;
 export const selectTotalValue = (state) => state.photoCalculator.totalValue;
 export const selectSubTotalPoints = (state) => state.photoCalculator.subtotals;
 export const selectPhotoCounts = (state) => state.photoCalculator.counts;
+export const selectPhotoCount = (state) => state.photoCalculator.count;
+export const selectPhotos = (state) => state.photoCalculator.photos;
 
 export default photoCalculatorSlice.reducer;

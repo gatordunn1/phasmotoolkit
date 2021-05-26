@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import MoneyOffIcon from "@material-ui/icons/MoneyOff";
+import NotInterestedIcon from "@material-ui/icons/NotInterested";
 import React from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 
@@ -12,18 +13,36 @@ import Readable from "../../common/Readable";
 
 import {
   addPhoto,
+  disablePhotoType,
   reset as resetPhotoCalculator,
   selectCollectedPhotos,
-  selectPhotoCounts,
+  selectPhotos,
+  selectPhotoCount,
   selectTotalValue,
+  photoTotalConverter,
 } from "./photoCalculatorSlice";
-import { photoDetails } from "./constants";
+import { photoDistances, photoValues } from "./constants";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
   disabled: {
     opacity: "0.5",
     pointerEvents: "none",
+  },
+  disablePhotoType: {
+    gridArea: "disablePhotoType",
+    justifySelf: "flex-end",
+    margin: 0,
+    padding: 0,
+  },
+  disablePhotoTypeButton: {
+    color: theme.palette.error.main,
+    margin: 0,
+    padding: 0,
+    "&:hover": {
+      background: "none",
+      color: theme.palette.error.dark,
+    },
   },
   photoTypes: {
     justifySelf: "flex-end",
@@ -56,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     width: "90vw",
     display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
+    gridTemplateColumns: "1fr 1fr 1fr",
     gridTemplateAreas: '"photoTypes photoStars photoTypeCount"',
     justifyContent: "center",
     alignItems: "center",
@@ -99,29 +118,56 @@ export default function PhotoCalculator() {
   const dispatch = useDispatch();
   const collectedPhotos = useSelector(selectCollectedPhotos);
   const totalValue = useSelector(selectTotalValue);
-  const photoCounts = useSelector(selectPhotoCounts);
+  const photos = useSelector(selectPhotos);
+  const collectedPhotoCount = useSelector(selectPhotoCount);
 
   const collectPhoto = (photo) => () => {
     dispatch(addPhoto(photo));
   };
 
-  const isBookFull = React.useMemo(() => collectedPhotos.length >= 10, [collectedPhotos]);
+  const isBookFull = React.useMemo(() => collectedPhotoCount >= 10, [collectedPhotoCount]);
 
-  const isPhotoTypeFull = React.useCallback(
-    (photoType) => {
-      switch (photoType) {
-        case "ghost":
-        case "bone":
-        case "ouijaboard":
-          return photoCounts[photoType] >= 1;
-        default:
-          return false;
-      }
-    },
-    [photoCounts]
+  const collectedPhotoPoints = React.useMemo(
+    () =>
+      collectedPhotos.reduce((points, photo) => {
+        return points + photo.points;
+      }, 0),
+    [collectedPhotos]
   );
 
-  const totalPhotos = React.useMemo(() => collectedPhotos.length, [collectedPhotos]);
+  // const maxPossible = React.useMemo(() => {
+  //   const enabled = photos.filter((photo) => photo.enabled);
+  //   const missed = photos.filter((photo) => !photo.enabled && photo.count < photo.limit);
+  //   let photoLimit = 10 - collectedPhotos.length;
+  //   let photoCount = 0;
+  //   console.log(enabled);
+  //   const remainingPhotoPoints = enabled.reduce((total, photoType) => {
+  //     // Stop counting past the remaining allowed photos
+  //     if (photoCount >= photoLimit) return total;
+
+  //     // How many of this type can we collect?
+  //     let photoTypeLimit = photoType.limit - photoType.count;
+
+  //     // If we would exceed our limit, take the difference for the available photos remaining
+  //     if (photoTypeLimit + photoCount >= photoLimit) {
+  //       photoTypeLimit = photoTypeLimit - photoCount;
+  //     }
+
+  //     photoCount += photoTypeLimit;
+
+  //     return total + photoValues[photoType.id][3] * photoTypeLimit;
+  //   }, 0);
+
+  //   // Account for missed (disabled) photos (ex, ouija board)
+  //   const unavailablePhotoPoints = missed.reduce((total, photoType) => {
+  //     return total + photoValues[photoType.id][3] * (photoType.limit - photoType.count);
+  //   }, 0);
+
+  //   // Return max possible value, capped at 40
+  //   return photoTotalConverter(
+  //     collectedPhotoPoints + remainingPhotoPoints - unavailablePhotoPoints
+  //   );
+  // }, [collectedPhotos.length, photos, collectedPhotoPoints]);
 
   const handleResetClick = () => dispatch(resetPhotoCalculator());
 
@@ -138,19 +184,33 @@ export default function PhotoCalculator() {
       </div>
       <div className={classes.subtitle}>
         <Readable>
-          Click the Stars to Collect Photos | <Accent>${totalValue}</Accent> |{" "}
-          <Accent>{totalPhotos} photos</Accent>
+          Click the Stars to Collect Photos |{" "}
+          <Accent>
+            ${totalValue}
+          </Accent>{" "}
+          | <Accent>{collectedPhotoCount} photos</Accent>
         </Readable>
       </div>
       <div className={classes.photoDetails}>
-        {photoDetails.map((photoType) => (
+        {photos.map((photoType) => (
           <span
             className={clsx(classes.photoTypeContainer, {
-              [classes.disabled]: isPhotoTypeFull(photoType.id) || isBookFull,
+              [classes.disabled]: !photoType.enabled || isBookFull,
             })}
             key={photoType.id}
           >
             <span className={classes.photoTypes}>{photoType.display}</span>
+            {/* <span className={classes.disablePhotoType}>
+              {["bone", "ouijaboard"].includes(photoType.id) && (
+                <IconButton
+                  className={classes.disablePhotoTypeButton}
+                  onClick={() => dispatch(disablePhotoType(photoType.id))}
+                  title={`Click if you could not find the ${photoType.display}`}
+                >
+                  <NotInterestedIcon />
+                </IconButton>
+              )}
+            </span> */}
             <span className={classes.photoStars}>
               <ButtonGroup
                 key={photoType.id}
@@ -159,19 +219,19 @@ export default function PhotoCalculator() {
                 variant="text"
                 className={classes.starIcons}
               >
-                <Button>
+                <Button title={photoType.id === 'ghost' ? photoDistances.ghost[1] : photoDistances.other[1]}>
                   <StarBorderIcon onClick={collectPhoto({ stars: 1, ...photoType })} />
                 </Button>
-                <Button>
+                <Button title={photoType.id === 'ghost' ? photoDistances.ghost[2] : photoDistances.other[2]}>
                   <StarBorderIcon onClick={collectPhoto({ stars: 2, ...photoType })} />
                 </Button>
-                <Button>
+                <Button title={photoType.id === 'ghost' ? photoDistances.ghost[3] : photoDistances.other[3]}>
                   <StarBorderIcon onClick={collectPhoto({ stars: 3, ...photoType })} />
                 </Button>
               </ButtonGroup>
             </span>
             <span className={classes.photoTypeCount}>
-              <Readable>{photoCounts[photoType.id]}</Readable>
+              <Readable>{photoType.count}</Readable>
             </span>
           </span>
         ))}

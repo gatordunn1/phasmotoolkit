@@ -45,49 +45,61 @@ export const photoDetails = [
   {
     id: "ghost",
     display: "Ghost",
+    limit: 1,
   },
   {
     id: "bone",
     display: "Bone",
+    limit: 1,
   },
   {
     id: "ouijaboard",
     display: "Ouija Board",
+    limit: 1,
   },
   {
     id: "fingerprints",
     display: "Fingerprints",
+    limit: 10,
   },
   {
     id: "interaction",
     display: "Interaction",
+    limit: 10,
   },
   {
     id: "footsteps",
     display: "Footsteps",
+    limit: 10,
   },
   {
     id: "dirtywater",
     display: "Dirty Water",
+    limit: 10,
   },
   {
     id: "deadbody",
     display: "Dead Body",
+    limit: 3,
   },
-];
+].map((photo) => ({
+  ...photo,
+  count: 0,
+  enabled: true,
+}))
 
 export const photoTypes = photoDetails.map((photo) => photo.id);
 
 export const photoDistances = {
   ghost: {
-    1: "> 8 meters",
-    2: "4 - 8 meters",
-    3: "< 4 meters",
+    1: "Taken from greater than 8 meters",
+    2: "Taken from between 4 and 8 meters",
+    3: "Taken from less than 4 meters",
   },
   other: {
-    1: "> 8 meters",
-    2: "1.5 - 8 meters",
-    3: "< 1.5 meters",
+    1: "Taken from greater than 8 meters",
+    2: "Taken from between 1.5 and 8 meters",
+    3: "Taken from less than 1.5 meters",
   },
 };
 
@@ -106,6 +118,8 @@ export const initialState = {
     }),
     {}
   ),
+  photos: photoDetails,
   collected: [],
+  count: 0,
   totalValue: 0,
 };
