@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.primary,
     "&:hover": {
       background: "none",
-      color: theme.palette.text.secondary,
+      color: theme.palette.text.accent,
     },
   },
   cancelButton: {

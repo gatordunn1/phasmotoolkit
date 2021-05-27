@@ -4,6 +4,7 @@ import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
+import * as pkgJson from '../../../package.json';
 
 import {
   selectFirstname,
@@ -61,7 +62,11 @@ const useStyles = makeStyles((theme) => ({
   title: {
     fontFamily: "Indie Flower !important",
     justifySelf: "flex-start",
-    color: theme.palette.text.primary,
+    color: theme.palette.text.accent,
+    "& > span": {
+      fontSize: "0.6em",
+      color: theme.palette.text.disabled,
+    }
   },
 }));
 
@@ -75,7 +80,7 @@ export default function Header() {
   return (
     <Paper square className={classes.container}>
       <span>
-        <span className={classes.title}>PhasmoKit</span>
+        <span className={classes.title}>PhasmoKit <Readable>v{pkgJson.version}</Readable></span>
       </span>
       {!isVisible ? (
         <Button
