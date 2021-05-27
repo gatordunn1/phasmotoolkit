@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   container: {
+    fontSize: "1.0em",
     display: "flex",
     justifyContent: "space-between",
     margin: "0 0 10px 0",
@@ -78,7 +79,7 @@ export default function Header() {
   const isVisible = useSelector(selectIsVisible);
 
   return (
-    <Paper square className={classes.container}>
+    <Paper square className={classes.container} component="h1">
       <span>
         <span className={classes.title}>PhasmoKit <Readable>v{pkgJson.version}</Readable></span>
       </span>

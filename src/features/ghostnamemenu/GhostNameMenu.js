@@ -177,7 +177,7 @@ export default function GhostNameMenu() {
           variant="text"
           color="primary"
           className={classes.button}
-          startIcon={<Icon path={mdiGhost} title="Ghost Name" size={1} />}
+          startIcon={<Icon aria-hidden={true} path={mdiGhost} title="Ghost Name" size={1} />}
           onClick={() => setDrawerOpen(!drawerOpen)}
         >
           <Readable>Set Name</Readable>

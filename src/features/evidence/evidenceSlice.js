@@ -17,7 +17,7 @@ export const iconMap = (id) => {
     ghostorbs: () => <VideocamIcon />,
     ghostwriting: () => <MenuBookIcon />,
     spiritbox: () => (
-      <Icon path={mdiRadioHandheld} title="Spirit Box" size={1} horizontal vertical rotate={180} />
+      <Icon path={mdiRadioHandheld} title="Spirit Box" size={1} aria-hidden={true} />
     ),
   };
 

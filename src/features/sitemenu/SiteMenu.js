@@ -26,7 +26,7 @@ import { reset as resetPhotoCalculator } from "../photocalculator/photoCalculato
 import { resetApp, selectThemeName, selectViews, toggleModule, toggleTheme } from "../../appSlice";
 import { resetEvidence, selectIsPristine } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
-import { reset as resetJobRandomizer } from '../randomizers/jobrandomizer/jobRandomizerSlice';
+import { reset as resetJobRandomizer } from "../randomizers/jobrandomizer/jobRandomizerSlice";
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
 import { LOCAL_STORAGE_KEY } from "../../constants";
@@ -100,7 +100,7 @@ export default function SiteMenu() {
     dispatch(resetPhotoCalculator());
     dispatch(resetJobRandomizer());
     setState({ ...state, right: false });
-    localStorage.removeItem(LOCAL_STORAGE_KEY)
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
 
   const clearEvidence = () => {
@@ -215,13 +215,14 @@ export default function SiteMenu() {
   return (
     <div className={classes.root}>
       <span
+        title="Clear Evidence"
         onClick={clearEvidence}
         className={clsx({
           [classes.clearActive]: evidenceIsPristine,
           [classes.clearInactive]: !evidenceIsPristine,
         })}
       >
-        <Icon path={mdiMagnifyClose} title="Clear Evidence" size={1} />
+        <Icon path={mdiMagnifyClose} size={1} />
       </span>
       <IconButton
         className={classes.menu}

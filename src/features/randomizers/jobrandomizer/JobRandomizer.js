@@ -93,7 +93,7 @@ const RandomizerResult = ({ results }) => {
   );
 };
 
-const SectionCountSelect = ({ currentValue, handleChange }) => {
+const SectionCountSelect = ({ context, currentValue, handleChange }) => {
   const options = [1, 2, 3, 4, 5, 6];
 
   return (
@@ -102,12 +102,12 @@ const SectionCountSelect = ({ currentValue, handleChange }) => {
         value={currentValue}
         onChange={handleChange}
         inputProps={{
-          name: "itemcount",
-          id: "item-native-simple",
+          name: `${context}-itemcount`,
+          id: `item-count-${context}`,
         }}
       >
         {options.map((optionValue) => (
-          <MenuItem key={`optionItem_${optionValue}`} value={optionValue}>
+          <MenuItem key={`optionItem-${context}-${optionValue}`} value={optionValue}>
             {optionValue}
           </MenuItem>
         ))}
@@ -153,10 +153,11 @@ export default function JobRandomizer() {
         {randomizerSections.map((section) => (
           <div key={section.display} className="section">
             <span className="header">
-              <Icon className={"headerIcon"} path={section.iconPath} size={1} />
+              <Icon aria-hidden="true" className={"headerIcon"} path={section.iconPath} size={1} />
               <Readable className="sectionTitle">{section.display}</Readable>
               {["evidence", "other"].includes(section.id) ? (
                 <SectionCountSelect
+                  context={section.id}
                   currentValue={randomizedCounts[section.id]}
                   handleChange={(e) =>
                     dispatch(updateRandomizerTypeCount({ ...section, count: e.target.value }))

@@ -175,6 +175,8 @@ export default function PhotoCalculator() {
         <IconButton
           className={clsx(classes.resetButton, { [classes.resetButtonActive]: totalValue > 0 })}
           onClick={handleResetClick}
+          aria-label="reset photos"
+          title="Reset Photos"
         >
           <MoneyOffIcon />
         </IconButton>
