@@ -5,7 +5,8 @@ import App from "./App";
 import { store } from "./app/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
-import { hydrate } from "./appSlice";
+import { hydrate as hydrateAppPreferences } from "./appSlice";
+import { hydrate as hydrateJobsPreferences } from "./features/randomizers/jobrandomizer/jobRandomizerSlice";
 import { LOCAL_STORAGE_KEY } from "./constants";
 
 store.subscribe(() => {
@@ -25,7 +26,8 @@ const getPreferencesFromLocalStorage = () => {
 const preferences = getPreferencesFromLocalStorage();
 
 if (preferences) {
-  store.dispatch(hydrate(preferences));
+  store.dispatch(hydrateAppPreferences(preferences.app));
+  store.dispatch(hydrateJobsPreferences(preferences.randomizers.jobs))
 }
 
 ReactDOM.render(

@@ -1,12 +1,13 @@
 export const initialState = {
+  theme: "dark",
   views: {
+    challenges: true,
     evidence: true,
     ghostName: false,
     ghosts: true,
-    challenges: true,
+    jobs: true,
     photocalculator: true,
   },
-  theme: "dark",
 };
 
 export const LOCAL_STORAGE_KEY = "phasmoToolkit_state";

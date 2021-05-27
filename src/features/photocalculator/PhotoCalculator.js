@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import MoneyOffIcon from "@material-ui/icons/MoneyOff";
-import NotInterestedIcon from "@material-ui/icons/NotInterested";
 import React from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 
@@ -13,15 +12,13 @@ import Readable from "../../common/Readable";
 
 import {
   addPhoto,
-  disablePhotoType,
   reset as resetPhotoCalculator,
-  selectCollectedPhotos,
+  // selectCollectedPhotos,
   selectPhotos,
   selectPhotoCount,
   selectTotalValue,
-  photoTotalConverter,
 } from "./photoCalculatorSlice";
-import { photoDistances, photoValues } from "./constants";
+import { photoDistances } from "./constants";
 import clsx from "clsx";
 
 const useStyles = makeStyles((theme) => ({
@@ -116,7 +113,7 @@ const useStyles = makeStyles((theme) => ({
 export default function PhotoCalculator() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const collectedPhotos = useSelector(selectCollectedPhotos);
+  // const collectedPhotos = useSelector(selectCollectedPhotos);
   const totalValue = useSelector(selectTotalValue);
   const photos = useSelector(selectPhotos);
   const collectedPhotoCount = useSelector(selectPhotoCount);
@@ -127,13 +124,13 @@ export default function PhotoCalculator() {
 
   const isBookFull = React.useMemo(() => collectedPhotoCount >= 10, [collectedPhotoCount]);
 
-  const collectedPhotoPoints = React.useMemo(
-    () =>
-      collectedPhotos.reduce((points, photo) => {
-        return points + photo.points;
-      }, 0),
-    [collectedPhotos]
-  );
+  // const collectedPhotoPoints = React.useMemo(
+  //   () =>
+  //     collectedPhotos.reduce((points, photo) => {
+  //       return points + photo.points;
+  //     }, 0),
+  //   [collectedPhotos]
+  // );
 
   // const maxPossible = React.useMemo(() => {
   //   const enabled = photos.filter((photo) => photo.enabled);

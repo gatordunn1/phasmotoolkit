@@ -5,8 +5,8 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    hydrate: (state, action) => {
-      return action.payload.app;
+    hydrate: (_, action) => {
+      return action.payload;
     },
     resetApp: () => initialState,
     toggleModule: (state, action) => ({

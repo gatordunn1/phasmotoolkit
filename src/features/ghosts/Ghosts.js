@@ -101,7 +101,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function Ghosts() {
+export default function Ghosts() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const ghosts = useSelector(selectGhosts);

@@ -19,14 +19,17 @@ import ReplayIcon from "@material-ui/icons/Replay";
 import SearchIcon from "@material-ui/icons/Search";
 import SportsKabaddiIcon from "@material-ui/icons/SportsKabaddi";
 import Switch from "@material-ui/core/Switch";
+import WorkIcon from "@material-ui/icons/Work";
 
 import { reset as resetChallenges } from "../randomizers/challenges/challengeRandomizerSlice";
+import { reset as resetPhotoCalculator } from "../photocalculator/photoCalculatorSlice";
 import { resetApp, selectThemeName, selectViews, toggleModule, toggleTheme } from "../../appSlice";
 import { resetEvidence, selectIsPristine } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
-import { reset as resetPhotoCalculator } from "../photocalculator/photoCalculatorSlice";
+import { reset as resetJobRandomizer } from '../randomizers/jobrandomizer/jobRandomizerSlice';
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
+import { LOCAL_STORAGE_KEY } from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,7 +98,9 @@ export default function SiteMenu() {
     dispatch(resetApp());
     dispatch(resetChallenges());
     dispatch(resetPhotoCalculator());
+    dispatch(resetJobRandomizer());
     setState({ ...state, right: false });
+    localStorage.removeItem(LOCAL_STORAGE_KEY)
   };
 
   const clearEvidence = () => {
@@ -129,6 +134,12 @@ export default function SiteMenu() {
         display: "Challenges",
         onClick: () => dispatch(toggleModule("challenges")),
         icon: <SportsKabaddiIcon />,
+      },
+      {
+        id: "jobs",
+        display: "Job Randomizer",
+        onClick: () => dispatch(toggleModule("jobs")),
+        icon: <WorkIcon />,
       },
       {
         id: "photocalculator",

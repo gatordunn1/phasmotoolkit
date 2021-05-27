@@ -1,14 +1,15 @@
 import { useSelector } from "react-redux";
 import React from "react";
 
-import { Evidence } from "./features/evidence/Evidence";
-import { Ghosts } from "./features/ghosts/Ghosts";
 import { selectThemeName, selectViews } from "./appSlice";
-import GhostName from "./features/ghostname/GhostName";
-import Header from "./features/header/Header";
-import Theme from "./features/theme/Theme";
 import ChallengeRandomizer from "./features/randomizers/challenges/ChallengeRandomizer";
+import Evidence from "./features/evidence/Evidence";
+import GhostName from "./features/ghostname/GhostName";
+import Ghosts from "./features/ghosts/Ghosts";
+import Header from "./features/header/Header";
+import JobRandomizer from "./features/randomizers/jobrandomizer/JobRandomizer";
 import PhotoCalculator from "./features/photocalculator/PhotoCalculator";
+import Theme from "./features/theme/Theme";
 
 import "./App.css";
 
@@ -26,6 +27,7 @@ function App() {
           {views.evidence && <Evidence />}
           {views.ghosts && <Ghosts />}
           {views.challenges && <ChallengeRandomizer />}
+          {views.jobs && <JobRandomizer />}
           {views.photocalculator && <PhotoCalculator />}
         </main>
       </div>

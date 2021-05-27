@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export function Evidence() {
+export default function Evidence() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const ghosts = useSelector(selectGhosts);

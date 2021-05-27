@@ -1,7 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { mdiSlotMachineOutline } from "@mdi/js";
 import { useDispatch, useSelector } from "react-redux";
-import clsx from "clsx";
 import EditIcon from "@material-ui/icons/Edit";
 import Icon from "@mdi/react";
 import Paper from "@material-ui/core/Paper";
@@ -13,7 +12,6 @@ import ChallengesList from "./ChallengesList";
 import Readable from "../../../common/Readable";
 import Accent from "../../../common/Accent";
 
-
 import {
   resetUsed,
   selectChallenges,
@@ -24,6 +22,12 @@ import {
 const useStyles = makeStyles((theme) => ({
   challengeText: {
     fontSize: "1.2em",
+    display: "flex",
+    alignContent: "center",
+    gap: "10px",
+    "&:hover": {
+      color: theme.palette.action.hover,
+    }
   },
   editOptions: {
     alignSelf: "center",
@@ -34,27 +38,33 @@ const useStyles = makeStyles((theme) => ({
   icon: {
     alignSelf: "center",
   },
+  iconGroup: {
+    display: "flex",
+    justifySelf: "flex-start",
+  },
   iconHover: {
     color: theme.palette.action.hover,
   },
   root: {
-    width: "100vw",
-    padding: "10px",
+    width: "95vw",
+    padding: "10px 0 10px 0",
+    display: "flex",
   },
   randomizer: {
     cursor: "pointer",
     display: "flex",
     flexWrap: "nowrap",
     paddingLeft: "10px",
+    justifyContent: "space-between",
+    width: "95%",
   },
   spinner: {
     padding: "0 0 0 10px",
     display: "flex",
-    gap: "10px",
     width: "100%",
     alignSelf: "center",
-    justifySelf: "flex-start",
-    textAlign: "left",
+    justifySelf: "center",
+    justifyContent: "center",
   },
   randomChallenge: {
     webkitAnimation: "flip-in-hor-bottom 350ms ease-in-out 1 both",
@@ -70,7 +80,6 @@ export default function ChallengeRandomizer() {
   const dispatch = useDispatch();
   const challenges = useSelector(selectChallenges);
   const randomized = useSelector(selectRandomizedChallenge);
-  const [hovering, setHovering] = React.useState(false);
   const [editOpen, setEditOpen] = React.useState(false);
 
   const spinTheWheel = React.useCallback(
@@ -90,38 +99,42 @@ export default function ChallengeRandomizer() {
     [challenges, dispatch]
   );
 
-  const handleHovering = (hover) => () => setHovering(hover);
-
   const toggleDrawer = (status) => (event) => {
     if (event.type === "keydown" && (event.key === "Tab" || event.key === "Shift")) {
       return;
     }
 
-    setEditOpen(status)
+    setEditOpen(status);
   };
 
   return (
     <React.Fragment>
       <Paper className={classes.root}>
-        <Typography color="textPrimary" className={classes.randomizer}>
-          <EditIcon className={classes.editOptions} onClick={toggleDrawer(true)} />
+        <Typography component="span" color="textPrimary" className={classes.randomizer}>
+          <span className={classes.iconGroup}>
+            <EditIcon className={classes.editOptions} onClick={toggleDrawer(true)} />
+          </span>
           <span
             className={classes.spinner}
-            onMouseEnter={handleHovering(true)}
-            onMouseLeave={handleHovering(false)}
+            // onMouseEnter={handleHovering(true)}
+            // onMouseLeave={handleHovering(false)}
             onClick={spinTheWheel}
           >
-            <Icon
-              className={clsx(classes.icon, { [classes.iconHover]: hovering })}
-              path={mdiSlotMachineOutline}
-              size={1}
-            />
             {randomized && randomized.display ? (
               <span key={randomized.id} className={classes.randomChallenge}>
-                <Readable className={classes.challengeText}><Accent>{randomized.display}</Accent>: <span>{randomized.description}</span></Readable>
+                <Readable className={classes.challengeText}>
+                  <Accent>{randomized.display}</Accent> <div>{randomized.description}</div>
+                </Readable>
               </span>
             ) : (
-              <Readable className={classes.challengeText}>Click here for a random challenge!</Readable>
+              <Readable className={classes.challengeText}>
+                <Icon
+                  className={classes.icon}
+                  path={mdiSlotMachineOutline}
+                  size={1}
+                />
+                <Accent>Click here for a random challenge!</Accent>
+              </Readable>
             )}
           </span>
         </Typography>
