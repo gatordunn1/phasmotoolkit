@@ -6,8 +6,9 @@ import challengesReducer from "../features/randomizers/challenges/challengeRando
 import evidenceReducer from "../features/evidence/evidenceSlice";
 import ghostNameReducer from "../features/ghostname/ghostNameSlice";
 import ghostsReducer from "../features/ghosts/ghostsSlice";
-import photoCalculatorReducer from "../features/photocalculator/photoCalculatorSlice";
 import jobsReducer from "../features/randomizers/jobrandomizer/jobRandomizerSlice.js";
+import phasmoRPGReducer from "../features/phasmorpg/phasmoRPGSlice";
+import photoCalculatorReducer from "../features/photocalculator/photoCalculatorSlice";
 
 const randomizerReducers = combineReducers({
   challenges: challengesReducer,
@@ -20,6 +21,7 @@ export const store = configureStore({
     evidence: evidenceReducer,
     ghosts: ghostsReducer,
     ghostName: ghostNameReducer,
+    phasmoRPG: phasmoRPGReducer,
     photoCalculator: photoCalculatorReducer,
     randomizers: randomizerReducers,
   },

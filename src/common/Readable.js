@@ -4,7 +4,7 @@ import React from "react";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    fontFamily: "'Oswald', sans-serif !important",
+    fontFamily: "'Roboto', sans-serif !important",
   },
 }));
 

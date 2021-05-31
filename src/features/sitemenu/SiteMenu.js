@@ -21,15 +21,16 @@ import SportsKabaddiIcon from "@material-ui/icons/SportsKabaddi";
 import Switch from "@material-ui/core/Switch";
 import WorkIcon from "@material-ui/icons/Work";
 
+import { LOCAL_STORAGE_KEY } from "../../constants";
 import { reset as resetChallenges } from "../randomizers/challenges/challengeRandomizerSlice";
+import { reset as resetJobRandomizer } from "../randomizers/jobrandomizer/jobRandomizerSlice";
 import { reset as resetPhotoCalculator } from "../photocalculator/photoCalculatorSlice";
 import { resetApp, selectThemeName, selectViews, toggleModule, toggleTheme } from "../../appSlice";
 import { resetEvidence, selectIsPristine } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
-import { reset as resetJobRandomizer } from "../randomizers/jobrandomizer/jobRandomizerSlice";
+import { reset as resetPhasmoRPG } from '../phasmorpg/phasmoRPGSlice';
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
-import { LOCAL_STORAGE_KEY } from "../../constants";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -71,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.2em",
   },
   list: {
-    width: 275,
+    whiteSpace: "nowrap",
     color: theme.palette.text.primary,
   },
   fullList: {
@@ -99,6 +100,7 @@ export default function SiteMenu() {
     dispatch(resetChallenges());
     dispatch(resetPhotoCalculator());
     dispatch(resetJobRandomizer());
+    dispatch(resetPhasmoRPG());
     setState({ ...state, right: false });
     localStorage.removeItem(LOCAL_STORAGE_KEY);
   };
@@ -152,12 +154,12 @@ export default function SiteMenu() {
   );
 
   const menuActionItems = [
-    {
-      id: "theme",
-      display: `${themeName === "dark" ? "Light" : "Dark"} Theme`,
-      onClick: () => dispatch(toggleTheme()),
-      icon: <FormatPaintIcon />,
-    },
+    // {
+    //   id: "theme",
+    //   display: `${themeName === "dark" ? "Light" : "Dark"} Theme`,
+    //   onClick: () => dispatch(toggleTheme()),
+    //   icon: <FormatPaintIcon />,
+    // },
     {
       id: "reset",
       display: "Reset App",

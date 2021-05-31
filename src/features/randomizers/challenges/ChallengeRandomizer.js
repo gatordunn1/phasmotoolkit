@@ -116,8 +116,6 @@ export default function ChallengeRandomizer() {
           </span>
           <span
             className={classes.spinner}
-            // onMouseEnter={handleHovering(true)}
-            // onMouseLeave={handleHovering(false)}
             onClick={spinTheWheel}
           >
             {randomized && randomized.display ? (

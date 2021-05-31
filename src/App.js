@@ -8,8 +8,10 @@ import GhostName from "./features/ghostname/GhostName";
 import Ghosts from "./features/ghosts/Ghosts";
 import Header from "./features/header/Header";
 import JobRandomizer from "./features/randomizers/jobrandomizer/JobRandomizer";
+import PhasmoRPG from "./features/phasmorpg/PhasmoRPG";
 import PhotoCalculator from "./features/photocalculator/PhotoCalculator";
 import Theme from "./features/theme/Theme";
+import Alerts from './common/Alerts';
 
 import "./App.css";
 
@@ -26,9 +28,11 @@ function App() {
         <main className="App-main">
           {views.evidence && <Evidence />}
           {views.ghosts && <Ghosts />}
+          {views.phasmorpg && <PhasmoRPG />}
           {views.challenges && <ChallengeRandomizer />}
           {views.jobs && <JobRandomizer />}
           {views.photocalculator && <PhotoCalculator />}
+          <Alerts />
         </main>
       </div>
     </Theme>
