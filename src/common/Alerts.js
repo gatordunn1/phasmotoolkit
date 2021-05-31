@@ -36,7 +36,7 @@ export default function Alerts() {
 
   // Maintain a maximum of 4 active alerts
   React.useEffect(() => {
-    if (alerts.length > 0) {
+    if (alerts && alerts.length > 0) {
       return setActiveAlerts((prev) => [...prev, ...alerts.slice(0, 4).map((a) => a.id)]);
     }
     setActiveAlerts([]);
