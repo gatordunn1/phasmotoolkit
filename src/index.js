@@ -21,6 +21,8 @@ store.subscribe(() => {
   );
 });
 
+let initAlerts = [];
+
 const getAppStateFromLocalStorage = () => {
   try {
     const persistedState = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -29,12 +31,10 @@ const getAppStateFromLocalStorage = () => {
 
       // Force expire for previous versions
       if (parsed.version !== pkgJson.version) {
-        store.dispatch(
-          addAlert({
-            severity: "error",
-            message: `(App Reset) Upgraded to new version: ${parsed.version} => ${pkgJson.version}`,
-          })
-        );
+        initAlerts.push({
+          severity: "error",
+          message: `(App Reset) Upgraded to new version: ${parsed.version} => ${pkgJson.version}`,
+        });
         localStorage.removeItem(LOCAL_STORAGE_KEY);
       }
 
@@ -42,12 +42,10 @@ const getAppStateFromLocalStorage = () => {
     }
   } catch (e) {
     localStorage.removeItem(LOCAL_STORAGE_KEY);
-    store.dispatch(
-      addAlert({
-        severity: "error",
-        message: `(App Reset) Application Error (${pkgJson.version}): ${e.message}`,
-      })
-    );
+    initAlerts.push({
+      severity: "error",
+      message: `(App Reset) Application Error (${pkgJson.version}): ${e.message}`,
+    });
   }
 };
 
@@ -57,6 +55,12 @@ if (appState) {
   store.dispatch(hydrateAppState(appState.app));
   store.dispatch(hydrateJobsState(appState.randomizers.jobs));
   store.dispatch(hydratePhasmoRPGState(appState.phasmoRPG));
+
+  if (initAlerts.length > 0) {
+    initAlerts.forEach((alert) => {
+      store.dispatch(addAlert(alert));
+    });
+  }
 }
 
 ReactDOM.render(
