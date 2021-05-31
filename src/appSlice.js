@@ -12,8 +12,8 @@ export const appSlice = createSlice({
     },
     resetApp: () => initialState,
     addAlert: (state, action) => {
-      console.log('called')
-      state.alerts = [...state.alerts, { ...action.payload, id: nanoid() }];
+      const currentAlerts = (state.alerts && Array.isArray(state.alerts)) || [];
+      state.alerts = [...currentAlerts, { ...action.payload, id: nanoid() }];
     },
     removeAlert: (state, action) => {
       state.alerts = state.alerts.filter((alert) => alert.id !== action.payload);
@@ -28,10 +28,13 @@ export const appSlice = createSlice({
     togglePhasmoRPG: (state) => {
       const visible = state.views.phasmorpg;
       if (!visible) {
-        state.views = Object.keys(initialState.views).reduce((views, view) => ({
-          ...views,
-          [view]: view === "phasmorpg",
-        }), {});
+        state.views = Object.keys(initialState.views).reduce(
+          (views, view) => ({
+            ...views,
+            [view]: view === "phasmorpg",
+          }),
+          {}
+        );
       } else {
         state.views = initialState.views;
       }
