@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import { initialState } from "./constants";
 
@@ -33,7 +33,6 @@ export const jobRandomizerSlice = createSlice({
     },
     reset: () => initialState,
     resetSection: (state, action) => {
-      console.log("resetSection", { state: current(state), action });
       state.sectionItems[action.payload] = initialState.sectionItems[action.payload];
     },
     randomizeJob: (state) => {
@@ -43,7 +42,6 @@ export const jobRandomizerSlice = createSlice({
 
       // Update the list of items to mark the newly generated items as used
       for (const sectionType of ["location", "light", "evidence", "other"]) {
-        console.log("sectionType", sectionType);
         state.sectionItems[sectionType] = state.sectionItems[sectionType].map((item) => ({
           ...item,
           used: randomized[sectionType].map((x) => x.id).includes(item.id) ? true : item.used,

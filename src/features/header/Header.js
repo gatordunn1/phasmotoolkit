@@ -4,7 +4,7 @@ import Button from "@material-ui/core/Button";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
-import * as pkgJson from '../../../package.json';
+import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 
 import {
   selectFirstname,
@@ -15,6 +15,9 @@ import {
 import GhostNameMenu from "../ghostnamemenu/GhostNameMenu";
 import SiteMenu from "../sitemenu/SiteMenu";
 import Readable from "../../common/Readable";
+import Accent from "../../common/Accent";
+import { selectViews, togglePhasmoRPG } from "../../appSlice";
+import IconButton from "../../common/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -24,6 +27,13 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: "transparent",
       color: theme.palette.error.dark,
     },
+  },
+  toggleAppButton: {
+    color: theme.palette.secondary.light,
+    "&:hover": {
+      backgroundColor: "transparent",
+      color: theme.palette.primary.light,
+    }
   },
   container: {
     fontSize: "1.0em",
@@ -67,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     "& > span": {
       fontSize: "0.6em",
       color: theme.palette.text.disabled,
-    }
+    },
   },
 }));
 
@@ -77,27 +87,53 @@ export default function Header() {
   const firstname = useSelector(selectFirstname);
   const lastname = useSelector(selectLastname);
   const isVisible = useSelector(selectIsVisible);
+  const views = useSelector(selectViews);
+
+  const handleTogglePhasmoRPG = () => {
+    dispatch(togglePhasmoRPG());
+  };
 
   return (
     <Paper square className={classes.container} component="h1">
       <span>
-        <span className={classes.title}>PhasmoKit <Readable>v{pkgJson.version}</Readable></span>
-      </span>
-      {!isVisible ? (
-        <Button
-          variant="text"
-          color="primary"
-          className={classes.button}
-          onClick={() => dispatch(resetGhostName())}
-          startIcon={<DeleteIcon />}
+        {views.phasmorpg ? (
+          <Accent size="0.8em" color="primary">
+            Phasmo RPG
+          </Accent>
+        ) : (
+          <span className={classes.title}>PhasmoKit</span>
+        )}
+        <IconButton
+          onClick={() => handleTogglePhasmoRPG()}
+          aria-label="Toggle Phasmo RPG"
+          title="Toggle Phasmo RPG"
+          className={classes.toggleAppButton}
         >
-          <Readable>
-            {firstname} {lastname}
-          </Readable>
-        </Button>
-      ) : (
-        <GhostNameMenu />
-      )}
+          <SupervisedUserCircleIcon />
+        </IconButton>
+      </span>
+      <React.Fragment>
+        {views.evidence && (
+          <React.Fragment>
+            {!isVisible ? (
+              <Button
+                variant="text"
+                color="primary"
+                className={classes.button}
+                onClick={() => dispatch(resetGhostName())}
+                startIcon={<DeleteIcon />}
+              >
+                <Readable>
+                  {firstname} {lastname}
+                </Readable>
+              </Button>
+            ) : (
+              <GhostNameMenu />
+            )}
+          </React.Fragment>
+        )}
+      </React.Fragment>
+
       <span className={classes.menu}>
         <SiteMenu />
       </span>

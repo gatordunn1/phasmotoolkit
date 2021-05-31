@@ -1,4 +1,5 @@
 export const initialState = {
+  alerts: [],
   theme: "dark",
   views: {
     challenges: true,
@@ -6,6 +7,7 @@ export const initialState = {
     ghostName: false,
     ghosts: true,
     jobs: true,
+    phasmorpg: false,
     photocalculator: true,
   },
 };

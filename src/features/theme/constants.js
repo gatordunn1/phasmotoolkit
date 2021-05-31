@@ -14,7 +14,7 @@ export const palettes = {
         default: "#272733",
         paper: "#2b2d42",
         paperalt: "#402f4a",
-        papercontrast: "#2e1f27",
+        papercontrast: "#3d2033",
       },
       secondary: {
         main: "#5e548e",
@@ -35,7 +35,7 @@ export const palettes = {
       text: {
         primary: "#5fa8d3",
         secondary: "#cae9ff",
-        contrast: "#ffbc0a",
+        contrast: "#8ac926",
         accent: "#ffbc0a",
       },
     },
@@ -76,7 +76,7 @@ export const palettes = {
       text: {
         primary: "#3d718f",
         secondary: "#cae9ff",
-        contrast: "#33a1fd",
+        contrast: "#8ac926",
         accent: "#33a1fd",
       },
     },

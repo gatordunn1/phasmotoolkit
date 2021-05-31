@@ -1,20 +1,22 @@
+import { Provider } from "react-redux";
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import { store } from "./app/store";
-import { Provider } from "react-redux";
-import * as serviceWorker from "./serviceWorker";
-import { hydrate as hydrateAppPreferences } from "./appSlice";
-import { hydrate as hydrateJobsPreferences } from "./features/randomizers/jobrandomizer/jobRandomizerSlice";
+import { hydrate as hydrateAppState } from "./appSlice";
+import { hydrate as hydrateJobsState } from "./features/randomizers/jobrandomizer/jobRandomizerSlice";
+import { hydrate as hydratePhasmoRPGState } from "./features/phasmorpg/phasmoRPGSlice";
 import { LOCAL_STORAGE_KEY } from "./constants";
+import { store } from "./app/store";
+import * as serviceWorker from "./serviceWorker";
+import App from "./App";
+
+import "./index.css";
 
 store.subscribe(() => {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(store.getState()));
 });
 
 // appSlice.js preferences
-const getPreferencesFromLocalStorage = () => {
+const getAppStateFromLocalStorage = () => {
   try {
     const persistedState = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (persistedState) return JSON.parse(persistedState);
@@ -23,17 +25,18 @@ const getPreferencesFromLocalStorage = () => {
   }
 };
 
-const preferences = getPreferencesFromLocalStorage();
+const appState = getAppStateFromLocalStorage();
 
-if (preferences) {
-  store.dispatch(hydrateAppPreferences(preferences.app));
-  store.dispatch(hydrateJobsPreferences(preferences.randomizers.jobs))
+if (appState) {
+  store.dispatch(hydrateAppState(appState.app));
+  store.dispatch(hydrateJobsState(appState.randomizers.jobs));
+  store.dispatch(hydratePhasmoRPGState(appState.phasmoRPG));
 }
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+        <App />
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

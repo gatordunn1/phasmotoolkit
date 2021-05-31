@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import { initialState, photoValues } from "./constants";
 
@@ -65,7 +65,6 @@ export const photoCalculatorSlice = createSlice({
       });
     },
     disablePhotoType: (state, action) => {
-      console.log('disable', current(state))
       state.photos = state.photos.map((photo) => ({
         ...photo,
         count: photo.id === action.payload ? 0 : photo.count,
