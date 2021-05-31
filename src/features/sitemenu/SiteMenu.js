@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import clsx from "clsx";
 import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
-import FormatPaintIcon from "@material-ui/icons/FormatPaint";
 import Icon from "@mdi/react";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
@@ -18,17 +17,18 @@ import React from "react";
 import ReplayIcon from "@material-ui/icons/Replay";
 import SearchIcon from "@material-ui/icons/Search";
 import SportsKabaddiIcon from "@material-ui/icons/SportsKabaddi";
+import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import Switch from "@material-ui/core/Switch";
 import WorkIcon from "@material-ui/icons/Work";
 
 import { LOCAL_STORAGE_KEY } from "../../constants";
 import { reset as resetChallenges } from "../randomizers/challenges/challengeRandomizerSlice";
 import { reset as resetJobRandomizer } from "../randomizers/jobrandomizer/jobRandomizerSlice";
+import { reset as resetPhasmoRPG } from "../phasmorpg/phasmoRPGSlice";
 import { reset as resetPhotoCalculator } from "../photocalculator/photoCalculatorSlice";
-import { resetApp, selectThemeName, selectViews, toggleModule, toggleTheme } from "../../appSlice";
+import { resetApp, selectViews, toggleModule, togglePhasmoRPG } from "../../appSlice";
 import { resetEvidence, selectIsPristine } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
-import { reset as resetPhasmoRPG } from '../phasmorpg/phasmoRPGSlice';
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
 
@@ -83,7 +83,6 @@ const useStyles = makeStyles((theme) => ({
 export default function SiteMenu() {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const themeName = useSelector(selectThemeName);
   const evidenceIsPristine = useSelector(selectIsPristine);
   const views = useSelector(selectViews);
   const [state, setState] = React.useState({
@@ -154,17 +153,17 @@ export default function SiteMenu() {
   );
 
   const menuActionItems = [
-    // {
-    //   id: "theme",
-    //   display: `${themeName === "dark" ? "Light" : "Dark"} Theme`,
-    //   onClick: () => dispatch(toggleTheme()),
-    //   icon: <FormatPaintIcon />,
-    // },
     {
       id: "reset",
       display: "Reset App",
       onClick: () => reset(),
       icon: <ReplayIcon />,
+    },
+    {
+      id: "togglePhasmoRPG",
+      display: "PhasmoRPG",
+      onClick: () => dispatch(togglePhasmoRPG()),
+      icon: <SupervisedUserCircleIcon />,
     },
   ];
 

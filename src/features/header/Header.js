@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "transparent",
       color: theme.palette.primary.light,
-    }
+    },
   },
   container: {
     fontSize: "1.0em",
@@ -97,20 +97,22 @@ export default function Header() {
     <Paper square className={classes.container} component="h1">
       <span>
         {views.phasmorpg ? (
-          <Accent size="0.8em" color="primary">
-            Phasmo RPG
-          </Accent>
+          <React.Fragment>
+            <Accent size="0.8em" color="primary">
+              Phasmo RPG
+            </Accent>
+            <IconButton
+              onClick={() => handleTogglePhasmoRPG()}
+              aria-label="Toggle Phasmo RPG"
+              title="Toggle Phasmo RPG"
+              className={classes.toggleAppButton}
+            >
+              <SupervisedUserCircleIcon />
+            </IconButton>
+          </React.Fragment>
         ) : (
           <span className={classes.title}>PhasmoKit</span>
         )}
-        <IconButton
-          onClick={() => handleTogglePhasmoRPG()}
-          aria-label="Toggle Phasmo RPG"
-          title="Toggle Phasmo RPG"
-          className={classes.toggleAppButton}
-        >
-          <SupervisedUserCircleIcon />
-        </IconButton>
       </span>
       <React.Fragment>
         {views.evidence && (
