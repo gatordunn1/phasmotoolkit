@@ -11,7 +11,7 @@ import JobRandomizer from "./features/randomizers/jobrandomizer/JobRandomizer";
 import PhasmoRPG from "./features/phasmorpg/PhasmoRPG";
 import PhotoCalculator from "./features/photocalculator/PhotoCalculator";
 import Theme from "./features/theme/Theme";
-import Alerts from './common/Alerts';
+import Alerts from "./common/Alerts";
 
 import "./App.css";
 
