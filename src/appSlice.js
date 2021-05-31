@@ -12,7 +12,7 @@ export const appSlice = createSlice({
     },
     resetApp: () => initialState,
     addAlert: (state, action) => {
-      const currentAlerts = (state.alerts && Array.isArray(state.alerts)) || [];
+      const currentAlerts = (state.alerts && Array.isArray(state.alerts)) ? state.alerts : [];
       state.alerts = [...currentAlerts, { ...action.payload, id: nanoid() }];
     },
     removeAlert: (state, action) => {

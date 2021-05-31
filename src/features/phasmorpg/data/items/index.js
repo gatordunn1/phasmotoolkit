@@ -133,7 +133,7 @@ const items = [
     display: "Lighter",
     displayShort: "Lighter",
     category: categories.store,
-    type: types.light,
+    type: types.junk,
   },
   {
     display: "Motion Sensor",

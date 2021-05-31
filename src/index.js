@@ -10,6 +10,7 @@ import { LOCAL_STORAGE_KEY } from "./constants";
 import { store } from "./app/store";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
+import semver from 'semver';
 
 import "./index.css";
 import * as pkgJson from "../package.json";
