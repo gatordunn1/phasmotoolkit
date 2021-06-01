@@ -53,13 +53,16 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.2em",
     textTransform: "uppercase",
   },
+  bankedPoints: {
+    color: theme.palette.success.main,
+  },
   characterIcons: {
     display: "flex",
     gap: theme.spacing(1.5),
   },
   characterSheetHeader: {
     alignContent: "center",
-    color: theme.palette.text.accent,
+    color: theme.palette.secondary.light,
     display: "grid",
     gridTemplateColumns: "1fr",
     gap: theme.spacing(1.5),
@@ -131,7 +134,6 @@ const useStyles = makeStyles((theme) => ({
     gridTemplateColumns: "1fr",
     [theme.breakpoints.up("md")]: {
       fontSize: "0.6em",
-
     },
   },
   mapButtonUnlocked: {
@@ -176,20 +178,26 @@ const useStyles = makeStyles((theme) => ({
     gap: theme.spacing(1.5),
     justifyContent: "center",
     margin: theme.spacing(1.5),
-    "& > .deleteCharacter": {
-      color: theme.palette.error.dark,
-      "&:hover": {
-        color: theme.palette.text.secondary,
-        backgroundColor: theme.palette.error.main,
-      },
+  },
+  deleteCharacter: {
+    margin: theme.spacing(2, 0, 0, 0),
+    padding: theme.spacing(1),
+    color: theme.palette.error.dark,
+    "&:hover": {
+      color: theme.palette.text.secondary,
+      backgroundColor: theme.palette.error.main,
     },
   },
   root: {
-    margin: theme.spacing(1, 0, 1, 0),
+    margin: theme.spacing(1, 0, 0, 0),
     width: "95vw",
   },
   removeTrait: {
     color: theme.palette.error.main,
+  },
+  logMission: {
+    fontSize: "0.8em",
+    color: theme.palette.text.accent,
   },
 }));
 
@@ -205,14 +213,11 @@ const CharacterButtons = () => {
       <React.Fragment>
         <div className={classes.characterButtons}>
           <React.Fragment>
-            <Button onClick={() => dispatch(toggleMissionDrawerOpen())}>
-              Log{!screenExtraSmall && " Mission"}
-            </Button>
             <Button
-              className="deleteCharacter"
-              onClick={() => dispatch(deleteCharacter(character))}
+              className={classes.logMission}
+              onClick={() => dispatch(toggleMissionDrawerOpen())}
             >
-              Delete{!screenExtraSmall && " Character"}
+              Log{!screenExtraSmall && " Mission"}
             </Button>
           </React.Fragment>
         </div>
@@ -233,6 +238,7 @@ export default function CharacterPreview() {
   const dispatch = useDispatch();
   const character = useSelector(selectActiveCharacter);
   const [actsByMap, setActsByMap] = React.useState();
+  const screenExtraSmall = useMediaQuery((theme) => theme.breakpoints.only("xs"));
 
   React.useEffect(() => {
     if (character) {
@@ -278,17 +284,13 @@ export default function CharacterPreview() {
     <Paper elevation={3} className={clsx(classes.root, classes.characterPanel)} component="div">
       <div className={classes.characterSheetHeader}>
         <div className={classes.characterIcons}>
+        <span>
+          {character.name}
+        </span>
           <Readable className={classes.characterMoney}>
-            <AccountBalanceIcon />${character.bankedPoints}
+            <span className={classes.bankedPoints}>${character.bankedPoints}</span>
           </Readable>
-          <Avatar
-            name={character.name}
-            variant={character.name.length === 0 ? "marble" : "beam"}
-            colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
-            className={classes.avatar}
-          />
         </div>
-        <span>{character.name}</span>
       </div>
       <CharacterButtons />
       <span className={classes.characterProperties}>
@@ -348,6 +350,12 @@ export default function CharacterPreview() {
           </Paper>
         ))}
       </div>
+      <Button
+        className={classes.deleteCharacter}
+        onClick={() => dispatch(deleteCharacter(character))}
+      >
+        Delete{!screenExtraSmall && " Character"}
+      </Button>
     </Paper>
   ) : null;
 }

@@ -20,9 +20,9 @@ import { data, Acts } from "./constants";
 import {
   addRandomLoot,
   addRandomTrait,
-  completeMission,
   selectActiveCharacter,
   toggleMissionDrawerOpen,
+  updateCharacter,
 } from "./phasmoRPGSlice";
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
@@ -202,8 +202,6 @@ export default function LogMission() {
       randomNumberInRange(0, data.maxItemLootChances.evidence)
     );
 
-    console.log("randomLoot", { junk, objectives, evidence, data });
-
     return [...junk, ...objectives, ...evidence];
   };
 
@@ -225,7 +223,6 @@ export default function LogMission() {
 
     // Do nothing if we have no traits left to choose from
     if (availableTraits.length === 0) {
-      // TODO: reset all traits
       return;
     }
 
@@ -250,18 +247,58 @@ export default function LogMission() {
     );
   };
 
-  const handleMissionComplete = () => {
+  const calculateMissionPoints = (mission) => {
+    const multiplier = mission.difficulty / 10;
+    const basePoints = mission.map.type.pointValue;
+    let objectivePoints = 0;
+
+    for (const objective in mission.objectives) {
+      if (mission.objectives[objective].checked) {
+        objectivePoints += mission.objectives[objective].pointValue;
+      }
+    }
+
+    return (basePoints + objectivePoints) * multiplier;
+  };
+
+  const handleUpdateCharacter = () => {
     const mission = {
       difficulty: missionDifficulty,
       map: missionMap,
       objectives: missionObjectives,
     };
 
-    // Log the mission outcomes
-    dispatch(completeMission(mission));
+    const missionPoints = calculateMissionPoints(mission);
+    const totalPoints = missionPoints + activeCharacter.bankedPoints;
 
+    const nextLockedMap = activeCharacter.maps.find((map) => !map.unlocked);
+
+    const updatedCharacter = {
+      ...activeCharacter,
+      difficulty: missionDifficulty,
+      bankedPoints: totalPoints,
+      maps: activeCharacter.maps.map((map) => ({
+        ...map,
+        unlockable: map.id === nextLockedMap.id && totalPoints >= map.pointCost,
+      })),
+    };
+
+    dispatch(updateCharacter(updatedCharacter));
+
+    dispatch(
+      addAlert({
+        severity: "success",
+        message: `Completed ${missionMap.display} for $${missionPoints}!`,
+      })
+    );
+  };
+
+  const handleMissionComplete = () => {
     // Close the mission log
     dispatch(toggleMissionDrawerOpen());
+
+    // Log the mission outcomes
+    handleUpdateCharacter();
 
     // Randomly acquire 0-1 traits
     handleRandomTrait();

@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import Avatar from "boring-avatars";
 import Button from "@material-ui/core/Button";
+import clsx from 'clsx';
 import Paper from "@material-ui/core/Paper";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
 import { data } from "./constants";
+
 import {
   selectActiveCharacter,
   selectCharacters,
@@ -39,8 +41,12 @@ const useStyles = makeStyles((theme) => ({
       margin: 0,
     },
   },
+  isActive: {
+    border: `2px solid ${theme.palette.text.accent} !important`
+  },
   existingCharacterTile: {
     backgroundColor: theme.palette.background.papercontrast,
+    border: "2px solid transparent",
     padding: theme.spacing(2),
     display: "flex",
     alignContent: "center",
@@ -169,7 +175,13 @@ const CharacterButton = ({ character }) => {
   return (
     <Button className="existingCharacterButton" onClick={() => handleClick()}>
       {character ? (
-        <Paper title={character.name} className={classes.existingCharacterTile} component="span">
+        <Paper
+          title={character.name}
+          className={clsx(classes.existingCharacterTile, {
+            [classes.isActive]: character.isActive,
+          })}
+          component="span"
+        >
           <Avatar
             key={`key_${character.name}`}
             name={character.name}
@@ -196,8 +208,6 @@ export default function PhasmoRPG() {
     <div className={classes.root}>
       {characters.length > 0 && (
         <React.Fragment>
-          {/* <Accent color="accent">Existing Characters</Accent> */}
-
           <div className={classes.existingCharacters}>
             {characters.map((character) => (
               <CharacterButton key={character.id} character={character} />

@@ -36,6 +36,14 @@ export const phasmoRPGSlice = createSlice({
         })),
       }));
     },
+    updateCharacter: (state, action) => {
+      const activeCharacterIndex = state.characters.findIndex((c) => c.isActive);
+
+      state.characters[activeCharacterIndex] = {
+        ...state.characters[activeCharacterIndex],
+        ...action.payload,
+      };
+    },
     addRandomTrait: (state, action) => {
       const activeCharacter = getActiveCharacter(state);
 
@@ -202,6 +210,7 @@ export const {
   toggleMissionDrawerOpen,
   addRandomLoot,
   unlockMap,
+  updateCharacter,
 } = phasmoRPGSlice.actions;
 
 export const selectCharacters = (state) => state.phasmoRPG.characters;

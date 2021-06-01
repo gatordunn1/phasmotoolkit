@@ -2,27 +2,27 @@ const categories = {
   collector: {
     display: "Collector",
     description: "Collects things. All the things.",
-    removalCost: 500,
+    removalCost: 250,
   },
   obsessive: {
     display: "Obsessive",
     description: "Ritualistic, repetitive behaviors.",
-    removalCost: 1500,
+    removalCost: 1250,
   },
   nervous: {
     display: "Nervous",
     description: "Accident-prone, high-strung behaviors.",
-    removalCost: 1000,
+    removalCost: 750,
   },
   reckless: {
     display: "Reckless",
     description: "Impulsive behaviors and tendencies.",
-    removalCost: 2000,
+    removalCost: 1000,
   },
   silly: {
     display: "Silly",
     description: "Silly and ludicrous behaviors",
-    removalCost: 1000,
+    removalCost: 500,
   },
 };
 
