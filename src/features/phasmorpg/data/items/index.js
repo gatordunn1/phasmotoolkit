@@ -43,7 +43,7 @@ const items = [
     display: "Flashlight",
     displayShort: "Light",
     category: categories.starter,
-    type: types.light,
+    type: types.junk,
   },
   {
     display: "Objective Board",
@@ -100,7 +100,7 @@ const items = [
     type: types.photos,
   },
   {
-    display: "Candle",
+    display: "Candle + Lighter",
     displayShort: "Candle",
     category: categories.store,
     type: types.light,
@@ -160,7 +160,7 @@ const items = [
     type: types.tools,
   },
   {
-    display: "Smudge Sticks",
+    display: "Smudge Sticks + Lighter",
     displayShort: "Smudge",
     category: categories.store,
     type: types.objectives,

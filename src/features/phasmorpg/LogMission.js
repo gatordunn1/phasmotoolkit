@@ -191,8 +191,8 @@ export default function LogMission() {
 
   const getRandomLoot = () => {
     const junk = randomizeArray(data.items.filter((item) => item.type.id === "junk")).slice(
-      1,
-      randomNumberInRange(0, data.maxItemLootChances.junk)
+      0,
+      randomNumberInRange(1, data.maxItemLootChances.junk)
     );
     const objectives = randomizeArray(
       data.items.filter((item) => item.type.id === "objectives")
@@ -202,18 +202,21 @@ export default function LogMission() {
       randomNumberInRange(0, data.maxItemLootChances.evidence)
     );
 
+    console.log("randomLoot", { junk, objectives, evidence, data });
+
     return [...junk, ...objectives, ...evidence];
   };
 
-  const handleMissionComplete = () => {
-    const mission = {
-      difficulty: missionDifficulty,
-      map: missionMap,
-      objectives: missionObjectives,
-    };
+  const handleRandomTrait = () => {
+    // Flip a weighted coin to decide if we even get a trait this time
+    const acquiredTrait = Math.random() < 0.3;
 
-    dispatch(completeMission(mission));
-    dispatch(toggleMissionDrawerOpen());
+    // Stop here if we didn't get a trait this time
+    if (!acquiredTrait) {
+      return dispatch(
+        addAlert({ severity: "success", message: "Successfully avoided acquiring new trait!" })
+      );
+    }
 
     // Figure out what traits we have left
     const availableTraits = data.traits.filter(
@@ -222,7 +225,8 @@ export default function LogMission() {
 
     // Do nothing if we have no traits left to choose from
     if (availableTraits.length === 0) {
-      return dispatch(addAlert({ severity: "error", message: "No traits remaining!" }));
+      // TODO: reset all traits
+      return;
     }
 
     // Otherwise get a random trait from what's left
@@ -231,7 +235,9 @@ export default function LogMission() {
     dispatch(addRandomTrait(randomTrait));
 
     dispatch(addAlert({ severity: "warning", message: `Added Trait: ${randomTrait.display}` }));
+  };
 
+  const handleRandomLoot = () => {
     const randomLoot = getRandomLoot();
 
     dispatch(addRandomLoot(randomLoot));
@@ -242,6 +248,26 @@ export default function LogMission() {
         message: `Found ${randomLoot.length} ${randomLoot.length === 1 ? "item" : "items"}`,
       })
     );
+  };
+
+  const handleMissionComplete = () => {
+    const mission = {
+      difficulty: missionDifficulty,
+      map: missionMap,
+      objectives: missionObjectives,
+    };
+
+    // Log the mission outcomes
+    dispatch(completeMission(mission));
+
+    // Close the mission log
+    dispatch(toggleMissionDrawerOpen());
+
+    // Randomly acquire 0-1 traits
+    handleRandomTrait();
+
+    // Randomly acquire 1-many loot items
+    handleRandomLoot();
   };
 
   const difficultyOptions = [

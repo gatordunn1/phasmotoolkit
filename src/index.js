@@ -10,7 +10,7 @@ import { LOCAL_STORAGE_KEY } from "./constants";
 import { store } from "./app/store";
 import * as serviceWorker from "./serviceWorker";
 import App from "./App";
-import semver from 'semver';
+import semver from "semver";
 
 import "./index.css";
 import * as pkgJson from "../package.json";
@@ -29,9 +29,16 @@ const getAppStateFromLocalStorage = () => {
     const persistedState = localStorage.getItem(LOCAL_STORAGE_KEY);
     if (persistedState) {
       const parsed = JSON.parse(persistedState);
+      const prevMajor = semver.major(parsed.version);
+      const prevMinor = semver.minor(parsed.version);
+      const currentMinor = semver.minor(pkgJson.version);
+      const currentMajor = semver.major(pkgJson.version);
 
-      // Force expire for previous versions
-      if (parsed.version !== pkgJson.version) {
+      // Force expire for major/minor version but not for patch versions
+      if (
+        currentMajor > prevMajor ||
+        (currentMajor === prevMajor && currentMinor > prevMinor)
+      ) {
         initAlerts.push({
           severity: "error",
           message: `(App Reset) Upgraded to new version: ${parsed.version} => ${pkgJson.version}`,

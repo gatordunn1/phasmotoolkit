@@ -125,10 +125,14 @@ const useStyles = makeStyles((theme) => ({
   mapButton: {
     border: "2px solid transparent",
     fontFamily: "Indie Flower; cursive",
-    fontSize: "0.8em",
+    fontSize: "0.9em",
     display: "grid",
     justifyContent: "stretch",
     gridTemplateColumns: "1fr",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "0.6em",
+
+    },
   },
   mapButtonUnlocked: {
     backgroundColor: theme.palette.success.dark,
@@ -322,7 +326,7 @@ export default function CharacterPreview() {
                       ) : (
                         <LockIcon />
                       )}
-                      {map.display} {!map.unlocked && <span>{map.pointCost}</span>}
+                      {map.display} {!map.unlocked && <Readable>-${map.pointCost}</Readable>}
                       <span className={classes.mapIcon}>{data.iconMapMap[map.id]}</span>
                     </span>
                     {nextIndex && (

@@ -8,10 +8,11 @@ import Button from "@material-ui/core/Button";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React from "react";
 import Typography from "@material-ui/core/Typography";
-
+import Switch from "@material-ui/core/Switch";
 import { data } from "./constants";
 import { buyItem, sellItem, selectActiveCharacter } from "./phasmoRPGSlice";
 import Readable from "../../common/Readable";
+import { addAlert } from "../../appSlice";
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -33,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightRegular,
   },
   characterTraitsDetails: {
-    fontSize: "0.6em",
     display: "grid",
     gridTemplateColumns: "1fr auto",
     alignItems: "center",
@@ -41,6 +41,12 @@ const useStyles = makeStyles((theme) => ({
     justifyItems: "space-between",
     justifyContent: "space-between",
     textAlign: "left",
+    "& > span": {
+      fontSize: "0.8em",
+      [theme.breakpoints.up("md")]: {
+        fontSize: "0.7em !important",
+      },
+    },
   },
   buyItem: {
     color: theme.palette.error.main,
@@ -50,6 +56,10 @@ const useStyles = makeStyles((theme) => ({
   },
   toggleStoreMode: {
     textTransform: "uppercase",
+    fontSize: "0.6em",
+    [theme.breakpoints.up("md")]: {
+      fontSize: "0.4em",
+    },
   },
   itemTypeJunk: {
     color: theme.palette.text.disabled,
@@ -70,17 +80,21 @@ const useStyles = makeStyles((theme) => ({
       alignSelf: "center",
       color: theme.palette.text.secondary,
       fontWeight: "bold",
-    }
+    },
   },
   flipAnimation: {
-    webkitAnimation:
-      "flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both",
-    animation:
-      "flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both",
+    webkitAnimation: "flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both",
+    animation: "flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both",
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(1, 1, 1, 1),
+    padding: theme.spacing(0.5, 1, 0, 1),
     borderRadius: theme.spacing(0.5),
     margin: theme.spacing(1, 0, 0, 0),
+  },
+  storeButtons: {
+    display: "flex",
+    "& > *": {
+      alignSelf: "center",
+    },
   },
 }));
 
@@ -91,6 +105,23 @@ export default function Equipment() {
   const [storeMode, setStoreMode] = React.useState("sell");
 
   const handleStoreModeToggle = () => setStoreMode((prev) => (prev === "sell" ? "buy" : "sell"));
+  const handleSellJunk = () => {
+    const junk = character.items.filter((item) => item.type.id === "junk");
+    if (junk.length > 0) {
+      let totalValue = 0;
+      for (const item of junk) {
+        totalValue += item.type.pointValues.sell;
+        dispatch(sellItem(item));
+      }
+
+      dispatch(
+        addAlert({
+          severity: "success",
+          message: `Sold ${junk.length} junk items for $${totalValue}`,
+        })
+      );
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -105,16 +136,28 @@ export default function Equipment() {
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetails}>
           <div className={classes.storeHeader}>
-            <Typography component="span" className={classes.heading}>
-              {storeMode === "sell" ? "Inventory" : "Store"} Items
-            </Typography>
-            <Button
-              variant="text"
-              className={classes.toggleStoreMode}
-              onClick={() => handleStoreModeToggle()}
-            >
-              Show {storeMode === "sell" ? "Store" : "Inventory"}
-            </Button>
+            <span className={classes.storeButtons}>
+              <Readable className={classes.toggleStoreMode}>
+                Inventory
+                <Switch
+                  checked={storeMode === "buy"}
+                  onChange={handleStoreModeToggle}
+                  name="storeMode"
+                  inputProps={{ "aria-label": "store inventory checkbox" }}
+                  color="default"
+                />
+                Store
+              </Readable>
+            </span>
+            {storeMode === "sell" && (
+              <Button
+                variant="text"
+                className={classes.toggleStoreMode}
+                onClick={() => handleSellJunk()}
+              >
+                Sell Junk
+              </Button>
+            )}
           </div>
           {storeMode === "sell" ? (
             <div key="inventory_items" className={classes.flipAnimation}>
@@ -148,6 +191,7 @@ export default function Equipment() {
                 .filter((item) =>
                   ["evidence", "objectives", "light", "junk"].includes(item.type.id)
                 )
+                .sort((a, b) => b.type.pointValues.buy - a.type.pointValues.buy)
                 .map((item, index) => (
                   <div
                     className={classes.characterTraitsDetails}

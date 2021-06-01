@@ -162,7 +162,10 @@ export default function SiteMenu() {
     {
       id: "togglePhasmoRPG",
       display: "PhasmoRPG",
-      onClick: () => dispatch(togglePhasmoRPG()),
+      onClick: () => {
+        setState({ ...state, right: false });
+        dispatch(togglePhasmoRPG());
+      },
       icon: <SupervisedUserCircleIcon />,
     },
   ];
