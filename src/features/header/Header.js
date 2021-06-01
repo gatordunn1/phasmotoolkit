@@ -5,6 +5,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import {
   selectFirstname,
@@ -21,7 +22,6 @@ import IconButton from "../../common/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    margin: theme.spacing(1),
     color: theme.palette.text.primary,
     "&:hover": {
       backgroundColor: "transparent",
@@ -37,11 +37,12 @@ const useStyles = makeStyles((theme) => ({
   },
   container: {
     fontSize: "1.0em",
-    display: "flex",
-    justifyContent: "space-between",
-    margin: "0 0 10px 0",
+    display: "grid",
+    gridTemplateColumns: "auto 1fr auto",
+    margin: theme.spacing(0, 0, 0.5, 0),
     width: "100vw",
-    padding: "0 10px 0 10px",
+    maxHeight: theme.spacing(8),
+    padding: theme.spacing(0.5, 0, 0.5, 0),
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
     "& > span ": {
@@ -52,9 +53,8 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "5px",
     display: "flex",
     alignContent: "center",
-    justifyContent: "space-evenly",
     cursor: "pointer",
-    width: "10em",
+    margin: 0,
     backgroundColor: theme.palette.info.dark,
     "&:hover": {
       color: theme.palette.error.main,
@@ -66,6 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
   menu: {
     justifySelf: "flex-end",
+    paddingRight: theme.spacing(2),
   },
   reset: {
     marginLeft: "10px",
@@ -79,6 +80,22 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.text.disabled,
     },
   },
+  appName: {
+    minWidth: "165px",
+  },
+  existingCharacters: {
+    display: "flex",
+    gap: theme.spacing(1),
+    justifyContent: "center",
+    padding: theme.spacing(2),
+    width: "95vw",
+    borderRadius: "5px",
+    alignContent: "center",
+    "& > .existingCharacterButton": {
+      padding: 0,
+      margin: 0,
+    },
+  },
 }));
 
 export default function Header() {
@@ -88,6 +105,7 @@ export default function Header() {
   const lastname = useSelector(selectLastname);
   const isVisible = useSelector(selectIsVisible);
   const views = useSelector(selectViews);
+  const screenExtraSmall = useMediaQuery((theme) => theme.breakpoints.only("xs"));
 
   const handleTogglePhasmoRPG = () => {
     dispatch(togglePhasmoRPG());
@@ -95,12 +113,9 @@ export default function Header() {
 
   return (
     <Paper square className={classes.container} component="h1">
-      <span>
+      <span className={classes.appName}>
         {views.phasmorpg ? (
           <React.Fragment>
-            <Accent size="0.8em" color="primary">
-              Phasmo RPG
-            </Accent>
             <IconButton
               onClick={() => handleTogglePhasmoRPG()}
               aria-label="Toggle Phasmo RPG"
@@ -109,9 +124,24 @@ export default function Header() {
             >
               <SupervisedUserCircleIcon />
             </IconButton>
+            <Accent size="0.8em" color="primary">
+              Phasmo RPG
+            </Accent>
           </React.Fragment>
         ) : (
-          <span className={classes.title}>PhasmoKit</span>
+          <React.Fragment>
+            <IconButton
+              onClick={() => handleTogglePhasmoRPG()}
+              aria-label="Toggle Phasmo RPG"
+              title="Toggle Phasmo RPG"
+              className={classes.toggleAppButton}
+            >
+              <SupervisedUserCircleIcon />
+            </IconButton>
+            <Accent size="0.8em" color="primary">
+              {screenExtraSmall ? "PhasmoKit" : "Phasmo Toolkit"}
+            </Accent>
+          </React.Fragment>
         )}
       </span>
       <React.Fragment>
@@ -135,7 +165,6 @@ export default function Header() {
           </React.Fragment>
         )}
       </React.Fragment>
-
       <span className={classes.menu}>
         <SiteMenu />
       </span>

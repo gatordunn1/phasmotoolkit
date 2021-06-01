@@ -1,7 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import AccountBalanceIcon from "@material-ui/icons/AccountBalance";
-import Avatar from "boring-avatars";
 import Button from "@material-ui/core/Button";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
@@ -9,8 +7,8 @@ import LockIcon from "@material-ui/icons/Lock";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
 import Xarrow from "react-xarrows";
+import CharacterSelect from './CharacterSelect'
 
 import { addAlert } from "../../appSlice";
 import { data, Acts } from "./constants";
@@ -198,6 +196,8 @@ const useStyles = makeStyles((theme) => ({
   logMission: {
     fontSize: "0.8em",
     color: theme.palette.text.accent,
+    padding: 0,
+    margin: 0,
   },
 }));
 
@@ -205,7 +205,6 @@ const CharacterButtons = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const missionDrawerOpen = useSelector(selectMissionDrawerOpen);
-  const screenExtraSmall = useMediaQuery((theme) => theme.breakpoints.only("xs"));
   const character = useSelector(selectActiveCharacter);
 
   return (
@@ -217,7 +216,7 @@ const CharacterButtons = () => {
               className={classes.logMission}
               onClick={() => dispatch(toggleMissionDrawerOpen())}
             >
-              Log{!screenExtraSmall && " Mission"}
+              Log Mission
             </Button>
           </React.Fragment>
         </div>
@@ -238,7 +237,6 @@ export default function CharacterPreview() {
   const dispatch = useDispatch();
   const character = useSelector(selectActiveCharacter);
   const [actsByMap, setActsByMap] = React.useState();
-  const screenExtraSmall = useMediaQuery((theme) => theme.breakpoints.only("xs"));
 
   React.useEffect(() => {
     if (character) {
@@ -285,7 +283,7 @@ export default function CharacterPreview() {
       <div className={classes.characterSheetHeader}>
         <div className={classes.characterIcons}>
         <span>
-          {character.name}
+          <CharacterSelect />
         </span>
           <Readable className={classes.characterMoney}>
             <span className={classes.bankedPoints}>${character.bankedPoints}</span>
@@ -354,7 +352,7 @@ export default function CharacterPreview() {
         className={classes.deleteCharacter}
         onClick={() => dispatch(deleteCharacter(character))}
       >
-        Delete{!screenExtraSmall && " Character"}
+        Delete Character
       </Button>
     </Paper>
   ) : null;

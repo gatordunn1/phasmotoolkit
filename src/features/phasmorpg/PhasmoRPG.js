@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import Avatar from "boring-avatars";
 import Button from "@material-ui/core/Button";
-import clsx from 'clsx';
+import clsx from "clsx";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
@@ -20,6 +20,7 @@ import {
 import CharacterPreview from "./CharacterPreview";
 
 const useStyles = makeStyles((theme) => ({
+  avatar: {},
   characterCreator: {
     display: "grid",
     gridTemplateColumns: "1fr",
@@ -27,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
   createCharacter: {
     width: 200,
     justifySelf: "center",
+  },
+  cancelButton: {
+    color: theme.palette.error.main,
   },
   existingCharacters: {
     display: "flex",
@@ -42,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   isActive: {
-    border: `2px solid ${theme.palette.text.accent} !important`
+    border: `2px solid ${theme.palette.text.accent} !important`,
   },
   existingCharacterTile: {
     backgroundColor: theme.palette.background.papercontrast,
@@ -70,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
     width: "350px",
   },
   root: {
-    margin: theme.spacing(2),
+    margin: theme.spacing(0, 1, 0, 1),
   },
 }));
 
@@ -92,6 +96,7 @@ const getRandomChunkFromRange = (start, end, splitBy) => {
 const CreateCharacter = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const characters = useSelector(selectCharacters);
   const [characterName, setCharacterName] = React.useState("");
 
   const handleKeyUp = debounce((e) => {
@@ -157,15 +162,20 @@ const CreateCharacter = () => {
         variant="standard"
         onKeyUp={handleKeyUp}
       />
-      <Button className={classes.createCharacter} onClick={() => handleClick()}>
-        Create Character
-      </Button>
+      <span>
+        <Button className={classes.createCharacter} onClick={() => handleClick()}>
+          Create Character
+        </Button>
+        <Button className={classes.cancelButton} onClick={() => dispatch(setCharacterActive(characters[0].id))}>
+          Cancel
+        </Button>
+      </span>
       <CharacterPreview />
     </div>
   );
 };
 
-const CharacterButton = ({ character }) => {
+export const CharacterButton = ({ character }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -186,6 +196,7 @@ const CharacterButton = ({ character }) => {
             key={`key_${character.name}`}
             name={character.name}
             variant="beam"
+            size="25px"
             colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
             className={classes.avatar}
           />
@@ -201,22 +212,10 @@ const CharacterButton = ({ character }) => {
 
 export default function PhasmoRPG() {
   const classes = useStyles();
-  const characters = useSelector(selectCharacters);
   const activeCharacter = useSelector(selectActiveCharacter);
 
   return (
     <div className={classes.root}>
-      {characters.length > 0 && (
-        <React.Fragment>
-          <div className={classes.existingCharacters}>
-            {characters.map((character) => (
-              <CharacterButton key={character.id} character={character} />
-            ))}
-            <CharacterButton />
-          </div>
-        </React.Fragment>
-      )}
-
       {activeCharacter ? <CharacterPreview /> : <CreateCharacter />}
     </div>
   );

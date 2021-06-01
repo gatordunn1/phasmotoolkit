@@ -218,16 +218,18 @@ export default function SiteMenu() {
 
   return (
     <div className={classes.root}>
-      <span
-        title="Clear Evidence"
-        onClick={clearEvidence}
-        className={clsx({
-          [classes.clearActive]: evidenceIsPristine,
-          [classes.clearInactive]: !evidenceIsPristine,
-        })}
-      >
-        <Icon path={mdiMagnifyClose} size={1} />
-      </span>
+      {views.evidence && (
+        <span
+          title="Clear Evidence"
+          onClick={clearEvidence}
+          className={clsx({
+            [classes.clearActive]: evidenceIsPristine,
+            [classes.clearInactive]: !evidenceIsPristine,
+          })}
+        >
+          <Icon path={mdiMagnifyClose} size={1} />
+        </span>
+      )}
       <IconButton
         className={classes.menu}
         color="default"

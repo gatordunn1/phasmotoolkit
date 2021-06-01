@@ -7,6 +7,7 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Icon from "@mdi/react";
 import React from "react";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 
 import Readable from "../../common/Readable";
 
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "space-between",
-    margin: "10px 0 15px 0",
+    margin: 0,
     backgroundColor: theme.palette.primary.dark,
     color: theme.palette.text.primary,
     "& > span ": {
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(1, 0, 0, 0),
     color: theme.palette.text.primary,
     "&:hover": {
       background: "none",
@@ -136,6 +137,7 @@ export default function GhostNameMenu() {
   const isVisible = useSelector(selectIsVisible);
   const instructions = useSelector(selectInstructions);
   const ghostNameViews = useSelector(selectGhostNameViews);
+  const screenExtraSmall = useMediaQuery((theme) => theme.breakpoints.only("xs"));
 
   const [drawerOpen, setDrawerOpen] = React.useState(false);
 
@@ -180,7 +182,7 @@ export default function GhostNameMenu() {
           startIcon={<Icon aria-hidden={true} path={mdiGhost} title="Ghost Name" size={1} />}
           onClick={() => setDrawerOpen(!drawerOpen)}
         >
-          <Readable>Set Name</Readable>
+          <Readable>{screenExtraSmall ? "Name" : "Set Name"}</Readable>
         </Button>
         {isVisible && (
           <Drawer anchor={"left"} open={drawerOpen} variant="persistent">

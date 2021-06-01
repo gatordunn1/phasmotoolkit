@@ -3,7 +3,7 @@ export const palettes = {
     palette: {
       type: "dark",
       action: {
-        hover: "#ffb627",
+        hover: "#15527a",
       },
       primary: {
         main: "#0582ca",
