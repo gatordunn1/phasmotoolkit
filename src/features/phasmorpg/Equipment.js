@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accordionSummary: {
     "&:hover": {
-      color: theme.palette.text.accent,
+      color: `${theme.palette.text.secondary} !important`,
     },
   },
   root: {
@@ -33,7 +33,11 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.pxToRem(15),
     fontWeight: theme.typography.fontWeightRegular,
   },
+  hasHQLoot: {
+    color: theme.palette.text.accent,
+  },
   characterTraitsDetails: {
+    paddingLeft: theme.spacing(1),
     display: "grid",
     gridTemplateColumns: "1fr auto",
     alignItems: "center",
@@ -55,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.success.main,
   },
   toggleStoreMode: {
+    cursor: "pointer",
     textTransform: "uppercase",
     fontSize: "0.6em",
     [theme.breakpoints.up("md")]: {
@@ -65,6 +70,12 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.disabled,
   },
   itemTypeEvidence: {
+    color: theme.palette.text.secondary,
+  },
+  itemTypeLQLoot: {
+    color: theme.palette.success.dark,
+  },
+  itemTypeHQLoot: {
     color: theme.palette.text.accent,
   },
   itemTypeObjectives: {
@@ -82,6 +93,9 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: "bold",
     },
   },
+  storeModeSelected: {
+    color: theme.palette.secondary.light,
+  },
   flipAnimation: {
     webkitAnimation: "flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both",
     animation: "flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both",
@@ -89,6 +103,9 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0.5, 1, 0, 1),
     borderRadius: theme.spacing(0.5),
     margin: theme.spacing(1, 0, 0, 0),
+  },
+  sellLootHover: {
+    backgroundColor: `${theme.palette.action.disabledBackground} !important`,
   },
   storeButtons: {
     display: "flex",
@@ -103,31 +120,37 @@ export default function Equipment() {
   const dispatch = useDispatch();
   const character = useSelector(selectActiveCharacter);
   const [storeMode, setStoreMode] = React.useState("sell");
+  const [sellLootHover, setSellLootHover] = React.useState(false);
 
   const handleStoreModeToggle = () => setStoreMode((prev) => (prev === "sell" ? "buy" : "sell"));
   const handleSellJunk = () => {
-    const junk = character.items.filter((item) => item.type.id === "junk");
+    const junk = character.items.filter((item) => ["junk", "lqloot", "hqloot"].includes(item.type));
     if (junk.length > 0) {
       let totalValue = 0;
       for (const item of junk) {
-        totalValue += item.type.pointValues.sell;
+        totalValue += item.pointValues.sell;
         dispatch(sellItem(item));
       }
 
       dispatch(
         addAlert({
           severity: "success",
-          message: `Sold ${junk.length} junk items for $${totalValue}`,
+          message: `Sold ${junk.length} loot items for $${totalValue}`,
         })
       );
     }
   };
 
+  const characterHasHQLoot = React.useMemo(
+    () => character.items.find((item) => item.type === "hqloot"),
+    [character]
+  );
+
   return (
     <div className={classes.root}>
       <Accordion className={classes.accordion}>
         <AccordionSummary
-          className={classes.accordionSummary}
+          className={clsx(classes.accordionSummary, { [classes.hasHQLoot]: characterHasHQLoot })}
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
           id="panel1a-header"
@@ -137,25 +160,27 @@ export default function Equipment() {
         <AccordionDetails className={classes.accordionDetails}>
           <div className={classes.storeHeader}>
             <span className={classes.storeButtons}>
-              <Readable className={classes.toggleStoreMode}>
-                Inventory
+              <Readable onClick={handleStoreModeToggle} className={classes.toggleStoreMode}>
+                <span className={clsx({[classes.storeModeSelected]: storeMode === "sell"})}>Inventory</span>
                 <Switch
                   checked={storeMode === "buy"}
-                  onChange={handleStoreModeToggle}
                   name="storeMode"
                   inputProps={{ "aria-label": "store inventory checkbox" }}
                   color="default"
                 />
-                Store
+                
+                <span className={clsx({[classes.storeModeSelected]: storeMode === "buy"})}>Store</span>
               </Readable>
             </span>
             {storeMode === "sell" && (
               <Button
+                onMouseEnter={() => setSellLootHover(true)}
+                onMouseLeave={() => setSellLootHover(false)}
                 variant="text"
                 className={classes.toggleStoreMode}
                 onClick={() => handleSellJunk()}
               >
-                Sell Junk
+                Sell Loot
               </Button>
             )}
           </div>
@@ -163,14 +188,19 @@ export default function Equipment() {
             <div key="inventory_items" className={classes.flipAnimation}>
               {character.items.map((item, index) => (
                 <div
-                  className={classes.characterTraitsDetails}
                   key={`${character.id}_owned_${item.id}_${index}`}
+                  className={clsx(classes.characterTraitsDetails, {
+                    [classes.sellLootHover]:
+                      ["junk", "hqloot", "lqloot"].includes(item.type) && sellLootHover,
+                  })}
                 >
                   <Readable
                     className={clsx({
-                      [classes.itemTypeJunk]: item.type.id === "junk",
-                      [classes.itemTypeEvidence]: item.type.id === "evidence",
-                      [classes.itemTypeObjectives]: item.type.id === "objectives",
+                      [classes.itemTypeJunk]: item.type === "junk",
+                      [classes.itemTypeLQLoot]: item.type === "lqloot",
+                      [classes.itemTypeHQLoot]: item.type === "hqloot",
+                      [classes.itemTypeEvidence]: item.type === "evidence",
+                      [classes.itemTypeObjectives]: item.type === "objectives",
                     })}
                   >
                     {item.display}
@@ -180,7 +210,7 @@ export default function Equipment() {
                     className={classes.sellItem}
                     variant="text"
                   >
-                    +${item.type.pointValues.sell}
+                    +${item.pointValues.sell}
                   </Button>
                 </div>
               ))}
@@ -188,10 +218,12 @@ export default function Equipment() {
           ) : (
             <div key="store_items" className={classes.flipAnimation}>
               {data.items
-                .filter((item) =>
-                  ["evidence", "objectives", "light", "junk"].includes(item.type.id)
+                .filter(
+                  (item) =>
+                    ["evidence", "objectives", "light", "junk"].includes(item.type) &&
+                    !character.items.find((i) => i.display === item.display)
                 )
-                .sort((a, b) => b.type.pointValues.buy - a.type.pointValues.buy)
+                .sort((a, b) => b.pointValues.buy - a.pointValues.buy)
                 .map((item, index) => (
                   <div
                     className={classes.characterTraitsDetails}
@@ -199,20 +231,20 @@ export default function Equipment() {
                   >
                     <Readable
                       className={clsx({
-                        [classes.itemTypeJunk]: item.type.id === "junk",
-                        [classes.itemTypeEvidence]: item.type.id === "evidence",
-                        [classes.itemTypeObjectives]: item.type.id === "objectives",
+                        [classes.itemTypeJunk]: item.type === "junk",
+                        [classes.itemTypeEvidence]: item.type === "evidence",
+                        [classes.itemTypeObjectives]: item.type === "objectives",
                       })}
                     >
                       {item.display}
                     </Readable>
                     <Button
-                      disabled={character.bankedPoints < item.type.pointValues.buy}
+                      disabled={character.bankedPoints < item.pointValues.buy}
                       onClick={() => dispatch(buyItem(item))}
                       className={classes.buyItem}
                       variant="text"
                     >
-                      -${item.type.pointValues.buy}
+                      -${item.pointValues.buy}
                     </Button>
                   </div>
                 ))}

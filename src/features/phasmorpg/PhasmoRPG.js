@@ -166,9 +166,14 @@ const CreateCharacter = () => {
         <Button className={classes.createCharacter} onClick={() => handleClick()}>
           Create Character
         </Button>
-        <Button className={classes.cancelButton} onClick={() => dispatch(setCharacterActive(characters[0].id))}>
-          Cancel
-        </Button>
+        {characters.length > 0 && (
+          <Button
+            className={classes.cancelButton}
+            onClick={() => dispatch(setCharacterActive(characters[0].id))}
+          >
+            Cancel
+          </Button>
+        )}
       </span>
       <CharacterPreview />
     </div>

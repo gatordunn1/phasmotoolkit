@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accordionSummary: {
     "&:hover": {
-      color: theme.palette.text.accent,
+      color: theme.palette.text.secondary,
     }
   },
   root: {

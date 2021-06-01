@@ -6,6 +6,8 @@ const descriptions = {
   light: "Light sources",
   tools: "Items that are useful for general gameplay",
   other: "Everything else!",
+  lqloot: "Low quality loot items to sell for a small amount of cash.",
+  hqloot: "High quality loot items to sell for a large amount of cash.",
 };
 
 export const types = {
@@ -13,6 +15,7 @@ export const types = {
     id: "evidence",
     display: "Evidence",
     description: descriptions.evidence,
+    dropChance: 0.15,
     pointValues: {
       buy: 1000,
       sell: 250,
@@ -22,6 +25,7 @@ export const types = {
     id: "objectives",
     display: "Objectives",
     description: descriptions.objectives,
+    dropChance: 0.15,
     pointValues: {
       buy: 750,
       sell: 250,
@@ -31,6 +35,7 @@ export const types = {
     id: "tools",
     display: "Tools",
     description: descriptions.tools,
+    dropChance: 0.10,
     pointValues: {
       buy: 500,
       sell: 250,
@@ -40,6 +45,7 @@ export const types = {
     id: "light",
     display: "Lights",
     description: descriptions.light,
+    dropChance: 0.5,
     pointValues: {
       buy: 1500,
       sell: 1000,
@@ -49,15 +55,17 @@ export const types = {
     id: "junk",
     display: "Junk",
     description: descriptions.junk,
+    dropChance: 0.55,
     pointValues: {
       buy: 100,
-      sell: 100,
+      sell: 50,
     },
   },
   photos: {
     id: "photos",
     display: "Photos",
     description: descriptions.photos,
+    dropChance: 0.25,
     pointValues: {
       buy: 1000,
       sell: 250,
@@ -67,11 +75,32 @@ export const types = {
     id: "other",
     display: "Other",
     description: descriptions.other,
+    dropChance: 0.25,
     pointValues: {
       buy: 1000,
       sell: 250,
     },
   },
+  lqloot: {
+    id: "lqloot",
+    description: descriptions.lqloot,
+    display: "Low Quality Loot",
+    dropChance: 0.45,
+    pointValues: {
+      buy: 99999,
+      sell: 100,
+    }
+  },
+  hqloot: {
+    id: "hqloot",
+    description: descriptions.hqloot,
+    display: "High Quality Loot",
+    dropChance: 0.30,
+    pointValues: {
+      buy: 99999,
+      sell: 1000,
+    }
+  }
 };
 
 export default types;

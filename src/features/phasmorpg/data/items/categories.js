@@ -22,6 +22,11 @@ const categories = {
   hidden: {
     id: "hidden",
   },
+  loot: {
+    id: "loot",
+    description: "Items taken from the map to sell for money",
+    display: "Loot Items",
+  }
 };
 
 export default categories;

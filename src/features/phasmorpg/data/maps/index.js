@@ -48,56 +48,57 @@ const maps = [
   {
     id: "tanglewood",
     display: "Tanglewood",
-    type: mapTypes.street,
+    type: "street",
     unlocked: false,
     act: "act1",
   },
   {
     id: "edgefield",
     display: "Edgefield",
-    type: mapTypes.street,
+    type: "street",
     act: "act1",
   },
   {
     id: "ridgeview",
     display: "Ridgeview",
-    type: mapTypes.road,
+    type: "road",
     act: "act1",
   },
   {
     id: "grafton",
     display: "Grafton",
-    type: mapTypes.farm,
+    type: "farm",
     act: "act2",
   },
   {
     id: "bleasdale",
     display: "Bleasdale",
-    type: mapTypes.farm,
+    type: "farm",
     act: "act2",
   },
   {
     id: "brownstone",
     display: "High School",
-    type: mapTypes.school,
+    type: "school",
     act: "act2",
   },
   {
     id: "prison",
     display: "Prison",
-    type: mapTypes.institution,
+    type: "institution",
     act: "act3",
   },
   {
     id: "asylum",
     display: "Asylum",
-    type: mapTypes.institution,
+    type: "institution",
     act: "act3",
   },
 ].map((map) => ({
   ...map,
   unlocked: false,
   unlockable: false,
+  pointValue: mapTypes[map.type].pointValue,
 }))
 
 export const mapCategories = {

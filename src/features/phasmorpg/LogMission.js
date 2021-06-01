@@ -172,6 +172,12 @@ export default function LogMission() {
     },
   });
 
+  // Always default to the highest unlocked map
+  React.useEffect(() => {
+    const unlockedMaps = activeCharacter.maps.filter((m) => m.unlocked);
+    setMissionMap(unlockedMaps[unlockedMaps.length - 1]);
+  }, []);
+
   const handleMapChange = (event) => {
     const map = activeCharacter.maps.find((map) => map.id === event.target.value);
     setMissionMap(map);
@@ -190,19 +196,28 @@ export default function LogMission() {
     });
 
   const getRandomLoot = () => {
-    const junk = randomizeArray(data.items.filter((item) => item.type.id === "junk")).slice(
-      0,
-      randomNumberInRange(1, data.maxItemLootChances.junk)
-    );
-    const objectives = randomizeArray(
-      data.items.filter((item) => item.type.id === "objectives")
-    ).slice(0, randomNumberInRange(0, data.maxItemLootChances.objectives));
-    const evidence = randomizeArray(data.items.filter((item) => item.type.id === "evidence")).slice(
-      0,
-      randomNumberInRange(0, data.maxItemLootChances.evidence)
-    );
+    const loot = ["hqloot", "lqloot", "junk"]
+      .reduce(
+        (loot, itemType) => [
+          ...loot,
+          data.items
+            .filter(
+              (item) =>
+                item.type === itemType &&
+                item.allowedMaps.includes(missionMap.id) &&
+                Math.random() < item.dropChance
+            )
+            .slice(1, data.maxItemLootChances[itemType]),
+        ],
+        []
+      )
+      .flat();
 
-    return [...junk, ...objectives, ...evidence];
+    if (loot.find((item) => item.type === "hqloot")) {
+      dispatch(addAlert({ severity: "success", message: "High quality loot found!" }));
+    }
+
+    return loot;
   };
 
   const handleRandomTrait = () => {
@@ -241,7 +256,7 @@ export default function LogMission() {
 
     dispatch(
       addAlert({
-        severity: "success",
+        severity: "info",
         message: `Found ${randomLoot.length} ${randomLoot.length === 1 ? "item" : "items"}`,
       })
     );
@@ -249,7 +264,7 @@ export default function LogMission() {
 
   const calculateMissionPoints = (mission) => {
     const multiplier = mission.difficulty / 10;
-    const basePoints = mission.map.type.pointValue;
+    const basePoints = mission.map.pointValue;
     let objectivePoints = 0;
 
     for (const objective in mission.objectives) {
@@ -279,7 +294,7 @@ export default function LogMission() {
       bankedPoints: totalPoints,
       maps: activeCharacter.maps.map((map) => ({
         ...map,
-        unlockable: map.id === nextLockedMap.id && totalPoints >= map.pointCost,
+        unlockable: nextLockedMap && nextLockedMap.id === map.id && totalPoints >= map.pointCost,
       })),
     };
 
@@ -287,7 +302,7 @@ export default function LogMission() {
 
     dispatch(
       addAlert({
-        severity: "success",
+        severity: "info",
         message: `Completed ${missionMap.display} for $${missionPoints}!`,
       })
     );

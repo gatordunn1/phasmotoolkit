@@ -23,6 +23,7 @@ store.subscribe(() => {
 });
 
 let initAlerts = [];
+let forceReload = false;
 
 const getAppStateFromLocalStorage = () => {
   try {
@@ -35,14 +36,12 @@ const getAppStateFromLocalStorage = () => {
       const currentMajor = semver.major(pkgJson.version);
 
       // Force expire for major/minor version but not for patch versions
-      if (
-        currentMajor > prevMajor ||
-        (currentMajor === prevMajor && currentMinor > prevMinor)
-      ) {
+      if (currentMajor > prevMajor || (currentMajor === prevMajor && currentMinor > prevMinor)) {
         initAlerts.push({
           severity: "error",
           message: `(App Reset) Upgraded to new version: ${parsed.version} => ${pkgJson.version}`,
         });
+        forceReload = true;
         localStorage.removeItem(LOCAL_STORAGE_KEY);
       }
 
@@ -59,16 +58,17 @@ const getAppStateFromLocalStorage = () => {
 
 const appState = getAppStateFromLocalStorage();
 
-if (appState) {
+// Only restore if we didn't have to start over with minor/major bump
+if (appState && !forceReload) {
   store.dispatch(hydrateAppState(appState.app));
   store.dispatch(hydrateJobsState(appState.randomizers.jobs));
   store.dispatch(hydratePhasmoRPGState(appState.phasmoRPG));
+}
 
-  if (initAlerts.length > 0) {
-    initAlerts.forEach((alert) => {
-      store.dispatch(addAlert(alert));
-    });
-  }
+if (initAlerts.length > 0) {
+  initAlerts.forEach((alert) => {
+    store.dispatch(addAlert(alert));
+  });
 }
 
 ReactDOM.render(

@@ -6,13 +6,23 @@ const getActiveCharacter = (state) => state.characters.find((character) => chara
 
 const calculateMissionPoints = (mission) => {
   const multiplier = mission.difficulty / 10;
-  const basePoints = mission.map.type.pointValue;
+  const basePoints = mission.map.pointValue;
   let objectivePoints = 0;
   for (const objective in mission.objectives) {
     objectivePoints += mission.objectives[objective].pointValue;
   }
 
   return (basePoints + objectivePoints) * multiplier;
+};
+
+const getUpdatedMapUnlocks = (state, realBankedPoints) => {
+  const activeCharacter = getActiveCharacter(state);
+  const nextLockedMap = activeCharacter.maps.find((map) => !map.unlocked);
+
+  return activeCharacter.maps.map((map) => ({
+    ...map,
+    unlockable: nextLockedMap && nextLockedMap.id === map.id && realBankedPoints >= map.pointCost,
+  }));
 };
 
 export const phasmoRPGSlice = createSlice({
@@ -67,21 +77,25 @@ export const phasmoRPGSlice = createSlice({
     buyItem: (state, action) => {
       const activeCharacterIndex = state.characters.findIndex((c) => c.isActive);
       const activeCharacter = getActiveCharacter(state);
+      const bankedPoints = activeCharacter.bankedPoints - action.payload.pointValues.buy;
 
       state.characters[activeCharacterIndex] = {
         ...activeCharacter,
-        bankedPoints: activeCharacter.bankedPoints - action.payload.type.pointValues.buy,
+        bankedPoints,
         items: [...activeCharacter.items, action.payload],
+        maps: getUpdatedMapUnlocks(state, bankedPoints),
       };
     },
     sellItem: (state, action) => {
       const activeCharacterIndex = state.characters.findIndex((c) => c.isActive);
       const activeCharacter = getActiveCharacter(state);
+      const bankedPoints = activeCharacter.bankedPoints + action.payload.pointValues.sell;
 
       state.characters[activeCharacterIndex] = {
         ...activeCharacter,
-        bankedPoints: activeCharacter.bankedPoints + action.payload.type.pointValues.sell,
+        bankedPoints,
         items: activeCharacter.items.filter((item) => item.id !== action.payload.id),
+        maps: getUpdatedMapUnlocks(state, bankedPoints),
       };
     },
     removeTrait: (state, action) => {
