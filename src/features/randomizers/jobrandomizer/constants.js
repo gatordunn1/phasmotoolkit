@@ -9,7 +9,7 @@ export const randomizerSections = [
   },
   {
     id: "light",
-    display: "Light Source",
+    display: "Lights",
     iconPath: mdiFlashlight,
   },
   {
