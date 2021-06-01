@@ -58,7 +58,7 @@ export const types = {
     dropChance: 0.55,
     pointValues: {
       buy: 100,
-      sell: 50,
+      sell: 100,
     },
   },
   photos: {
@@ -88,7 +88,7 @@ export const types = {
     dropChance: 0.45,
     pointValues: {
       buy: 99999,
-      sell: 100,
+      sell: 25,
     }
   },
   hqloot: {
@@ -98,7 +98,7 @@ export const types = {
     dropChance: 0.30,
     pointValues: {
       buy: 99999,
-      sell: 1000,
+      sell: 250,
     }
   }
 };

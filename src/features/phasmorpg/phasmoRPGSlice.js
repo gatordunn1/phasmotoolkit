@@ -232,5 +232,6 @@ export const selectActiveCharacter = (state) =>
   state.phasmoRPG.characters.find((character) => character.isActive);
 
 export const selectMissionDrawerOpen = (state) => state.phasmoRPG.missionDrawerOpen;
+export const selectHasActiveCharacter = (state) => state.phasmoRPG.characters.filter((c) => c.isActive).length > 0;
 
 export default phasmoRPGSlice.reducer;

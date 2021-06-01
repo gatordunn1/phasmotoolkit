@@ -1,6 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import Button from "@material-ui/core/Button";
+import clsx from "clsx";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
@@ -19,6 +20,7 @@ import Readable from "../../common/Readable";
 import Accent from "../../common/Accent";
 import { selectViews, togglePhasmoRPG } from "../../appSlice";
 import IconButton from "../../common/IconButton";
+import { selectHasActiveCharacter, toggleMissionDrawerOpen } from "../phasmorpg/phasmoRPGSlice";
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -38,15 +40,29 @@ const useStyles = makeStyles((theme) => ({
   container: {
     fontSize: "1.0em",
     display: "grid",
-    gridTemplateColumns: "auto 1fr auto",
+    gridTemplateColumns: "1fr auto 1fr",
     margin: theme.spacing(0, 0, 0.5, 0),
     width: "100vw",
     maxHeight: theme.spacing(8),
-    padding: theme.spacing(0.5, 0, 0.5, 0),
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.text.primary,
     "& > span ": {
       alignSelf: "center",
+      textAlign: "left",
+    },
+  },
+  containerRPG: {
+    fontSize: "1.0em",
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr 1fr",
+    justifyContent: "space-between",
+    margin: theme.spacing(0, 0, 0.5, 0),
+    width: "100vw",
+    backgroundColor: theme.palette.background.paper,
+    color: theme.palette.text.primary,
+    "& > span ": {
+      alignSelf: "center",
+      textAlign: "left",
     },
   },
   ghostname: {
@@ -64,9 +80,10 @@ const useStyles = makeStyles((theme) => ({
     float: "right",
     alignSelf: "center",
   },
-  menu: {
-    justifySelf: "flex-end",
-    paddingRight: theme.spacing(2),
+  logMission: {
+    padding: theme.spacing(0, 1, 0, 1),
+    margin: 0,
+    color: theme.palette.text.accent,
   },
   reset: {
     marginLeft: "10px",
@@ -80,21 +97,16 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.text.disabled,
     },
   },
+  menu: {
+    justifySelf: "flex-end",
+    paddingRight: theme.spacing(2),
+  },
   appName: {
     minWidth: "165px",
+    justifySelf: "flex-start",
   },
-  existingCharacters: {
-    display: "flex",
-    gap: theme.spacing(1),
-    justifyContent: "center",
-    padding: theme.spacing(2),
-    width: "95vw",
-    borderRadius: "5px",
-    alignContent: "center",
-    "& > .existingCharacterButton": {
-      padding: 0,
-      margin: 0,
-    },
+  buttonBar: {
+    justifySelf: "center",
   },
 }));
 
@@ -105,6 +117,7 @@ export default function Header() {
   const lastname = useSelector(selectLastname);
   const isVisible = useSelector(selectIsVisible);
   const views = useSelector(selectViews);
+  const hasActiveCharacter = useSelector(selectHasActiveCharacter)
   const screenExtraSmall = useMediaQuery((theme) => theme.breakpoints.only("xs"));
 
   const handleTogglePhasmoRPG = () => {
@@ -112,7 +125,14 @@ export default function Header() {
   };
 
   return (
-    <Paper square className={classes.container} component="h1">
+    <Paper
+      square
+      className={clsx({
+        [classes.container]: !views.phasmorpg,
+        [classes.containerRPG]: views.phasmorpg,
+      })}
+      component="h1"
+    >
       <span className={classes.appName}>
         {views.phasmorpg ? (
           <React.Fragment>
@@ -144,7 +164,7 @@ export default function Header() {
           </React.Fragment>
         )}
       </span>
-      <React.Fragment>
+      <span className={classes.buttonBar}>
         {views.evidence && (
           <React.Fragment>
             {!isVisible ? (
@@ -164,7 +184,16 @@ export default function Header() {
             )}
           </React.Fragment>
         )}
-      </React.Fragment>
+        {views.phasmorpg && hasActiveCharacter && (
+          <Button
+            className={classes.logMission}
+            onClick={() => dispatch(toggleMissionDrawerOpen())}
+            variant="outlined"
+          >
+            Log Mission
+          </Button>
+        )}
+      </span>
       <span className={classes.menu}>
         <SiteMenu />
       </span>

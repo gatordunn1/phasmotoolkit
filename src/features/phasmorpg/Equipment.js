@@ -124,7 +124,7 @@ export default function Equipment() {
 
   const handleStoreModeToggle = () => setStoreMode((prev) => (prev === "sell" ? "buy" : "sell"));
   const handleSellJunk = () => {
-    const junk = character.items.filter((item) => ["junk", "lqloot", "hqloot"].includes(item.type));
+    const junk = character.items.filter((item) => ["lqloot", "hqloot"].includes(item.type));
     if (junk.length > 0) {
       let totalValue = 0;
       for (const item of junk) {
@@ -191,7 +191,7 @@ export default function Equipment() {
                   key={`${character.id}_owned_${item.id}_${index}`}
                   className={clsx(classes.characterTraitsDetails, {
                     [classes.sellLootHover]:
-                      ["junk", "hqloot", "lqloot"].includes(item.type) && sellLootHover,
+                      ["hqloot", "lqloot"].includes(item.type) && sellLootHover,
                   })}
                 >
                   <Readable

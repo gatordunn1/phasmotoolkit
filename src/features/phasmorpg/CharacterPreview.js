@@ -8,7 +8,7 @@ import LockOpenIcon from "@material-ui/icons/LockOpen";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
 import Xarrow from "react-xarrows";
-import CharacterSelect from './CharacterSelect'
+import CharacterSelect from "./CharacterSelect";
 
 import { addAlert } from "../../appSlice";
 import { data, Acts } from "./constants";
@@ -175,7 +175,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     gap: theme.spacing(1.5),
     justifyContent: "center",
-    margin: theme.spacing(1.5),
   },
   deleteCharacter: {
     margin: theme.spacing(2, 0, 0, 0),
@@ -193,49 +192,13 @@ const useStyles = makeStyles((theme) => ({
   removeTrait: {
     color: theme.palette.error.main,
   },
-  logMission: {
-    fontSize: "0.8em",
-    color: theme.palette.text.accent,
-    padding: 0,
-    margin: 0,
-  },
 }));
-
-const CharacterButtons = () => {
-  const classes = useStyles();
-  const dispatch = useDispatch();
-  const missionDrawerOpen = useSelector(selectMissionDrawerOpen);
-  const character = useSelector(selectActiveCharacter);
-
-  return (
-    Object.keys(character).length > 0 && (
-      <React.Fragment>
-        <div className={classes.characterButtons}>
-          <React.Fragment>
-            <Button
-              className={classes.logMission}
-              onClick={() => dispatch(toggleMissionDrawerOpen())}
-            >
-              Log Mission
-            </Button>
-          </React.Fragment>
-        </div>
-        <Drawer
-          anchor={"right"}
-          open={missionDrawerOpen}
-          onClose={() => dispatch(toggleMissionDrawerOpen())}
-        >
-          <LogMission character={character} />
-        </Drawer>
-      </React.Fragment>
-    )
-  );
-};
 
 export default function CharacterPreview() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const character = useSelector(selectActiveCharacter);
+  const missionDrawerOpen = useSelector(selectMissionDrawerOpen);
   const [actsByMap, setActsByMap] = React.useState();
 
   React.useEffect(() => {
@@ -282,15 +245,23 @@ export default function CharacterPreview() {
     <Paper elevation={3} className={clsx(classes.root, classes.characterPanel)} component="div">
       <div className={classes.characterSheetHeader}>
         <div className={classes.characterIcons}>
-        <span>
-          <CharacterSelect />
-        </span>
+          <span>
+            <CharacterSelect />
+          </span>
           <Readable className={classes.characterMoney}>
             <span className={classes.bankedPoints}>${character.bankedPoints}</span>
           </Readable>
         </div>
       </div>
-      <CharacterButtons />
+      {Object.keys(character).length > 0 && (
+        <Drawer
+          anchor={"right"}
+          open={missionDrawerOpen}
+          onClose={() => dispatch(toggleMissionDrawerOpen())}
+        >
+          <LogMission character={character} />
+        </Drawer>
+      )}
       <span className={classes.characterProperties}>
         <Equipment />
         <Traits />

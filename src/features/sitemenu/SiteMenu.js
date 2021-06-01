@@ -17,7 +17,6 @@ import React from "react";
 import ReplayIcon from "@material-ui/icons/Replay";
 import SearchIcon from "@material-ui/icons/Search";
 import SportsKabaddiIcon from "@material-ui/icons/SportsKabaddi";
-import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import Switch from "@material-ui/core/Switch";
 import WorkIcon from "@material-ui/icons/Work";
 
@@ -26,7 +25,7 @@ import { reset as resetChallenges } from "../randomizers/challenges/challengeRan
 import { reset as resetJobRandomizer } from "../randomizers/jobrandomizer/jobRandomizerSlice";
 import { reset as resetPhasmoRPG } from "../phasmorpg/phasmoRPGSlice";
 import { reset as resetPhotoCalculator } from "../photocalculator/photoCalculatorSlice";
-import { resetApp, selectViews, toggleModule, togglePhasmoRPG } from "../../appSlice";
+import { resetApp, selectViews, toggleModule } from "../../appSlice";
 import { resetEvidence, selectIsPristine } from "../evidence/evidenceSlice";
 import { resetGhostName } from "../ghostname/ghostNameSlice";
 import Accent from "../../common/Accent";
@@ -159,15 +158,6 @@ export default function SiteMenu() {
       onClick: () => reset(),
       icon: <ReplayIcon />,
     },
-    {
-      id: "togglePhasmoRPG",
-      display: "PhasmoRPG",
-      onClick: () => {
-        setState({ ...state, right: false });
-        dispatch(togglePhasmoRPG());
-      },
-      icon: <SupervisedUserCircleIcon />,
-    },
   ];
 
   const list = (anchor) => (
@@ -182,26 +172,28 @@ export default function SiteMenu() {
         <Accent>Phasmo Toolkit</Accent>
       </div>
       <Divider />
-      <List>
-        {menuToggleItems.map((item) => (
-          <ListItem
-            className={clsx({ [classes.disabled]: !views[item.id] })}
-            button
-            key={item.id}
-            onClick={item.onClick}
-          >
-            <ListItemIcon>{item.icon}</ListItemIcon>
-            <ListItemText
-              primary={<Readable className={classes.menuItem}>{item.display}</Readable>}
-            />
-            <Switch
-              checked={views[item.id]}
-              name={item.id}
-              inputProps={{ "aria-label": "secondary checkbox" }}
-            />
-          </ListItem>
-        ))}
-      </List>
+      {!views.phasmorpg && (
+        <List>
+          {menuToggleItems.map((item) => (
+            <ListItem
+              className={clsx({ [classes.disabled]: !views[item.id] })}
+              button
+              key={item.id}
+              onClick={item.onClick}
+            >
+              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemText
+                primary={<Readable className={classes.menuItem}>{item.display}</Readable>}
+              />
+              <Switch
+                checked={views[item.id]}
+                name={item.id}
+                inputProps={{ "aria-label": "secondary checkbox" }}
+              />
+            </ListItem>
+          ))}
+        </List>
+      )}
       <Divider />
       <List>
         {menuActionItems.map((item) => (

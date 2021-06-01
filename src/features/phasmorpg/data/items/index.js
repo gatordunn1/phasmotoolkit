@@ -274,7 +274,7 @@ const loot = [
     pointValues: {
       buy: 99999,
       sell: 2000,
-    }
+    },
   },
   {
     display: "Set of Mugs",
@@ -293,7 +293,7 @@ const loot = [
     pointValues: {
       buy: 99999,
       sell: 2000,
-    }
+    },
   },
   {
     display: "Rusty Shiv",
@@ -304,7 +304,7 @@ const loot = [
     pointValues: {
       buy: 99999,
       sell: 75,
-    }
+    },
   },
   {
     display: "Billy Club",
@@ -315,7 +315,7 @@ const loot = [
     pointValues: {
       buy: 99999,
       sell: 250,
-    }
+    },
   },
   {
     display: "Warden's Keyring",
@@ -327,7 +327,7 @@ const loot = [
     pointValues: {
       buy: 99999,
       sell: 2000,
-    }
+    },
   },
   {
     display: "Doctor's Wallet",
@@ -339,7 +339,7 @@ const loot = [
     pointValues: {
       buy: 99999,
       sell: 2000,
-    }
+    },
   },
 ].map((x) => ({
   // Globals (can be overwritten)
@@ -352,12 +352,14 @@ const loot = [
   id: nanoid(),
 }));
 
-export default [...items, ...loot];
+const allItems = [...items, ...loot];
+
+export default allItems;
 
 export const maxItemLootChances = {
-  junk: 5,
+  junk: 3,
   evidence: 1,
   objectives: 1,
-  lqloot: 5,
+  lqloot: 3,
   hqloot: 2,
 };

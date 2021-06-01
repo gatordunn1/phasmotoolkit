@@ -12,8 +12,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import Select from "@material-ui/core/Select";
-import Slider from "@material-ui/core/Slider";
-import Typography from "@material-ui/core/Typography";
+import uniqBy from 'lodash.uniqby';
 
 import { data, Acts } from "./constants";
 
@@ -27,7 +26,7 @@ import {
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
 import { addAlert } from "../../appSlice";
-import { randomizeArray, randomNumberInRange } from "../../utils";
+import { randomizeArray } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,13 +50,6 @@ const useStyles = makeStyles((theme) => ({
       width: "80%",
     },
   },
-  difficultySlider: {
-    width: "65%",
-    display: "inline-block",
-    [theme.breakpoints.up("md")]: {
-      width: "75%",
-    },
-  },
   formControl: {
     margin: theme.spacing(1),
     width: "90%",
@@ -79,25 +71,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const marks = [
-  {
-    value: 10,
-    label: "Amateur",
-  },
-  {
-    value: 20,
-    label: "Intermediate",
-  },
-  {
-    value: 30,
-    label: "Professional",
-  },
-];
-
-function valuetext(value) {
-  return `${value}°C`;
-}
-
 const renderMapSelectOptions = (act, maps) => {
   const options = maps
     .filter((map) => map.unlocked && map.act === act.id)
@@ -108,29 +81,6 @@ const renderMapSelectOptions = (act, maps) => {
     ));
 
   return [<ListSubheader key={act.id}>{act.display}</ListSubheader>, options];
-};
-
-export const DifficultySlider = ({ handleChange, className }) => {
-  const activeCharacter = useSelector(selectActiveCharacter);
-
-  return (
-    <div className={className}>
-      <Typography id="difficulty-slider" gutterBottom>
-        Difficulty
-      </Typography>
-      <Slider
-        onChange={handleChange}
-        value={activeCharacter.difficulty}
-        getAriaValueText={valuetext}
-        aria-labelledby="difficulty-slider"
-        step={10}
-        valueLabelDisplay="off"
-        marks={marks}
-        min={10}
-        max={30}
-      />
-    </div>
-  );
 };
 
 export default function LogMission() {
@@ -176,7 +126,7 @@ export default function LogMission() {
   React.useEffect(() => {
     const unlockedMaps = activeCharacter.maps.filter((m) => m.unlocked);
     setMissionMap(unlockedMaps[unlockedMaps.length - 1]);
-  }, []);
+  }, [activeCharacter.maps]);
 
   const handleMapChange = (event) => {
     const map = activeCharacter.maps.find((map) => map.id === event.target.value);
@@ -196,18 +146,23 @@ export default function LogMission() {
     });
 
   const getRandomLoot = () => {
+    let uniqueItems = [];
     const loot = ["hqloot", "lqloot", "junk"]
       .reduce(
         (loot, itemType) => [
           ...loot,
           data.items
-            .filter(
-              (item) =>
-                item.type === itemType &&
+            .filter((item) => {
+              uniqueItems = [...uniqueItems];
+              return (
+                (["hqloot", "lqloot"].includes(item.type) ||
+                  (item.type === "junk" &&
+                    !activeCharacter.items.find((i) => i.display === item.display))) &&
                 item.allowedMaps.includes(missionMap.id) &&
                 Math.random() < item.dropChance
-            )
-            .slice(1, data.maxItemLootChances[itemType]),
+              );
+            })
+            .slice(0, data.maxItemLootChances[itemType]),
         ],
         []
       )
@@ -217,7 +172,9 @@ export default function LogMission() {
       dispatch(addAlert({ severity: "success", message: "High quality loot found!" }));
     }
 
-    return loot;
+    const uniqueLoot = uniqBy(loot, 'display');
+
+    return uniqueLoot;
   };
 
   const handleRandomTrait = () => {

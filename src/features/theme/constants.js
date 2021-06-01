@@ -15,6 +15,7 @@ export const palettes = {
         paper: "#2b2d42",
         paperalt: "#402f4a",
         papercontrast: "#3d2033",
+        paperhighlight: "#5728a1",
       },
       secondary: {
         main: "#5e548e",
