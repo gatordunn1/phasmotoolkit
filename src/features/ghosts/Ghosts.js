@@ -7,8 +7,8 @@ import React from "react";
 import { iconMap, selectExcluded, selectIncluded } from "../evidence/evidenceSlice";
 import { selectGhosts, selectSelected, setActiveGhost, updateGhosts } from "./ghostsSlice";
 import Ghost from "../ghost/Ghost";
-import Accent from '../../common/Accent';
-import Readable from '../../common/Readable';
+import Accent from "../../common/Accent";
+import Readable from "../../common/Readable";
 
 const useStyles = makeStyles((theme) => ({
   backdrop: {
@@ -17,25 +17,28 @@ const useStyles = makeStyles((theme) => ({
     cursor: "pointer",
   },
   root: {
-    margin: "10px 0 10px 0",
+    margin: theme.spacing(0.5, 0, 1.5, 0),
   },
   description: {
     display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
-    textAlign: "center",
+    textAlign: "left",
     "& > span": {
       width: "100vw",
     },
+    margin: theme.spacing(1.5, -2, 1.5, -2),
+    padding: theme.spacing(0.5, 1.5, 0.5, 1.5),
+    backgroundColor: theme.palette.background.paperalt,
+    borderTop: `1px solid ${theme.palette.primary.main}`,
+    borderBottom: `1px solid ${theme.palette.primary.main}`,
+    display: "block",
   },
   ghostHeader: {
     display: "flex",
     justifyContent: "space-around",
     alignContent: "center",
-    backgroundColor: theme.palette.secondary.dark,
-    borderBottom: `1px solid ${theme.palette.primary.main}`,
-    padding: "5px 0 0 0",
-    margin: "0 0 5px 0",
+    margin: theme.spacing(0, -2, 0, -2),
     "& > span": {
       alignSelf: "center",
     },
@@ -71,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
       width: "50vw",
     },
     "& > span:first-child": {
-      textAlign: "center",
+      textAlign: "left",
       fontWeight: "bold",
     },
     "& > span:last-child": {
@@ -90,10 +93,10 @@ const useStyles = makeStyles((theme) => ({
   },
   selectedGhost: {
     backgroundColor: theme.palette.background.default,
-    padding: "0 10px 10px 10px",
+    padding: theme.spacing(2),
     color: theme.palette.text.primary,
-    borderTop: `2px solid ${theme.palette.primary.main}`,
-    borderBottom: `2px solid ${theme.palette.primary.main}`,
+    border: `2px solid ${theme.palette.secondary.main}`,
+    width: "90vw",
     margin: 0,
     "& > * ": {
       fontFamily: "Indie Flower !important",
@@ -142,7 +145,11 @@ export default function Ghosts() {
             {selectedGhost && (
               <div>
                 <div className={classes.ghostHeader}>
-                  <span className={classes.ghostName}><Accent><Readable>{selectedGhost.name}</Readable></Accent></span>
+                  <span className={classes.ghostName}>
+                    <Accent color="accent">
+                      <Readable>{selectedGhost.name}</Readable>
+                    </Accent>
+                  </span>
                   <span className={classes.ghostIcons}>
                     {selectedGhost.evidence.map((ev) => (
                       <span
@@ -156,19 +163,19 @@ export default function Ghosts() {
                   </span>
                 </div>
                 <div className={classes.description}>
-                  <span>{selectedGhost.description}</span>
+                  <Accent color="secondary">{selectedGhost.description}</Accent>
                 </div>
                 <div className={classes.labeled}>
-                  <span>Unique Strengths:</span>
+                  <Accent color="contrast">Unique Strengths</Accent>
                   <span>{selectedGhost.strengths}</span>
                 </div>
                 <div className={classes.labeled}>
-                  <span>Weaknesses:</span>
+                  <Accent color="contrast">Weaknesses</Accent>
                   <span>{selectedGhost.weaknesses}</span>
                 </div>
                 {selectedGhost.secondaryEvidence.map((secondaryEvidence, index) => (
                   <div key={`secondaryEvidence_${index}`} className={classes.labeled}>
-                    <span>Secondary Evidence:</span>
+                    <Accent color="contrast">Secondary Evidence</Accent>
                     <span>{secondaryEvidence}</span>
                   </div>
                 ))}

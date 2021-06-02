@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
+import BuildIcon from '@material-ui/icons/Build';
 import Button from "@material-ui/core/Button";
 import clsx from "clsx";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -156,7 +157,7 @@ export default function Header() {
               title="Toggle Phasmo RPG"
               className={classes.toggleAppButton}
             >
-              <SupervisedUserCircleIcon />
+              <BuildIcon />
             </IconButton>
             <Accent size="0.8em" color="primary">
               {screenExtraSmall ? "PhasmoKit" : "Phasmo Toolkit"}
