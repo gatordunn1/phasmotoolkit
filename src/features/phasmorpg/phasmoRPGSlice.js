@@ -4,17 +4,6 @@ import { nanoid } from "nanoid";
 
 const getActiveCharacter = (state) => state.characters.find((character) => character.isActive);
 
-const calculateMissionPoints = (mission) => {
-  const multiplier = mission.difficulty / 10;
-  const basePoints = mission.map.pointValue;
-  let objectivePoints = 0;
-  for (const objective in mission.objectives) {
-    objectivePoints += mission.objectives[objective].pointValue;
-  }
-
-  return (basePoints + objectivePoints) * multiplier;
-};
-
 const getUpdatedMapUnlocks = (state, realBankedPoints) => {
   const activeCharacter = getActiveCharacter(state);
   const nextLockedMap = activeCharacter.maps.find((map) => !map.unlocked);
@@ -29,23 +18,6 @@ export const phasmoRPGSlice = createSlice({
   name: "phasmoRPG",
   initialState,
   reducers: {
-    completeMission: (state, action) => {
-      const activeCharacter = getActiveCharacter(state);
-      const missionPoints = calculateMissionPoints(action.payload);
-      const totalPoints = missionPoints + activeCharacter.bankedPoints;
-
-      const nextLockedMap = activeCharacter.maps.find((map) => !map.unlocked);
-
-      state.characters = state.characters.map((character) => ({
-        ...character,
-        difficulty: action.payload.difficulty,
-        bankedPoints: character.id === activeCharacter.id ? totalPoints : character.bankedPoints,
-        maps: character.maps.map((map) => ({
-          ...map,
-          unlockable: map.id === nextLockedMap.id && totalPoints >= map.pointCost,
-        })),
-      }));
-    },
     updateCharacter: (state, action) => {
       const activeCharacterIndex = state.characters.findIndex((c) => c.isActive);
 
@@ -71,7 +43,7 @@ export const phasmoRPGSlice = createSlice({
 
       state.characters[activeCharacterIndex] = {
         ...activeCharacter,
-        items: [...activeCharacter.items, ...action.payload],
+        items: action.payload,
       };
     },
     buyItem: (state, action) => {
@@ -100,9 +72,10 @@ export const phasmoRPGSlice = createSlice({
     },
     removeTrait: (state, action) => {
       const activeCharacter = getActiveCharacter(state);
+
       const traitCost = activeCharacter.traits.find(
         (trait) => trait.display === action.payload.display
-      ).category.removalCost;
+      ).removalCost;
 
       // Verify funds
       if (activeCharacter.bankedPoints >= traitCost) {
@@ -214,7 +187,6 @@ export const {
   buyItem,
   sellItem,
   addRandomTrait,
-  completeMission,
   deleteCharacter,
   removeTrait,
   saveCharacter,
@@ -232,6 +204,7 @@ export const selectActiveCharacter = (state) =>
   state.phasmoRPG.characters.find((character) => character.isActive);
 
 export const selectMissionDrawerOpen = (state) => state.phasmoRPG.missionDrawerOpen;
-export const selectHasActiveCharacter = (state) => state.phasmoRPG.characters.filter((c) => c.isActive).length > 0;
+export const selectHasActiveCharacter = (state) =>
+  state.phasmoRPG.characters.filter((c) => c.isActive).length > 0;
 
 export default phasmoRPGSlice.reducer;

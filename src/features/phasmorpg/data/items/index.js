@@ -103,7 +103,7 @@ const items = [
     type: "photos",
   },
   {
-    display: "Candle + Lighter",
+    display: "Candle",
     displayShort: "Candle",
     category: categories.store,
     type: "light",
@@ -119,7 +119,7 @@ const items = [
     display: "Glow Stick",
     displayShort: "Glow Stick",
     category: categories.store,
-    type: "evidence",
+    type: "light",
   },
   {
     display: "Head Mounted Camera",
@@ -165,7 +165,7 @@ const items = [
     enabled: false, // Only enabled after certain conditions met
   },
   {
-    display: "Smudge Sticks + Lighter",
+    display: "Smudge Sticks",
     displayShort: "Smudge",
     category: categories.store,
     type: "objectives",
@@ -209,6 +209,7 @@ const items = [
   allowedMaps: allMapIds,
   pointValues: types[x.type].pointValues,
   dropChance: types[x.type].dropChance,
+  sortWeight: types[x.type].sortWeight,
   ...x,
   // Forced default
   id: nanoid(),
@@ -263,6 +264,13 @@ const loot = [
     category: categories.loot,
     type: "lqloot",
     allowedMaps: ["tanglewood", "edgefield", "ridgeview"],
+  },
+  {
+    display: "Old Donut",
+    displayShort: "Old Donut",
+    category: categories.loot,
+    type: "lqloot",
+    allowedMaps: ["prison", "asylum"],
   },
   {
     display: "Moon Lamp",
@@ -341,12 +349,49 @@ const loot = [
       sell: 2000,
     },
   },
+  {
+    display: "Antique Clock",
+    displayShort: "Clock",
+    category: categories.loot,
+    type: "hqloot",
+    allowedMaps: ["grafton", "bleasdale"],
+    dropChance: 0.20,
+    pointValues: {
+      buy: 99999,
+      sell: 1500,
+    },
+  },
+  {
+    display: "Bloody Mascot Outfit",
+    displayShort: "Mascot Outfit",
+    category: categories.loot,
+    type: "hqloot",
+    allowedMaps: ["brownstone"],
+    dropChance: 0.20,
+    pointValues: {
+      buy: 99999,
+      sell: 1800,
+    },
+  },
+  {
+    display: "Contraband Stash",
+    displayShort: "Contraband",
+    category: categories.loot,
+    type: "hqloot",
+    allowedMaps: ["asylum", "prison"],
+    dropChance: 0.15,
+    pointValues: {
+      buy: 99999,
+      sell: 2000,
+    },
+  },
 ].map((x) => ({
   // Globals (can be overwritten)
   enabled: true,
   used: false,
   dropChance: types[x.type].dropChance,
   pointValues: types[x.type].pointValues,
+  sortWeight: types[x.type].sortWeight,
   ...x,
   // Forced default
   id: nanoid(),
@@ -362,4 +407,5 @@ export const maxItemLootChances = {
   objectives: 1,
   lqloot: 3,
   hqloot: 2,
+  light: 1,
 };

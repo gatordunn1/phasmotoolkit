@@ -20,6 +20,7 @@ export const types = {
       buy: 1000,
       sell: 250,
     },
+    sortWeight: 100,
   },
   objectives: {
     id: "objectives",
@@ -30,6 +31,7 @@ export const types = {
       buy: 750,
       sell: 250,
     },
+    sortWeight: 110,
   },
   tools: {
     id: "tools",
@@ -40,16 +42,18 @@ export const types = {
       buy: 500,
       sell: 250,
     },
+    sortWeight: 0,
   },
   light: {
     id: "light",
     display: "Lights",
     description: descriptions.light,
-    dropChance: 0.5,
+    dropChance: 0.25,
     pointValues: {
       buy: 1500,
-      sell: 1000,
+      sell: 100,
     },
+    sortWeight: 120,
   },
   junk: {
     id: "junk",
@@ -60,6 +64,7 @@ export const types = {
       buy: 100,
       sell: 100,
     },
+    sortWeight: 130,
   },
   photos: {
     id: "photos",
@@ -70,6 +75,7 @@ export const types = {
       buy: 1000,
       sell: 250,
     },
+    sortWeight: 0,
   },
   other: {
     id: "other",
@@ -80,16 +86,18 @@ export const types = {
       buy: 1000,
       sell: 250,
     },
+    sortWeight: 0,
   },
   lqloot: {
     id: "lqloot",
     description: descriptions.lqloot,
     display: "Low Quality Loot",
-    dropChance: 0.45,
+    dropChance: 0.55,
     pointValues: {
       buy: 99999,
-      sell: 25,
-    }
+      sell: 50,
+    },
+    sortWeight: 10,
   },
   hqloot: {
     id: "hqloot",
@@ -99,7 +107,8 @@ export const types = {
     pointValues: {
       buy: 99999,
       sell: 250,
-    }
+    },
+    sortWeight: 0,
   }
 };
 

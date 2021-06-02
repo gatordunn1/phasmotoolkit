@@ -38,6 +38,7 @@ export const palettes = {
         secondary: "#cae9ff",
         contrast: "#8ac926",
         accent: "#ffbc0a",
+        error: "#ff0000",
       },
     },
   },

@@ -48,9 +48,10 @@ export default function Alerts() {
         <Snackbar
           key={alert.id}
           open={activeAlerts.includes(alert.id)}
-          autoHideDuration={5000}
+          autoHideDuration={3000}
           onClose={(_, reason) => handleClose(alert.id, reason)}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          disableWindowBlurListener={true}
         >
           <Alert onClick={() => handleClose(alert.id)} severity={alert.severity}>
             {alert.message}

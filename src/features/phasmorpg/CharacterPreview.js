@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) => ({
   },
   characterProperties: {
     display: "grid",
-    gap: theme.spacing(1.5),
+    gap: theme.spacing(2),
     gridTemplateColumns: "1fr",
     [theme.breakpoints.up("md")]: {
       gridTemplateColumns: "1fr 1fr",

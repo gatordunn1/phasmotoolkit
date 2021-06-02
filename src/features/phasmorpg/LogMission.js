@@ -12,7 +12,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import Select from "@material-ui/core/Select";
-import uniqBy from 'lodash.uniqby';
+import uniqBy from "lodash.uniqby";
 
 import { data, Acts } from "./constants";
 
@@ -26,7 +26,7 @@ import {
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
 import { addAlert } from "../../appSlice";
-import { randomizeArray } from "../../utils";
+import { randomNumberInRange, randomizeArray } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -145,38 +145,6 @@ export default function LogMission() {
       },
     });
 
-  const getRandomLoot = () => {
-    let uniqueItems = [];
-    const loot = ["hqloot", "lqloot", "junk"]
-      .reduce(
-        (loot, itemType) => [
-          ...loot,
-          data.items
-            .filter((item) => {
-              uniqueItems = [...uniqueItems];
-              return (
-                (["hqloot", "lqloot"].includes(item.type) ||
-                  (item.type === "junk" &&
-                    !activeCharacter.items.find((i) => i.display === item.display))) &&
-                item.allowedMaps.includes(missionMap.id) &&
-                Math.random() < item.dropChance
-              );
-            })
-            .slice(0, data.maxItemLootChances[itemType]),
-        ],
-        []
-      )
-      .flat();
-
-    if (loot.find((item) => item.type === "hqloot")) {
-      dispatch(addAlert({ severity: "success", message: "High quality loot found!" }));
-    }
-
-    const uniqueLoot = uniqBy(loot, 'display');
-
-    return uniqueLoot;
-  };
-
   const handleRandomTrait = () => {
     // Flip a weighted coin to decide if we even get a trait this time
     const acquiredTrait = Math.random() < 0.3;
@@ -207,14 +175,48 @@ export default function LogMission() {
   };
 
   const handleRandomLoot = () => {
-    const randomLoot = getRandomLoot();
+    const newRandomLoot = data.items
+      .filter(
+        (item) =>
+          ["hqloot", "lqloot"].includes(item.type) &&
+          item.allowedMaps.includes(missionMap.id) &&
+          Math.random() < item.dropChance
+      )
+      .slice(0, randomNumberInRange(3, 5));
 
-    dispatch(addRandomLoot(randomLoot));
+    const newRandomItems = data.items.filter(
+      (item) =>
+        ["light", "junk"].includes(item.type) &&
+        item.allowedMaps.includes(missionMap.id) &&
+        Math.random() < item.dropChance
+    );
+
+    const allItems = [...activeCharacter.items, ...newRandomLoot, ...newRandomItems];
+
+    // De-duplicate non-loot
+    const nonLoot = uniqBy(
+      allItems.filter((item) => !["lqloot", "hqloot"].includes(item.type)),
+      "display"
+    );
+
+    // Separate out the loot
+    const justLoot = allItems.filter((item) => ["lqloot", "hqloot"].includes(item.type));
+
+    // Notify on rare loot
+    if (justLoot.find((item) => item.dropChance <= 0.3)) {
+      dispatch(addAlert({ severity: "success", message: "Rare loot found!" }));
+    }
+
+    const finalItems = [...justLoot, ...nonLoot];
+
+    dispatch(addRandomLoot(finalItems));
+
+    const newLootCount = finalItems.length - activeCharacter.items.length;
 
     dispatch(
       addAlert({
         severity: "info",
-        message: `Found ${randomLoot.length} ${randomLoot.length === 1 ? "item" : "items"}`,
+        message: `Found ${newLootCount} ${newLootCount === 1 ? "item" : "items"}`,
       })
     );
   };
@@ -245,6 +247,26 @@ export default function LogMission() {
 
     const nextLockedMap = activeCharacter.maps.find((map) => !map.unlocked);
 
+    const traits = activeCharacter.traits
+      .map((trait) => ({
+        ...trait,
+        remaining: trait.duration !== -1 && trait.remaining > 0 ? trait.remaining - 1 : -1,
+      }))
+      .filter((trait) => (trait.duration !== -1 && trait.remaining > 0) || trait.duration === -1);
+
+    const expiredTraitCount = activeCharacter.traits.length - traits.length;
+
+    if (expiredTraitCount > 0) {
+      dispatch(
+        addAlert({
+          severity: "info",
+          message: `${expiredTraitCount} ${
+            expiredTraitCount > 1 ? "effects" : "effect"
+          } has expired! `,
+        })
+      );
+    }
+
     const updatedCharacter = {
       ...activeCharacter,
       difficulty: missionDifficulty,
@@ -253,6 +275,7 @@ export default function LogMission() {
         ...map,
         unlockable: nextLockedMap && nextLockedMap.id === map.id && totalPoints >= map.pointCost,
       })),
+      traits,
     };
 
     dispatch(updateCharacter(updatedCharacter));

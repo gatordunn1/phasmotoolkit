@@ -1,18 +1,21 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import clsx from "clsx";
 import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Button from "@material-ui/core/Button";
+import clsx from "clsx";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import React from "react";
-import Typography from "@material-ui/core/Typography";
 import Switch from "@material-ui/core/Switch";
-import { data } from "./constants";
-import { buyItem, sellItem, selectActiveCharacter } from "./phasmoRPGSlice";
-import Readable from "../../common/Readable";
+import Typography from "@material-ui/core/Typography";
+
+import sortBy from "lodash.sortby";
+
 import { addAlert } from "../../appSlice";
+import { buyItem, sellItem, selectActiveCharacter } from "./phasmoRPGSlice";
+import { data } from "./constants";
+import Readable from "../../common/Readable";
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -37,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.accent,
   },
   characterTraitsDetails: {
-    paddingLeft: theme.spacing(1),
+    padding: theme.spacing(0, 1, 0, 1),
     display: "grid",
     gridTemplateColumns: "1fr auto",
     alignItems: "center",
@@ -100,7 +103,7 @@ const useStyles = makeStyles((theme) => ({
     webkitAnimation: "flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both",
     animation: "flip-vertical-right 0.4s cubic-bezier(0.455, 0.030, 0.515, 0.955) both",
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(0.5, 1, 0, 1),
+    padding: theme.spacing(1, 1, 1, 1),
     borderRadius: theme.spacing(0.5),
     margin: theme.spacing(1, 0, 0, 0),
   },
@@ -122,9 +125,20 @@ export default function Equipment() {
   const [storeMode, setStoreMode] = React.useState("sell");
   const [sellLootHover, setSellLootHover] = React.useState(false);
 
+  const characterItems = React.useMemo(() => sortBy(character.items, ["sortWeight"]), [character]);
+  const sellableLoot = React.useMemo(
+    () => characterItems.filter((item) => ["lqloot", "hqloot"].includes(item.type)),
+    [characterItems]
+  );
+
+  const sellableLootTotal = React.useMemo(
+    () => sellableLoot.reduce((totalValue, item) => totalValue + item.pointValues.sell, 0),
+    [sellableLoot]
+  );
+
   const handleStoreModeToggle = () => setStoreMode((prev) => (prev === "sell" ? "buy" : "sell"));
   const handleSellJunk = () => {
-    const junk = character.items.filter((item) => ["lqloot", "hqloot"].includes(item.type));
+    const junk = characterItems.filter((item) => ["lqloot", "hqloot"].includes(item.type));
     if (junk.length > 0) {
       let totalValue = 0;
       for (const item of junk) {
@@ -142,8 +156,8 @@ export default function Equipment() {
   };
 
   const characterHasHQLoot = React.useMemo(
-    () => character.items.find((item) => item.type === "hqloot"),
-    [character]
+    () => characterItems.find((item) => item.type === "hqloot"),
+    [characterItems]
   );
 
   return (
@@ -155,21 +169,25 @@ export default function Equipment() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>Equipment ({character.items.length})</Typography>
+          <Typography className={classes.heading}>Equipment ({characterItems.length})</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetails}>
           <div className={classes.storeHeader}>
             <span className={classes.storeButtons}>
               <Readable onClick={handleStoreModeToggle} className={classes.toggleStoreMode}>
-                <span className={clsx({[classes.storeModeSelected]: storeMode === "sell"})}>Inventory</span>
+                <span className={clsx({ [classes.storeModeSelected]: storeMode === "sell" })}>
+                  Inventory
+                </span>
                 <Switch
                   checked={storeMode === "buy"}
                   name="storeMode"
                   inputProps={{ "aria-label": "store inventory checkbox" }}
                   color="default"
                 />
-                
-                <span className={clsx({[classes.storeModeSelected]: storeMode === "buy"})}>Store</span>
+
+                <span className={clsx({ [classes.storeModeSelected]: storeMode === "buy" })}>
+                  Store
+                </span>
               </Readable>
             </span>
             {storeMode === "sell" && (
@@ -179,14 +197,15 @@ export default function Equipment() {
                 variant="text"
                 className={classes.toggleStoreMode}
                 onClick={() => handleSellJunk()}
+                disabled={sellableLoot.length === 0}
               >
-                Sell Loot
+                Sell Loot (${sellableLootTotal})
               </Button>
             )}
           </div>
           {storeMode === "sell" ? (
             <div key="inventory_items" className={classes.flipAnimation}>
-              {character.items.map((item, index) => (
+              {characterItems.map((item, index) => (
                 <div
                   key={`${character.id}_owned_${item.id}_${index}`}
                   className={clsx(classes.characterTraitsDetails, {
@@ -205,13 +224,9 @@ export default function Equipment() {
                   >
                     {item.display}
                   </Readable>
-                  <Button
-                    onClick={() => dispatch(sellItem(item))}
-                    className={classes.sellItem}
-                    variant="text"
-                  >
-                    +${item.pointValues.sell}
-                  </Button>
+                  {["hqloot", "lqloot"].includes(item.type) && (
+                    <Readable className={classes.sellItem}>+${item.pointValues.sell}</Readable>
+                  )}
                 </div>
               ))}
             </div>
@@ -220,8 +235,8 @@ export default function Equipment() {
               {data.items
                 .filter(
                   (item) =>
-                    ["evidence", "objectives", "light", "junk"].includes(item.type) &&
-                    !character.items.find((i) => i.display === item.display)
+                    ["evidence", "objectives", "light"].includes(item.type) &&
+                    !characterItems.find((i) => i.display === item.display)
                 )
                 .sort((a, b) => b.pointValues.buy - a.pointValues.buy)
                 .map((item, index) => (
