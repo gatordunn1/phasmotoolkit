@@ -70,6 +70,9 @@ export const phasmoRPGSlice = createSlice({
         maps: getUpdatedMapUnlocks(state, bankedPoints),
       };
     },
+    logMission: (state, action) => {
+      // log each complete mission for stats
+    },
     removeTrait: (state, action) => {
       const activeCharacter = getActiveCharacter(state);
 

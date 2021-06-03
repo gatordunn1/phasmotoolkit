@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0.5, 0, 1.5, 0),
   },
   description: {
-    display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
     textAlign: "left",

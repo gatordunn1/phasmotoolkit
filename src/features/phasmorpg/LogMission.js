@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
+import Avatar from "boring-avatars";
 import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControl from "@material-ui/core/FormControl";
@@ -12,6 +13,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import MenuItem from "@material-ui/core/MenuItem";
 import React from "react";
 import Select from "@material-ui/core/Select";
+
 import uniqBy from "lodash.uniqby";
 
 import { data, Acts } from "./constants";
@@ -51,6 +53,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   formControl: {
+    whiteSpace: "nowrap",
     margin: theme.spacing(1),
     width: "90%",
     [theme.breakpoints.up("md")]: {
@@ -64,10 +67,40 @@ const useStyles = makeStyles((theme) => ({
     display: "grid",
     gridTemplateColumns: "1fr",
     gap: theme.spacing(1),
+    justifyItems: "center",
+    [theme.breakpoints.down("sm")]: {
+      gridTemplateColumns: "1fr",
+      "& > label": {
+        minWidth: "200px",
+      },
+    },
     [theme.breakpoints.up("md")]: {
       gridTemplateColumns: "1fr 1fr",
+      "& > label:nth-child(odd)": {
+        justifySelf: "flex-start",
+      },
+      "& > label:nth-child(even)": {
+        justifySelf: "flex-end",
+        "& > span:last-child": {
+          minWidth: "145px",
+        },
+      },
     },
     whiteSpace: "nowrap",
+    backgroundColor: theme.palette.background.paperalt,
+    borderRadius: theme.spacing(0.75),
+    padding: theme.spacing(1),
+  },
+  missionObjectivesContainer: {
+    width: "100%",
+  },
+  characterName: {
+    display: "grid",
+    gridTemplateColumns: "1fr 1fr",
+    alignItems: "center",
+    justifyContent: "space-around",
+    margin: theme.spacing(1),
+    gap: theme.spacing(3),
   },
 }));
 
@@ -130,7 +163,7 @@ export default function LogMission() {
 
   const handleMapChange = (event) => {
     const map = activeCharacter.maps.find((map) => map.id === event.target.value);
-    setMissionMap(map);
+    if (map) setMissionMap(map);
   };
 
   const handleDifficultyChange = (event) =>
@@ -323,6 +356,18 @@ export default function LogMission() {
         <Accent size="1.5em" color="accent" transform="uppercase">
           Mission Details
         </Accent>
+        <Accent className={classes.characterName} size="1.5em" color="accent">
+          <span>
+            <Avatar
+              key={`key_${activeCharacter.name}`}
+              name={activeCharacter.name}
+              variant="beam"
+              size="30px"
+              colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
+            />
+          </span>
+          <span>{activeCharacter.name}</span>
+        </Accent>
       </Readable>
       <div className={classes.missionDetails}>
         <div className={classes.mapSelect}>
@@ -336,7 +381,6 @@ export default function LogMission() {
             >
               {Acts.map((act) => renderMapSelectOptions(act, activeCharacter.maps))}
             </Select>
-            {/* <FormHelperText>Location</FormHelperText> */}
           </FormControl>
           <FormControl className={classes.formControl}>
             <InputLabel id="mission-details-log-map">Difficulty</InputLabel>
@@ -352,10 +396,9 @@ export default function LogMission() {
                 </MenuItem>
               ))}
             </Select>
-            {/* <FormHelperText>Location</FormHelperText> */}
           </FormControl>
         </div>
-        <div>
+        <div className={classes.missionObjectivesContainer}>
           <FormControl component="fieldset" className={classes.formControl}>
             <FormLabel component="legend">
               <Accent size="1.1em" color="accent" transform="uppercase">
