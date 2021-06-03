@@ -31,76 +31,101 @@ import { addAlert } from "../../appSlice";
 import { randomNumberInRange, randomizeArray } from "../../utils";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    width: "80vw",
-    [theme.breakpoints.up("md")]: {
-      width: "45vw",
-    },
-    textAlign: "center",
-    padding: theme.spacing(1.5, 0, 1.5, 0),
-  },
-  missionDetails: {
+  characterName: {
+    alignItems: "center",
     display: "grid",
-    gridTemplateColumns: "1fr",
-    justifyItems: "center",
-    justifyContent: "center",
-    gap: theme.spacing(1.5),
+    gap: theme.spacing(2),
+    gridTemplateColumns: "1fr 1fr 1fr",
+    justifyContent: "space-around",
+    backgroundColor: theme.palette.background.default,
+    margin: theme.spacing(0, -1.5, 0, -1.5),
+    padding: theme.spacing(1.25, 0, 1.25, 0),
+    "& > span:first-child": {
+      margin: theme.spacing(0, 0, -1, 0),
+    },
+    "& > span:last-child": {
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      [theme.breakpoints.up("xs")]: {
+        width: "80px",
+      },
+      [theme.breakpoints.up("sm")]: {
+        width: "100px",
+      },
+      [theme.breakpoints.up("md")]: {
+        width: "120px",
+      },
+      [theme.breakpoints.up("lg")]: {
+        width: "320px",
+      },
+      [theme.breakpoints.up("xl")]: {
+        width: "320px",
+      },
+    },
   },
   difficulty: {
-    width: "60%",
     [theme.breakpoints.up("md")]: {
       width: "80%",
     },
+    width: "60%",
   },
   formControl: {
-    whiteSpace: "nowrap",
-    margin: theme.spacing(1),
-    width: "90%",
     [theme.breakpoints.up("md")]: {
       width: "90%",
     },
+    margin: theme.spacing(1),
+    whiteSpace: "nowrap",
+    width: "90%",
   },
   mapSelect: {
     width: "100%",
   },
-  missionObjectives: {
+  missionDetails: {
     display: "grid",
+    gap: theme.spacing(1.5),
     gridTemplateColumns: "1fr",
-    gap: theme.spacing(1),
+    justifyContent: "center",
     justifyItems: "center",
+  },
+  missionObjectives: {
     [theme.breakpoints.down("sm")]: {
-      gridTemplateColumns: "1fr",
       "& > label": {
         minWidth: "200px",
       },
+      gridTemplateColumns: "1fr",
     },
     [theme.breakpoints.up("md")]: {
-      gridTemplateColumns: "1fr 1fr",
-      "& > label:nth-child(odd)": {
-        justifySelf: "flex-start",
-      },
       "& > label:nth-child(even)": {
-        justifySelf: "flex-end",
         "& > span:last-child": {
           minWidth: "145px",
         },
+        justifySelf: "flex-end",
       },
+      "& > label:nth-child(odd)": {
+        justifySelf: "flex-start",
+      },
+      gridTemplateColumns: "1fr 1fr",
     },
-    whiteSpace: "nowrap",
-    backgroundColor: theme.palette.background.paperalt,
     borderRadius: theme.spacing(0.75),
+    display: "grid",
+    gap: theme.spacing(1),
+    gridTemplateColumns: "1fr",
+    justifyItems: "center",
     padding: theme.spacing(1),
+    whiteSpace: "nowrap",
   },
   missionObjectivesContainer: {
     width: "100%",
+    backgroundColor: theme.palette.background.default,
+    padding: theme.spacing(1),
   },
-  characterName: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    alignItems: "center",
-    justifyContent: "space-around",
-    margin: theme.spacing(1),
-    gap: theme.spacing(3),
+  root: {
+    [theme.breakpoints.up("md")]: {
+      width: "45vw",
+    },
+    textAlign: "center",
+    width: "80vw",
   },
 }));
 
@@ -353,10 +378,7 @@ export default function LogMission() {
   return (
     <div className={classes.root}>
       <Readable>
-        <Accent size="1.5em" color="accent" transform="uppercase">
-          Mission Details
-        </Accent>
-        <Accent className={classes.characterName} size="1.5em" color="accent">
+        <Accent className={classes.characterName} size="1.2em" color="accent">
           <span>
             <Avatar
               key={`key_${activeCharacter.name}`}
@@ -366,7 +388,10 @@ export default function LogMission() {
               colors={["#92A1C6", "#146A7C", "#F0AB3D", "#C271B4", "#C20D90"]}
             />
           </span>
-          <span>{activeCharacter.name}</span>
+          <Accent size="1.2em" color="accent" transform="uppercase">
+            Details
+          </Accent>
+          <span title={activeCharacter.name}>{activeCharacter.name}</span>
         </Accent>
       </Readable>
       <div className={classes.missionDetails}>
