@@ -17,7 +17,6 @@ import {
   deleteCharacter,
   selectActiveCharacter,
   selectMissionDrawerOpen,
-  setNextUnlockableMap,
   toggleMissionDrawerOpen,
   unlockMap,
 } from "./phasmoRPGSlice";
@@ -123,6 +122,9 @@ const useStyles = makeStyles((theme) => ({
       color: theme.palette.error.light,
     },
   },
+  mapNameDisplay: {
+    minWidth: "110px",
+  },
   mapButton: {
     border: "2px solid transparent",
     fontFamily: "Indie Flower; cursive",
@@ -225,7 +227,6 @@ export default function CharacterPreview() {
 
   const handleUnlockAttempt = (map) => {
     dispatch(unlockMap(map.id));
-    dispatch(setNextUnlockableMap());
 
     dispatch(
       addAlert({
@@ -297,7 +298,13 @@ export default function CharacterPreview() {
                       ) : (
                         <LockIcon />
                       )}
-                      {map.display} {!map.unlocked && <Readable>-${map.pointCost}</Readable>}
+                      <span className={classes.mapNameDisplay}>{map.display}</span>{" "}
+                      {!map.unlocked && <Readable>-${map.pointCost}</Readable>}
+                      {map.unlocked && character.missionCounts ? (
+                        <Readable>{character.missionCounts[map.id]}</Readable>
+                      ) : (
+                        <span>&nbsp;</span>
+                      )}
                       <span className={classes.mapIcon}>{data.iconMapMap[map.id]}</span>
                     </span>
                     {nextIndex && (

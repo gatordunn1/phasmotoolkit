@@ -13,7 +13,12 @@ export const appSlice = createSlice({
     resetApp: () => initialState,
     addAlert: (state, action) => {
       const currentAlerts = (state.alerts && Array.isArray(state.alerts)) ? state.alerts : [];
-      state.alerts = [...currentAlerts, { ...action.payload, id: nanoid() }];
+      const newAlert = {
+        ...action.payload,
+        id: nanoid(),
+      }
+      console.log('newAlert', newAlert);
+      state.alerts = [...currentAlerts, newAlert];
     },
     removeAlert: (state, action) => {
       state.alerts = state.alerts.filter((alert) => alert.id !== action.payload);

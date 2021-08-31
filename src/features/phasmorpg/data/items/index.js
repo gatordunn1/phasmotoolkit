@@ -203,16 +203,8 @@ const items = [
     type: "other",
   },
 ].map((x) => ({
-  // Globals (can be overwritten)
-  enabled: true,
-  used: false,
-  allowedMaps: allMapIds,
-  pointValues: types[x.type].pointValues,
-  dropChance: types[x.type].dropChance,
-  sortWeight: types[x.type].sortWeight,
   ...x,
-  // Forced default
-  id: nanoid(),
+  allowedMaps: allMapIds,
 }));
 
 const loot = [
@@ -385,19 +377,16 @@ const loot = [
       sell: 2000,
     },
   },
-].map((x) => ({
-  // Globals (can be overwritten)
-  enabled: true,
-  used: false,
+];
+
+const allItems = [...items, ...loot].map((x) => ({
+  ...x,
   dropChance: types[x.type].dropChance,
   pointValues: types[x.type].pointValues,
   sortWeight: types[x.type].sortWeight,
-  ...x,
-  // Forced default
   id: nanoid(),
-}));
-
-const allItems = [...items, ...loot];
+  broken: false,
+}))
 
 export default allItems;
 

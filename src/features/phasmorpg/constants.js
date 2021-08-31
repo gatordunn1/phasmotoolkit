@@ -1,15 +1,17 @@
 import items, { maxItemLootChances } from "./data/items";
-import traits from "./data/traits";
 import maps, { mapCategories, mapActList, iconMapMap } from "./data/maps";
+import traits, { onGoingEffects, onGoingEffectMessages } from "./data/traits";
 
 export const data = {
-  items,
-  maps,
-  mapCategories,
-  mapActList,
   iconMapMap,
-  traits,
+  items,
+  mapActList,
+  mapCategories,
+  maps,
   maxItemLootChances,
+  onGoingEffects,
+  onGoingEffectMessages,
+  traits
 };
 
 export const initialState = {

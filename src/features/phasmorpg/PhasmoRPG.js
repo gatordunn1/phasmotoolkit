@@ -16,6 +16,7 @@ import {
   selectCharacters,
   setCharacterActive,
   saveCharacter,
+  setNextUnlockableMap,
 } from "./phasmoRPGSlice";
 import CharacterPreview from "./CharacterPreview";
 
@@ -217,7 +218,21 @@ export const CharacterButton = ({ character }) => {
 
 export default function PhasmoRPG() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const activeCharacter = useSelector(selectActiveCharacter);
+  const [prevBankedPoints, setPrevBankedPoints] = React.useState(0);
+
+  React.useEffect(() => {
+    // Always keep next unlockable map up-to-date
+    if (
+      activeCharacter &&
+      activeCharacter.bankedPoints &&
+      prevBankedPoints !== activeCharacter.bankedPoints
+    ) {
+      setPrevBankedPoints(activeCharacter.bankedPoints);
+      dispatch(setNextUnlockableMap());
+    }
+  }, [activeCharacter, prevBankedPoints, dispatch]);
 
   return (
     <div className={classes.root}>

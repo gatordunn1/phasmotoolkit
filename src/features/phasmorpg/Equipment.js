@@ -84,6 +84,10 @@ const useStyles = makeStyles((theme) => ({
   itemTypeObjectives: {
     color: theme.palette.text.secondary,
   },
+  itemBroken: {
+    color: theme.palette.error.main,
+    textDecoration: "line-through",
+  },
   storeHeader: {
     display: "grid",
     justifyContent: "space-between",
@@ -220,6 +224,7 @@ export default function Equipment() {
                       [classes.itemTypeHQLoot]: item.type === "hqloot",
                       [classes.itemTypeEvidence]: item.type === "evidence",
                       [classes.itemTypeObjectives]: item.type === "objectives",
+                      [classes.itemBroken]: item.broken,
                     })}
                   >
                     {item.display}

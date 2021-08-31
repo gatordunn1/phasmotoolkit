@@ -4,17 +4,19 @@ import Accordion from "@material-ui/core/Accordion";
 import AccordionDetails from "@material-ui/core/AccordionDetails";
 import AccordionSummary from "@material-ui/core/AccordionSummary";
 import Button from "@material-ui/core/Button";
+import clsx from "clsx";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import Filter1Icon from "@material-ui/icons/Filter1";
+import Filter2Icon from "@material-ui/icons/Filter2";
+import Filter3Icon from "@material-ui/icons/Filter3";
 import React from "react";
-import Typography from "@material-ui/core/Typography";
 import TimerOffIcon from "@material-ui/icons/TimerOff";
+import Typography from "@material-ui/core/Typography";
+
 import { addAlert } from "../../appSlice";
 import { removeTrait, selectActiveCharacter } from "./phasmoRPGSlice";
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
-import Filter1Icon from "@material-ui/icons/Filter1";
-import Filter2Icon from "@material-ui/icons/Filter2";
-import Filter3Icon from "@material-ui/icons/Filter3";
 
 const useStyles = makeStyles((theme) => ({
   accordion: {
@@ -25,15 +27,21 @@ const useStyles = makeStyles((theme) => ({
     "& > div": {
       padding: theme.spacing(1),
       borderRadius: "5px",
+      marginBottom: theme.spacing(1),
+
     },
     "& > div:nth-child(odd)": {
       backgroundColor: theme.palette.background.paper,
-    }
+      borderRadius: "5px",
+    },
   },
   accordionSummary: {
     "&:hover": {
       color: theme.palette.text.secondary,
     },
+  },
+  onGoingEffect: {
+    border: `2px solid ${theme.palette.error.dark}`,
   },
   root: {
     width: "100%",
@@ -54,6 +62,8 @@ const useStyles = makeStyles((theme) => ({
     justifyItems: "space-between",
     gap: theme.spacing(1.5),
     textAlign: "left",
+    webkitAnimation: "blink-1 1.5s 2 both",
+    animation: "blink-1 1.5s 2 both",
   },
 }));
 
@@ -61,6 +71,7 @@ export default function Traits() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const character = useSelector(selectActiveCharacter);
+  const [effects, setEffects] = React.useState([]);
 
   const handleRemoveTrait = (trait) => {
     dispatch(removeTrait(trait));
@@ -113,6 +124,32 @@ export default function Traits() {
     }
   };
 
+  // Sort traits
+  React.useEffect(() => {
+    const currentEffects = [...character.traits];
+    const sortedEffects = currentEffects.sort((a, b) => {
+      if (a.onGoingEffect && !b.onGoingEffect) {
+        return -1;
+      }
+
+      if (!a.onGoingEffect && b.onGoingEffect) {
+        return 1;
+      }
+
+      if (a.duration > 0 && b.duration === -1) {
+        return -1;
+      }
+
+      if (a.duration === -1 && b.duration > 0) {
+        return 1;
+      }
+
+      return a.duration > b.duration ? -1 : 1;
+    });
+
+    setEffects(sortedEffects);
+  }, [character.traits]);
+
   return (
     <div className={classes.root}>
       <Accordion className={classes.accordion}>
@@ -125,8 +162,13 @@ export default function Traits() {
           <Typography className={classes.heading}>Effects ({character.traits.length})</Typography>
         </AccordionSummary>
         <AccordionDetails className={classes.accordionDetails}>
-          {character.traits.map((trait) => (
-            <div className={classes.characterTraitsDetails} key={trait.id}>
+          {effects.map((trait) => (
+            <div
+              className={clsx(classes.characterTraitsDetails, {
+                [classes.onGoingEffect]: trait.onGoingEffect,
+              })}
+              key={trait.id}
+            >
               <Readable>{renderRemainingRoundsIcon(trait.remaining)}</Readable>
               <Readable>
                 <Accent color="contrast">{trait.display}</Accent>: {trait.description}

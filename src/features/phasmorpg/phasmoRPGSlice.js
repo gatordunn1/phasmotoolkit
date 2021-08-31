@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { initialState } from "./constants";
 import { nanoid } from "nanoid";
+import { mapIdList } from "./data/maps";
 
 const getActiveCharacter = (state) => state.characters.find((character) => character.isActive);
 
@@ -98,6 +99,29 @@ export const phasmoRPGSlice = createSlice({
     deleteCharacter: (state, action) => {
       state.characters = state.characters.filter((character) => character.id !== action.payload.id);
     },
+    incrementMissionCounter: (state, action) => {
+      const activeCharacterIndex = state.characters.findIndex((c) => c.isActive);
+      let missionCounts = state.characters[activeCharacterIndex].missionCounts;
+
+      try {
+        Object.keys(missionCounts);
+      } catch (e) {
+        missionCounts = mapIdList.reduce(
+          (ids, mapId) => ({
+            ...ids,
+            [mapId]: 0,
+          }),
+          {}
+        );
+      }
+
+      state.characters[activeCharacterIndex].missionCounts = {
+        ...missionCounts,
+        [action.payload]: Number.isInteger(missionCounts[action.payload])
+          ? missionCounts[action.payload] + 1
+          : 1,
+      };
+    },
     saveCharacter: (state, action) => {
       const character = state.characters.find(
         (character) => character.name === action.payload.name
@@ -191,6 +215,7 @@ export const {
   sellItem,
   addRandomTrait,
   deleteCharacter,
+  incrementMissionCounter,
   removeTrait,
   saveCharacter,
   setCharacterActive,
@@ -209,5 +234,8 @@ export const selectActiveCharacter = (state) =>
 export const selectMissionDrawerOpen = (state) => state.phasmoRPG.missionDrawerOpen;
 export const selectHasActiveCharacter = (state) =>
   state.phasmoRPG.characters.filter((c) => c.isActive).length > 0;
+
+export const selectBankedPoints = (state) =>
+  state.phasmoRPG.characters.find((character) => character.isActive).bankedPoints;
 
 export default phasmoRPGSlice.reducer;

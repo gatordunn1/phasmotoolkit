@@ -21,6 +21,7 @@ import { data, Acts } from "./constants";
 import {
   addRandomLoot,
   addRandomTrait,
+  incrementMissionCounter,
   selectActiveCharacter,
   toggleMissionDrawerOpen,
   updateCharacter,
@@ -205,7 +206,7 @@ export default function LogMission() {
 
   const handleRandomTrait = () => {
     // Flip a weighted coin to decide if we even get a trait this time
-    const acquiredTrait = Math.random() < 0.3;
+    const acquiredTrait = Math.random() < 1.0;
 
     // Stop here if we didn't get a trait this time
     if (!acquiredTrait) {
@@ -293,7 +294,7 @@ export default function LogMission() {
     return (basePoints + objectivePoints) * multiplier;
   };
 
-  const handleUpdateCharacter = () => {
+  const handleMissionResults = () => {
     const mission = {
       difficulty: missionDifficulty,
       map: missionMap,
@@ -302,8 +303,6 @@ export default function LogMission() {
 
     const missionPoints = calculateMissionPoints(mission);
     const totalPoints = missionPoints + activeCharacter.bankedPoints;
-
-    const nextLockedMap = activeCharacter.maps.find((map) => !map.unlocked);
 
     const traits = activeCharacter.traits
       .map((trait) => ({
@@ -329,14 +328,15 @@ export default function LogMission() {
       ...activeCharacter,
       difficulty: missionDifficulty,
       bankedPoints: totalPoints,
-      maps: activeCharacter.maps.map((map) => ({
-        ...map,
-        unlockable: nextLockedMap && nextLockedMap.id === map.id && totalPoints >= map.pointCost,
-      })),
       traits,
     };
 
-    dispatch(updateCharacter(updatedCharacter));
+    const appliedCharacter = {
+      ...updateCharacter,
+      ...getAppliedOnGoingEffects(updatedCharacter),
+    };
+
+    dispatch(updateCharacter(appliedCharacter));
 
     dispatch(
       addAlert({
@@ -346,18 +346,116 @@ export default function LogMission() {
     );
   };
 
+  const getAppliedOnGoingEffects = (updatedCharacter) => {
+    const currentEffects = updatedCharacter.traits;
+    let appliedCharacter = { ...updatedCharacter };
+    // Apply any on-going effects
+    for (const effect of currentEffects) {
+      if (effect.onGoingEffect) {
+        const { key, modifier } = effect.onGoingEffect;
+
+        let alertMessageValue;
+        let calculatedModifier;
+        switch (key) {
+          case "loseMoney":
+            calculatedModifier = Math.floor(
+              updatedCharacter.bankedPoints - updatedCharacter.bankedPoints * modifier
+            );
+            alertMessageValue = updatedCharacter.bankedPoints - calculatedModifier;
+
+            break;
+          case "breakItems":
+            calculatedModifier = modifier;
+            alertMessageValue = `${modifier * 100}`;
+            break;
+          default:
+            break;
+        }
+
+        appliedCharacter = {
+          ...appliedCharacter,
+          ...data.onGoingEffects[key](updatedCharacter, calculatedModifier),
+        };
+
+        // if (alertMessageValue) {
+        //   console.log("fuck you fucker fuck", {
+        //     message: data.onGoingEffectMessages[key](alertMessageValue),
+        //     alertMessageValue,
+        //   });
+        //   dispatch(
+        //     addAlert({
+        //       severity: "error",
+        //       message: data.onGoingEffectMessages[key](alertMessageValue),
+        //     })
+        //   );
+        // }
+      }
+      console.log("returning appliedCharacter", appliedCharacter);
+      return appliedCharacter;
+    }
+  };
+
+  const handleOnGoingEffects = () => {
+    const currentEffects = activeCharacter.traits;
+
+    // Apply any on-going effects
+    for (const effect of currentEffects) {
+      if (effect.onGoingEffect) {
+        const { key, modifier } = effect.onGoingEffect;
+
+        let alertMessageValue;
+        let calculatedModifier;
+        switch (key) {
+          case "loseMoney":
+            calculatedModifier = Math.floor(
+              activeCharacter.bankedPoints - activeCharacter.bankedPoints * modifier
+            );
+            alertMessageValue = activeCharacter.bankedPoints - calculatedModifier;
+
+            break;
+          case "loseItems":
+            calculatedModifier = modifier;
+            alertMessageValue = `${modifier * 100}`;
+            break;
+          default:
+            break;
+        }
+
+        const updatedCharacter = data.onGoingEffects[key](activeCharacter, calculatedModifier);
+
+        if (alertMessageValue) {
+          dispatch(
+            addAlert({
+              severity: "error",
+              message: data.onGoingEffectMessages[key](alertMessageValue),
+            })
+          );
+        }
+      }
+    }
+  };
+
   const handleMissionComplete = () => {
     // Close the mission log
     dispatch(toggleMissionDrawerOpen());
 
     // Log the mission outcomes
-    handleUpdateCharacter();
+    handleMissionResults();
 
-    // Randomly acquire 0-1 traits
+    // Randomly acquire 0-1 effects
     handleRandomTrait();
 
     // Randomly acquire 1-many loot items
     handleRandomLoot();
+
+    // Increment mission counter
+    dispatch(incrementMissionCounter(missionMap.id));
+
+    // Apply any on-going effects
+    // handleOnGoingEffects();
+
+    // Store the rolled-up changes
+    // dispatch(updateCharacter(stagedCharacter));
   };
 
   const difficultyOptions = [

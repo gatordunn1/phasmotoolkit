@@ -99,7 +99,7 @@ const maps = [
   unlocked: false,
   unlockable: false,
   pointValue: mapTypes[map.type].pointValue,
-}))
+}));
 
 export const mapCategories = {
   easy: ["tanglewood", "edgefield", "ridgeview"],
@@ -112,5 +112,7 @@ export const mapActList = {
   act2: ["ridgeview", "bleasdale", "brownstone"],
   act3: ["prison", "asylum"],
 };
+
+export const mapIdList = maps.map((map) => map.id);
 
 export default maps;

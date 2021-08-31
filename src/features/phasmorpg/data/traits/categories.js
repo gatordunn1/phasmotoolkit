@@ -1,40 +1,47 @@
 const categories = {
   collector: {
-    display: "Collector",
     description: "Collects things. All the things.",
-    removalCost: 250,
-    duration: -1
-  },
-  obsessive: {
-    display: "Obsessive",
-    description: "Ritualistic, repetitive behaviors.",
-    removalCost: 1250,
+    display: "Collector",
     duration: -1,
+    removalCost: 250
+  },
+  expensive: {
+    description: "Negatively affects player money each round",
+    display: "Expensive",
+    duration: -1,
+    removalCost: 1500
   },
   nervous: {
-    display: "Nervous",
     description: "Accident-prone, high-strung behaviors.",
-    removalCost: 750,
+    display: "Nervous",
     duration: -1,
+    removalCost: 750
+  },
+  obsessive: {
+    description: "Ritualistic, repetitive behaviors.",
+    display: "Obsessive",
+    duration: -1,
+    removalCost: 1250
   },
   reckless: {
-    display: "Reckless",
     description: "Impulsive behaviors and tendencies.",
-    removalCost: 1000,
+    display: "Reckless",
     duration: 3,
+    removalCost: 1000
   },
   silly: {
-    display: "Silly",
     description: "Silly and ludicrous behaviors",
-    removalCost: 500,
+    display: "Silly",
     duration: 3,
+    removalCost: 500
   },
   temporary: {
-    display: "Temporary",
     description: "Temporary effects and events that end on their own.",
-    duration: 1, // Number of missions, default to 1
-    removalCost: 1000,
+    display: "Temporary",
+    duration: 1,
+    // Number of missions, default to 1
+    removalCost: 1000
   }
-};
+}
 
 export default categories;
