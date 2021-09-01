@@ -19,6 +19,12 @@ const items = [
     type: "evidence",
   },
   {
+    display: "D.O.T.S. Projector",
+    displayShort: "D.O.T.S.",
+    category: categories.starter,
+    type: "evidence",
+  },
+  {
     display: "Photo Camera",
     displayShort: "Photo",
     category: categories.starter,

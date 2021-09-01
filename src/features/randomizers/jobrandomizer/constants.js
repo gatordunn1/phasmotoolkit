@@ -116,6 +116,13 @@ export const itemTypes = {
 
 export const itemList = [
   {
+    display: "D.O.T.S. Projector",
+    displayShort: "D.O.T.S.",
+    category: itemCategories.starter,
+    type: itemTypes.evidence,
+    section: sectionTypes.evidence,
+  },
+  {
     display: "Spirit Box",
     displayShort: "Spirit Box",
     category: itemCategories.starter,
