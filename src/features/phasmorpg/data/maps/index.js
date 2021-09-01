@@ -37,6 +37,7 @@ export const iconMapMap = {
   tanglewood: <HomeIcon />,
   edgefield: <HomeIcon />,
   ridgeview: <HomeIcon />,
+  willow: <HomeIcon />,
   grafton: <Icon path={mdiTractor} title="Spirit Box" size={1} aria-hidden={true} />,
   bleasdale: <Icon path={mdiTractor} title="Spirit Box" size={1} aria-hidden={true} />,
   brownstone: <SchoolIcon />,
@@ -65,6 +66,12 @@ const maps = [
     act: "act1",
   },
   {
+    id: "willow",
+    display: "Willow",
+    type: "street",
+    act: "act2",
+  },
+  {
     id: "grafton",
     display: "Grafton",
     type: "farm",
@@ -80,7 +87,7 @@ const maps = [
     id: "brownstone",
     display: "High School",
     type: "school",
-    act: "act2",
+    act: "act3",
   },
   {
     id: "prison",
@@ -103,14 +110,14 @@ const maps = [
 
 export const mapCategories = {
   easy: ["tanglewood", "edgefield", "ridgeview"],
-  medium: ["grafton", "bleasdale", "brownstone"],
-  hard: ["prison", "asylum"],
+  medium: ["willow", "grafton", "bleasdale"],
+  hard: ["brownstone", "prison", "asylum"],
 };
 
 export const mapActList = {
-  act1: ["tanglewood", "edgefield", "grafton"],
-  act2: ["ridgeview", "bleasdale", "brownstone"],
-  act3: ["prison", "asylum"],
+  act1: ["tanglewood", "edgefield", "ridgeview"],
+  act2: ["willow", "grafton", "bleasdale"],
+  act3: ["brownstone", "prison", "asylum"],
 };
 
 export default maps;

@@ -221,7 +221,7 @@ const loot = [
     displayShort: "Mobile",
     category: categories.loot,
     type: "hqloot",
-    allowedMaps: ["tanglewood", "edgefield", "ridgeview"],
+    allowedMaps: ["tanglewood", "edgefield", "ridgeview", "willow"],
   },
   {
     display: "Dirty Wallet",
@@ -256,14 +256,14 @@ const loot = [
     displayShort: "Laptop",
     category: categories.loot,
     type: "hqloot",
-    allowedMaps: ["tanglewood", "edgefield", "ridgeview"],
+    allowedMaps: ["tanglewood", "edgefield", "ridgeview", "willow"],
   },
   {
     display: "Dinner Plates",
     displayShort: "Plates",
     category: categories.loot,
     type: "lqloot",
-    allowedMaps: ["tanglewood", "edgefield", "ridgeview"],
+    allowedMaps: ["tanglewood", "edgefield", "ridgeview", "willow"],
   },
   {
     display: "Old Donut",
@@ -289,14 +289,14 @@ const loot = [
     displayShort: "Mugs",
     category: categories.loot,
     type: "lqloot",
-    allowedMaps: ["tanglewood", "edgefield", "ridgeview"],
+    allowedMaps: ["tanglewood", "edgefield", "ridgeview", "willow"],
   },
   {
     display: "Voodoo Doll",
     displayShort: "Voodoo Doll",
     category: categories.loot,
     type: "hqloot",
-    allowedMaps: ["grafton", "bleasdale"],
+    allowedMaps: ["grafton", "bleasdale", "willow"],
     dropChance: 0.15,
     pointValues: {
       buy: 99999,

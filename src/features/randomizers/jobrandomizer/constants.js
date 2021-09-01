@@ -383,6 +383,10 @@ export const locationList = [
     type: locationTypes.road,
   },
   {
+    display: "Willow Street House",
+    type: locationTypes.street,
+  },
+  {
     display: "Grafton Farmhouse",
     type: locationTypes.farm,
   },

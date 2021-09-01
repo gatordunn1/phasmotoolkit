@@ -216,6 +216,7 @@ export default function CharacterPreview() {
     tanglewood: React.useRef(null),
     ridgeview: React.useRef(null),
     edgefield: React.useRef(null),
+    willow: React.useRef(null),
     bleasdale: React.useRef(null),
     grafton: React.useRef(null),
     brownstone: React.useRef(null),
