@@ -58,9 +58,9 @@ const useStyles = makeStyles((theme) => ({
     justifyItems: "stretch",
     gap: "10px",
     width: "95vw",
-    gridTemplateColumns: "repeat(2, 1fr)",
+    gridTemplateColumns: "repeat(4, 1fr)",
     [theme.breakpoints.up("md")]: {
-      gridTemplateColumns: "repeat(7, 1fr)",
+      gridTemplateColumns: "repeat(4, 1fr)",
       gap: "20px",
     },
   },

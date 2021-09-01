@@ -10,7 +10,7 @@ import Grid from "@material-ui/core/Grid";
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "95vw",
-    margin: '10px 0 10px 0 ',
+    margin: "10px 0 10px 0 ",
   },
   icon: {
     float: "left",
@@ -84,9 +84,14 @@ export default function Evidence() {
 
   return (
     <div className={classes.root}>
-      <Grid container spacing={2}>
+      <Grid alignItems="stretch" container spacing={2}>
         {evidence.map((e) => (
-          <Grid key={e.id} item xs={6} sm={4} onClick={() => isPossible(e) && dispatch(cycle(e))}>
+          <Grid
+            key={e.id}
+            item
+            sm={e.id === "dotsprojector" ? 12 : 6}
+            onClick={() => isPossible(e) && dispatch(cycle(e))}
+          >
             <Paper
               className={classNames(classes.paper, {
                 [classes.included]: !!isIncluded(e),

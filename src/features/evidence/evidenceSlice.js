@@ -5,12 +5,14 @@ import FingerprintIcon from "@material-ui/icons/Fingerprint";
 import Icon from '@mdi/react'
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import SettingsInputAntennaIcon from "@material-ui/icons/SettingsInputAntenna";
+import DragIndicatorIcon from '@material-ui/icons/DragIndicator';
 import VideocamIcon from "@material-ui/icons/Videocam";
 
 import { initialState } from "./constants";
 
 export const iconMap = (id) => {
   const map = {
+    dotsprojector: () => <DragIndicatorIcon />,
     emflevel5: () => <SettingsInputAntennaIcon />,
     fingerprints: () => <FingerprintIcon />,
     freezingtemperatures: () => <AcUnitIcon />,

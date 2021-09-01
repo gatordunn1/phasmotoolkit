@@ -1,5 +1,10 @@
 const evidence = [
   {
+    id: "dotsprojector",
+    long: "D.O.T.S. Projector",
+    short: "D.O.T.S. Projector",
+  },
+  {
     id: "emflevel5",
     long: "EMF Level 5",
     short: "EMF 5",
