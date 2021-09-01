@@ -84,12 +84,14 @@ export default function Evidence() {
 
   return (
     <div className={classes.root}>
-      <Grid alignItems="stretch" container spacing={2}>
+      <Grid lignItems="space-between" container spacing={1}>
         {evidence.map((e) => (
           <Grid
             key={e.id}
             item
-            sm={e.id === "dotsprojector" ? 12 : 6}
+            xs={12}
+            sm={6}
+            md={4}
             onClick={() => isPossible(e) && dispatch(cycle(e))}
           >
             <Paper
