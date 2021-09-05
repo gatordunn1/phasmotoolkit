@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "column",
-    gap: theme.spacing(3),
     backgroundColor: theme.palette.background.papercontrast,
     height: "100%",
     borderRadius: "5px",
@@ -152,17 +151,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     alignContent: "center",
     display: "flex",
-    gap: theme.spacing(1),
     padding: theme.spacing(0.5),
     justifyContent: "space-between",
     border: "2px solid transparent",
     borderRadius: "5px",
-  },
-  mapTile: {
-    margin: theme.spacing(0.5),
-    [theme.breakpoints.up("md")]: {
-      margin: theme.spacing(1),
-    },
   },
   mapUnlocked: {
     color: theme.palette.success.light,
@@ -191,6 +183,12 @@ const useStyles = makeStyles((theme) => ({
   },
   removeTrait: {
     color: theme.palette.error.main,
+  },
+  mapWrapper: {
+    "& > button": {
+      width: "100%",
+      marginBottom: theme.spacing(3),
+    }
   },
 }));
 
@@ -277,18 +275,20 @@ export default function CharacterPreview() {
                 <Paper
                   key={map.id}
                   component={({ children }) => (
-                    <Button
-                      onClick={() => handleUnlockAttempt(map)}
-                      disabled={map.unlocked || !map.unlockable}
-                      className={clsx(classes.mapButton, {
-                        [classes.mapButtonLocked]: !map.unlocked,
-                        [classes.mapButtonUnlocked]: map.unlocked,
-                        [classes.mapButtonUnlockable]: map.unlockable,
-                      })}
-                      variant="contained"
-                    >
-                      {children}
-                    </Button>
+                    <span className={classes.mapWrapper}>
+                      <Button
+                        onClick={() => handleUnlockAttempt(map)}
+                        disabled={map.unlocked || !map.unlockable}
+                        variant="contained"
+                        className={clsx(classes.mapButton, {
+                          [classes.mapButtonLocked]: !map.unlocked,
+                          [classes.mapButtonUnlocked]: map.unlocked,
+                          [classes.mapButtonUnlockable]: map.unlockable,
+                        })}
+                      >
+                        {children}
+                      </Button>
+                    </span>
                   )}
                 >
                   <span>

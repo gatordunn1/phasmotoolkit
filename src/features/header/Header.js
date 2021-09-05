@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import BuildIcon from '@material-ui/icons/Build';
+import BuildIcon from "@material-ui/icons/Build";
 import Button from "@material-ui/core/Button";
 import clsx from "clsx";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -86,6 +86,16 @@ const useStyles = makeStyles((theme) => ({
     margin: 0,
     color: theme.palette.text.accent,
   },
+  logShort: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    }
+  },
+  logLong: {
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    }
+  },
   reset: {
     marginLeft: "10px",
   },
@@ -118,7 +128,7 @@ export default function Header() {
   const lastname = useSelector(selectLastname);
   const isVisible = useSelector(selectIsVisible);
   const views = useSelector(selectViews);
-  const hasActiveCharacter = useSelector(selectHasActiveCharacter)
+  const hasActiveCharacter = useSelector(selectHasActiveCharacter);
   const screenExtraSmall = useMediaQuery((theme) => theme.breakpoints.only("xs"));
 
   const handleTogglePhasmoRPG = () => {
@@ -191,7 +201,8 @@ export default function Header() {
             onClick={() => dispatch(toggleMissionDrawerOpen())}
             variant="outlined"
           >
-            Log Mission
+            <span className={classes.logShort}>Log</span>
+            <span className={classes.logLong}>Log Mission</span>
           </Button>
         )}
       </span>
