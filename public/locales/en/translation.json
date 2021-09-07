@@ -1,0 +1,96 @@
+{
+  "actions": {
+    "generateRandomizedJob": "Generate Randomized Job",
+    "randomChallenge": "Click here for a random challenge!",
+    "setName": {
+      "long": "Set Name",
+      "short": "Name"
+    }
+  },
+  "apps": {
+    "rpg": {
+      "name": "PhasmoRPG"
+    },
+    "toolkit": {
+      "name": {
+        "long": "Phasmophobia Toolkit",
+        "short": "Phasmo Kit"
+      }
+    }
+  },
+  "labels": {
+    "bone": "Bone",
+    "close": "Close",
+    "challenges": "Challenges",
+    "chooselanguage": "Choose Language",
+    "deadBody": "Dead Body",
+    "dirtyWater": "Dirty Water",
+    "evidence": "Evidence",
+    "fingerprints": "Fingerprints",
+    "footsteps": "Footsteps",
+    "ghost": "Ghost",
+    "ghosts": "Ghosts",
+    "interaction": "Interaction",
+    "jobs": "Jobs",
+    "lights": "Lights",
+    "location": "Location",
+    "ouijaBoard": "Ouija Board",
+    "photocalculator": {
+      "long": "Photo Calculator",
+      "short": "Photo Calc"
+    },
+    "photocalculatorsubheading": "Click the Stars to Collect Photos",
+    "random": "Random",
+    "resetapp": "Reset App"
+  },
+  "phasmo": {
+    "evidence": {
+      "dotsprojector": {
+        "long": "D.O.T.S. Projector",
+        "short": "D.O.T.S."
+      },
+      "emflevel5": {
+        "long": "EMF Level 5",
+        "short": "EMF 5"
+      },
+      "fingerprints": {
+        "long": "Fingerprints",
+        "short": "Fingerprints"
+      },
+      "freezingtemperatures": {
+        "long": "Freezing Temperatures",
+        "short": "Freezing"
+      },
+      "ghostorbs": {
+        "long": "Ghost Orbs",
+        "short": "Orbs"
+      },
+      "ghostwriting": {
+        "long": "Ghost Writing",
+        "short": "Writing"
+      },
+      "spiritbox": {
+        "long": "Spirit Box",
+        "short": "Spirit Box"
+      }
+    },
+    "ghosts": {
+      "banshee": "Banshee",
+      "demon": "Demon",
+      "goryo": "Goryo",
+      "hantu": "Hantu",
+      "jinn": "Jinn",
+      "mare": "Mare",
+      "myling": "Myling",
+      "oni": "Oni",
+      "phantom": "Phantom",
+      "poltergeist": "Poltergeist",
+      "revenant": "Revenant",
+      "shade": "Shade",
+      "spirit": "Spirit",
+      "wraith": "Wraith",
+      "yokai": "Yokai",
+      "yurei": "Yurei"
+    }
+  }
+}

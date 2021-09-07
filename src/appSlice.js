@@ -18,6 +18,9 @@ export const appSlice = createSlice({
     removeAlert: (state, action) => {
       state.alerts = state.alerts.filter((alert) => alert.id !== action.payload);
     },
+    setLanguage: (state, action) => {
+      state.language = action.payload;
+    },
     toggleModule: (state, action) => ({
       ...state,
       views: {
@@ -50,6 +53,7 @@ export const {
   resetApp,
   addAlert,
   removeAlert,
+  setLanguage,
   toggleModule,
   togglePhasmoRPG,
   toggleTheme,
@@ -58,5 +62,6 @@ export const {
 export const selectViews = (state) => state.app.views;
 export const selectThemeName = (state) => state.app.theme;
 export const selectAlerts = (state) => state.app.alerts;
+export const selectLanguage = (state) => state.app.language;
 
 export default appSlice.reducer;

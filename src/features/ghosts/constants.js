@@ -17,6 +17,7 @@ export const ghostNames = [
 
 export const ghosts = [
   {
+    id: "banshee",
     name: "Banshee",
     description:
       "A Banshee is a natural hunter and will attack anything. It has been known to stalk its prey one at a time until making its kill.",
@@ -26,6 +27,7 @@ export const ghosts = [
     weaknesses: "Banshees fear the Crucifix and will be less aggressive when near one.",
   },
   {
+    id: "demon",
     name: "Demon",
     evidence: ["ghostwriting", "freezingtemperatures", "fingerprints"],
     description:
@@ -39,6 +41,7 @@ export const ghosts = [
       "Asking a Demon successful questions on the Ouija Board won't lower the user's sanity.",
   },
   {
+    id: "goryo",
     name: "Goryo",
     evidence: ["emflevel5", "fingerprints", "dotsprojector"],
     description:
@@ -48,6 +51,7 @@ export const ghosts = [
     weaknesses: "They are rarely seen far from their place of death.",
   },
   {
+    id: "hantu",
     name: "Hantu",
     evidence: ["fingerprints", "ghostorbs", "freezingtemperatures"],
     description:
@@ -57,6 +61,7 @@ export const ghosts = [
     weaknesses: "Moves slower in warmer areas.",
   },
   {
+    id: "jinn",
     name: "Jinn",
     evidence: ["emflevel5", "freezingtemperatures", "fingerprints"],
     description:
@@ -67,6 +72,7 @@ export const ghosts = [
       "Turning off the locations power source will prevent the Jinn from using its ability.",
   },
   {
+    id: "mare",
     name: "Mare",
     evidence: ["ghostwriting", "ghostorbs", "spiritbox"],
     description: "A Mare is the source of all nightmares, making it most powerful in the dark.",
@@ -79,6 +85,7 @@ export const ghosts = [
     weaknesses: "Turning the lights on around the Mare will lower its chance to attack.",
   },
   {
+    id: "myling",
     name: "Myling",
     evidence: ["emflevel5", "fingerprints", "ghostwriting"],
     description:
@@ -90,6 +97,7 @@ export const ghosts = [
     weaknesses: "Mylings more frequently make paranormal sounds.",
   },
   {
+    id: "oni",
     name: "Oni",
     evidence: ["emflevel5", "freezingtemperatures", "dotsprojector"],
     description:
@@ -100,6 +108,7 @@ export const ghosts = [
     weaknesses: "Being more active make the Oni easier to find and identify",
   },
   {
+    id: "phantom",
     name: "Phantom",
     evidence: ["spiritbox", "fingerprints", "dotsprojector"],
     description:
@@ -112,6 +121,7 @@ export const ghosts = [
     weaknesses: "Taking a photo of the Phantom will make it temporarily disappear.",
   },
   {
+    id: "poltergeist",
     name: "Poltergeist",
     evidence: ["ghostwriting", "spiritbox", "fingerprints"],
     description:
@@ -121,6 +131,7 @@ export const ghosts = [
     weaknesses: "A Poltergeist is almost ineffective in an empty room.",
   },
   {
+    id: "revenant",
     name: "Revenant",
     evidence: ["ghostorbs", "ghostwriting", "freezingtemperatures"],
     description:
@@ -134,6 +145,7 @@ export const ghosts = [
     weaknesses: "Hiding from the Revenant will cause it to move very slowly.",
   },
   {
+    id: "shade",
     name: "Shade",
     evidence: ["emflevel5", "freezingtemperatures", "ghostwriting"],
     description:
@@ -143,6 +155,7 @@ export const ghosts = [
     weaknesses: "The Ghost will not enter hunting mode if there is multiple people nearby.",
   },
   {
+    id: "spirit",
     name: "Spirit",
     evidence: ["emflevel5", "ghostwriting", "spiritbox"],
     description:
@@ -154,6 +167,7 @@ export const ghosts = [
     weaknesses: "Using Smudge Sticks on a spirit will stop it attacking for a long period of time.",
   },
   {
+    id: "wraith",
     name: "Wraith",
     evidence: ["emflevel5", "dotsprojector", "spiritbox"],
     description:
@@ -165,6 +179,7 @@ export const ghosts = [
     weaknesses: "Wraiths have a toxic reaction to Salt.",
   },
   {
+    id: "yokai",
     name: "Yokai",
     evidence: ["ghostorbs", "dotsprojector", "spiritbox"],
     description:
@@ -174,6 +189,7 @@ export const ghosts = [
     weaknesses: "When hunting a Yokai can only hear voices close to it.",
   },
   {
+    id: "yurei",
     name: "Yurei",
     evidence: ["freezingtemperatures", "ghostorbs", "dotsprojector"],
     description:

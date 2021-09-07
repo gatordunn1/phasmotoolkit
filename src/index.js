@@ -1,7 +1,7 @@
 import { Provider } from "react-redux";
 import React from "react";
 import ReactDOM from "react-dom";
-
+import "./i18n";
 import { addAlert } from "./appSlice";
 import { hydrate as hydrateAppState } from "./appSlice";
 import { hydrate as hydrateJobsState } from "./features/randomizers/jobrandomizer/jobRandomizerSlice";

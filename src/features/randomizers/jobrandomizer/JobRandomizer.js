@@ -6,6 +6,7 @@ import Icon from "@mdi/react";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
 import Select from "@material-ui/core/Select";
+import { useTranslation } from "react-i18next";
 
 import {
   randomizeJob,
@@ -117,6 +118,7 @@ const SectionCountSelect = ({ context, currentValue, handleChange }) => {
 };
 
 export default function JobRandomizer() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const randomized = useSelector(selectRandomized);
@@ -147,15 +149,15 @@ export default function JobRandomizer() {
   return (
     <div className={classes.root}>
       <Paper className={classes.randomizeAll} onClick={spinTheWheel}>
-        Generate Randomized Job
+        {t('actions.generateRandomizedJob')}
       </Paper>
       <div className={classes.jobGrid}>
         {randomizerSections.map((section) => (
           <div key={section.display} className="section">
             <span className="header">
               <Icon aria-hidden="true" className={"headerIcon"} path={section.iconPath} size={1} />
-              <Readable className="sectionTitle">{section.display}</Readable>
-              {["evidence", "other"].includes(section.id) ? (
+              <Readable className="sectionTitle">{t(`labels.${section.id}`)}</Readable>
+              {["evidence", "random"].includes(section.id) ? (
                 <SectionCountSelect
                   context={section.id}
                   currentValue={randomizedCounts[section.id]}

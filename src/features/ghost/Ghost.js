@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import classNames from "classnames";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { iconMap, selectIncluded } from "../evidence/evidenceSlice";
 import { selectSelected } from "../ghosts/ghostsSlice";
@@ -51,6 +52,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Ghost({ ghost, handleClick }) {
+  const { t } = useTranslation();
   const classes = useStyles();
   const included = useSelector(selectIncluded);
   const selected = useSelector(selectSelected);
@@ -71,7 +73,7 @@ export default function Ghost({ ghost, handleClick }) {
           [classes.selected]: isSelected,
         })}
       >
-        {ghost.name}
+        {t(`phasmo.ghosts.${ghost.id}`)}
       </div>
       <div className={ghost.included ? classes.iconsValid : classes.iconsInvalid}>
         {ghost.evidence.map((ev) => (

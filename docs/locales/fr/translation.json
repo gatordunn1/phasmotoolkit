@@ -1,0 +1,95 @@
+{
+  "actions": {
+    "generateRandomizedJob": "Générer un Travail Aléatoire",
+    "randomChallenge": "Cliquez ici pour un défi aléatoire!",
+    "setName": {
+      "long": "Définir le Nom",
+      "short": "Nom"
+    }
+  },
+  "apps": {
+    "rpg": {
+      "name": "PhasmoRPG"
+    },
+    "toolkit": {
+      "name": {
+        "long": "Phasmophobia Toolkit",
+        "short": "Phasmo Kit"
+      }
+    }
+  },
+  "labels": {
+    "bone": "Bone",
+    "chooselanguage": "Choisissez la Langue",
+    "close": "Fermeture",
+    "deadBody": "Cadavre",
+    "dirtyWater": "Eau Sale",
+    "evidence": "Preuve",
+    "fingerprints": "Empreintes",
+    "footsteps": "Trace de Pas",
+    "ghost": "Fantôme",
+    "ghosts": "Fantômes",
+    "interaction": "Interaction",
+    "jobs": "Travaux",
+    "lights": "Lumières",
+    "location": "Emplacement",
+    "ouijaBoard": "Planche Ouija",
+    "photocalculator": {
+      "long": "Calculatrice de Photos",
+      "short": "Calculatrice"
+    },
+    "photocalculatorsubheading": "Cliquez sur les étoiles pour collecter des photos",
+    "random": "Aléatoire",
+    "resetapp": "Réinitialiser App"
+  },
+  "phasmo": {
+    "evidence": {
+      "dotsprojector": {
+        "long": "D.O.T.S. Projector",
+        "short": "D.O.T.S."
+      },
+      "emflevel5": {
+        "long": "EMF Niveau 5",
+        "short": "EMF 5"
+      },
+      "fingerprints": {
+        "long": "Empreintes Digitales",
+        "short": "Empreintes"
+      },
+      "freezingtemperatures": {
+        "long": "Températures Glaciales",
+        "short": "Glaciales"
+      },
+      "ghostorbs": {
+        "long": "Orbe Fantômatique",
+        "short": "Orbe"
+      },
+      "ghostwriting": {
+        "long": "Écriture Fantômatique",
+        "short": "Écriture"
+      },
+      "spiritbox": {
+        "long": "Spirit Box",
+        "short": "Spirit Box"
+      }
+    },
+    "ghosts": {
+      "banshee": "Banshee",
+      "demon": "Démon",
+      "goryo": "Goryo",
+      "hantu": "Hantu",
+      "jinn": "Jinn",
+      "mare": "Mare",
+      "myling": "Myling",
+      "oni": "Oni",
+      "phantom": "Phantom",
+      "poltergeist": "Poltergeist",
+      "revenant": "Revenant",
+      "shade": "Shade",
+      "spirit": "Spirit",
+      "wraith": "Wraith",
+      "yokai": "Yokai",
+      "yurei": "Yurei"
+    }
+  }
+}

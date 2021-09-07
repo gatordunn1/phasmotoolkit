@@ -8,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import React from "react";
 import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTranslation } from "react-i18next";
 
 import {
   selectFirstname,
@@ -89,12 +90,12 @@ const useStyles = makeStyles((theme) => ({
   logShort: {
     [theme.breakpoints.up("sm")]: {
       display: "none",
-    }
+    },
   },
   logLong: {
     [theme.breakpoints.down("xs")]: {
       display: "none",
-    }
+    },
   },
   reset: {
     marginLeft: "10px",
@@ -122,6 +123,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Header() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const firstname = useSelector(selectFirstname);
@@ -157,6 +159,7 @@ export default function Header() {
             </IconButton>
             <Accent size="0.8em" color="primary">
               Phasmo RPG
+              {t('apps.rpg.name')}
             </Accent>
           </React.Fragment>
         ) : (
@@ -170,7 +173,7 @@ export default function Header() {
               <BuildIcon />
             </IconButton>
             <Accent size="0.8em" color="primary">
-              {screenExtraSmall ? "PhasmoKit" : "Phasmo Toolkit"}
+              {screenExtraSmall ? t('apps.toolkit.name.short') : t('apps.toolkit.name.long')}
             </Accent>
           </React.Fragment>
         )}

@@ -7,17 +7,17 @@ const randomize = (array) => array.sort(() => Math.random() - 0.5);
 const getRandomizedItems = (state) => {
   const availableLocations = state.sectionItems.location.filter((x) => x.enabled && !x.used);
 
-  const availableLights = state.sectionItems.light.filter((x) => x.enabled && !x.used);
+  const availableLights = state.sectionItems.lights.filter((x) => x.enabled && !x.used);
 
   const availableEvidence = state.sectionItems.evidence.filter((x) => x.enabled && !x.used);
 
-  const availableOther = state.sectionItems.other.filter((x) => x.enabled && !x.used);
+  const availableOther = state.sectionItems.random.filter((x) => x.enabled && !x.used);
 
   return {
     location: randomize(availableLocations).slice(0, state.randomizedCounts.location),
-    light: randomize(availableLights).slice(0, state.randomizedCounts.light),
+    lights: randomize(availableLights).slice(0, state.randomizedCounts.lights),
     evidence: randomize(availableEvidence).slice(0, state.randomizedCounts.evidence),
-    other: randomize(availableOther).slice(0, state.randomizedCounts.other),
+    random: randomize(availableOther).slice(0, state.randomizedCounts.random),
   };
 };
 
@@ -41,7 +41,7 @@ export const jobRandomizerSlice = createSlice({
       state.randomized = randomized;
 
       // Update the list of items to mark the newly generated items as used
-      for (const sectionType of ["location", "light", "evidence", "other"]) {
+      for (const sectionType of ["location", "lights", "evidence", "random"]) {
         state.sectionItems[sectionType] = state.sectionItems[sectionType].map((item) => ({
           ...item,
           used: randomized[sectionType].map((x) => x.id).includes(item.id) ? true : item.used,

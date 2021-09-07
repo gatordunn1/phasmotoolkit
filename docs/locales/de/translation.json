@@ -1,0 +1,95 @@
+{
+  "actions": {
+    "generateRandomizedJob": "Zufälligen Job Generieren",
+    "randomChallenge": "Klicken Sie hier für eine zufällige Herausforderung!",
+    "setName": {
+      "long": "Name einsetzen",
+      "short": "Name"
+    }
+  },
+  "apps": {
+    "rpg": {
+      "name": "PhasmoRPG"
+    },
+    "toolkit": {
+      "name": {
+        "long": "Phasmophobia Toolkit",
+        "short": "Phasmo Kit"
+      }
+    }
+  },
+  "labels": {
+    "bone": "Knochen",
+    "close": "Schließen",
+    "chooselanguage": "Sprache Wählen",
+    "deadBody": "Toter Körper",
+    "dirtyWater": "Schmutziges Wasser",
+    "evidence": "Beweis",
+    "fingerprints": "Fingerabdrücke",
+    "footsteps": "Schritte",
+    "ghost": "Geist",
+    "ghosts": "Geister",
+    "interaction": "Interaktion",
+    "jobs": "Arbeitsplätze",
+    "lights": "Beleuchtung",
+    "location": "Standort",
+    "ouijaBoard": "Ouija-Brett",
+    "photocalculator": {
+      "long": "Fotorechner",
+      "short": "Fotorechner"
+    },
+    "photocalculatorsubheading": "Klicken Sie auf die Sterne, um Fotos zu sammeln",
+    "random": "Willkürlich",
+    "resetapp": "App zurücksetzen"
+  },
+  "phasmo": {
+    "evidence": {
+      "dotsprojector": {
+        "long": "D.O.T.S. Projector",
+        "short": "D.O.T.S."
+      },
+      "emflevel5": {
+        "long": "EMF-Stufe 5",
+        "short": "EMF 5"
+      },
+      "fingerprints": {
+        "long": "Fingerabdrücke",
+        "short": "Fingerabdrücke"
+      },
+      "freezingtemperatures": {
+        "long": "Eisige Temperaturen",
+        "short": "Einfrieren"
+      },
+      "ghostorbs": {
+        "long": "Geisterkugeln",
+        "short": "Kugeln"
+      },
+      "ghostwriting": {
+        "long": "Geistschreiben",
+        "short": "Schreiben"
+      },
+      "spiritbox": {
+        "long": "Geisterkiste",
+        "short": "Geisterkiste"
+      }
+    },
+    "ghosts": {
+      "banshee": "Banshee",
+      "demon": "Demon",
+      "goryo": "Goryo",
+      "hantu": "Hantu",
+      "jinn": "Jinn",
+      "mare": "Mare",
+      "myling": "Myling",
+      "oni": "Oni",
+      "phantom": "Phantom",
+      "poltergeist": "Poltergeist",
+      "revenant": "Revenant",
+      "shade": "Shade",
+      "spirit": "Spirit",
+      "wraith": "Wraith",
+      "yokai": "Yokai",
+      "yurei": "Yurei"
+    }
+  }
+}

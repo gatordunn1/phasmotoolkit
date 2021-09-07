@@ -1,25 +1,29 @@
-import { makeStyles } from "@material-ui/core/styles";
-import { useSelector, useDispatch } from "react-redux";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import { makeStyles } from "@material-ui/core/styles";
 import MoneyOffIcon from "@material-ui/icons/MoneyOff";
-import React from "react";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
-
+import clsx from "clsx";
+import React from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
 import Accent from "../../common/Accent";
 import IconButton from "../../common/IconButton";
 import Readable from "../../common/Readable";
-
+import { photoDistances } from "./constants";
 import {
   addPhoto,
   reset as resetPhotoCalculator,
+
+
+  selectPhotoCount,
   // selectCollectedPhotos,
   selectPhotos,
-  selectPhotoCount,
-  selectTotalValue,
+
+  selectTotalValue
 } from "./photoCalculatorSlice";
-import { photoDistances } from "./constants";
-import clsx from "clsx";
+
+
 
 const useStyles = makeStyles((theme) => ({
   disabled: {
@@ -111,6 +115,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PhotoCalculator() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   // const collectedPhotos = useSelector(selectCollectedPhotos);
@@ -171,7 +176,7 @@ export default function PhotoCalculator() {
   return (
     <div className={classes.root}>
       <div className={classes.title}>
-        Photo Calculator
+        {t('labels.photocalculator.long')}
         <IconButton
           className={clsx(classes.resetButton, { [classes.resetButtonActive]: totalValue > 0 })}
           onClick={handleResetClick}

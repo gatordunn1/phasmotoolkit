@@ -6,6 +6,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
+import { useTranslation } from "react-i18next";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -55,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Evidence() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const ghosts = useSelector(selectGhosts);
@@ -84,7 +86,7 @@ export default function Evidence() {
 
   return (
     <div className={classes.root}>
-      <Grid lignItems="space-between" container spacing={1}>
+      <Grid container spacing={1}>
         {evidence.map((e) => (
           <Grid
             key={e.id}
@@ -102,7 +104,8 @@ export default function Evidence() {
               })}
             >
               <span className={classes.icon}>{iconMap(e.id)}</span>
-              {e.short}
+              {/* {e.short} */}
+              {t(`phasmo.evidence.${e.id}.short`)}
             </Paper>
           </Grid>
         ))}

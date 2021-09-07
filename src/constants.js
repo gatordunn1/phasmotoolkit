@@ -1,6 +1,7 @@
 export const initialState = {
   alerts: [],
   theme: "dark",
+  language: "en",
   views: {
     challenges: true,
     evidence: true,

@@ -8,6 +8,7 @@ import Drawer from "@material-ui/core/Drawer";
 import Icon from "@mdi/react";
 import React from "react";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTranslation } from "react-i18next";
 
 import Readable from "../../common/Readable";
 
@@ -128,6 +129,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function GhostNameMenu() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const firstnameLetters = useSelector(selectFirstnameLetters);
@@ -182,7 +184,7 @@ export default function GhostNameMenu() {
           startIcon={<Icon aria-hidden={true} path={mdiGhost} title="Ghost Name" size={1} />}
           onClick={() => setDrawerOpen(!drawerOpen)}
         >
-          <Readable>{screenExtraSmall ? "Name" : "Set Name"}</Readable>
+          <Readable>{screenExtraSmall ? t('actions.setName.short') : t('actions.setName.long')}</Readable>
         </Button>
         {isVisible && (
           <Drawer anchor={"left"} open={drawerOpen} variant="persistent">

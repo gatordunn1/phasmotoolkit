@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import React from "react";
+import React, { Suspense } from "react";
 
 import { selectThemeName, selectViews } from "./appSlice";
 import ChallengeRandomizer from "./features/randomizers/challenges/ChallengeRandomizer";
@@ -20,21 +20,23 @@ function App() {
   const themeName = useSelector(selectThemeName);
   return (
     <Theme themeName={themeName}>
-      <div className="App">
-        <header className="App-header">
-          <Header />
-          {views.ghostName && <GhostName />}
-        </header>
-        <main className="App-main">
-          {views.evidence && <Evidence />}
-          {views.ghosts && <Ghosts />}
-          {views.phasmorpg && <PhasmoRPG />}
-          {views.challenges && <ChallengeRandomizer />}
-          {views.jobs && <JobRandomizer />}
-          {views.photocalculator && <PhotoCalculator />}
-          <Alerts />
-        </main>
-      </div>
+      <Suspense fallback="loading">
+        <div className="App">
+          <header className="App-header">
+            <Header />
+            {views.ghostName && <GhostName />}
+          </header>
+          <main className="App-main">
+            {views.evidence && <Evidence />}
+            {views.ghosts && <Ghosts />}
+            {views.phasmorpg && <PhasmoRPG />}
+            {views.challenges && <ChallengeRandomizer />}
+            {views.jobs && <JobRandomizer />}
+            {views.photocalculator && <PhotoCalculator />}
+            <Alerts />
+          </main>
+        </div>
+      </Suspense>
     </Theme>
   );
 }

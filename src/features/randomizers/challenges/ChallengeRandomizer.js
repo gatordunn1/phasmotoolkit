@@ -5,6 +5,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import Icon from "@mdi/react";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Typography from "@material-ui/core/Typography";
 import Drawer from "@material-ui/core/Drawer";
 
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     gap: "10px",
     "&:hover": {
       color: theme.palette.action.hover,
-    }
+    },
   },
   editOptions: {
     alignSelf: "center",
@@ -76,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function ChallengeRandomizer() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const challenges = useSelector(selectChallenges);
@@ -114,10 +116,7 @@ export default function ChallengeRandomizer() {
           <span className={classes.iconGroup}>
             <EditIcon className={classes.editOptions} onClick={toggleDrawer(true)} />
           </span>
-          <span
-            className={classes.spinner}
-            onClick={spinTheWheel}
-          >
+          <span className={classes.spinner} onClick={spinTheWheel}>
             {randomized && randomized.display ? (
               <span key={randomized.id} className={classes.randomChallenge}>
                 <Readable className={classes.challengeText}>
@@ -126,12 +125,8 @@ export default function ChallengeRandomizer() {
               </span>
             ) : (
               <Readable className={classes.challengeText}>
-                <Icon
-                  className={classes.icon}
-                  path={mdiSlotMachineOutline}
-                  size={1}
-                />
-                <Accent>Click here for a random challenge!</Accent>
+                <Icon className={classes.icon} path={mdiSlotMachineOutline} size={1} />
+                <Accent>{t("actions.randomChallenge")}</Accent>
               </Readable>
             )}
           </span>

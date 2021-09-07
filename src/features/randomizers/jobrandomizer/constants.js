@@ -8,7 +8,7 @@ export const randomizerSections = [
     iconPath: mdiHomeCity,
   },
   {
-    id: "light",
+    id: "lights",
     display: "Lights",
     iconPath: mdiFlashlight,
   },
@@ -18,7 +18,7 @@ export const randomizerSections = [
     iconPath: mdiMagnify,
   },
   {
-    id: "other",
+    id: "random",
     display: "Random",
     iconPath: mdiCrosshairsQuestion,
   },
@@ -29,17 +29,17 @@ export const sectionTypes = {
     id: "location",
     display: "Location",
   },
-  light: {
-    id: "light",
+  lights: {
+    id: "lights",
     display: "Light",
   },
   evidence: {
     id: "evidence",
     display: "Evidence",
   },
-  other: {
-    id: "other",
-    display: "other",
+  random: {
+    id: "random",
+    display: "random",
   },
   hidden: {
     id: "hidden",
@@ -71,9 +71,9 @@ export const itemTypeDescriptions = {
   objectives: "Items used for completing objectives",
   photos: "Items worth photo money",
   junk: "Useless crap or favored treasure?",
-  light: "Light sources",
+  lights: "Light sources",
   tools: "Items that are useful for general gameplay",
-  other: "Everything else!",
+  random: "Everything else!",
 };
 
 export const itemTypes = {
@@ -92,10 +92,10 @@ export const itemTypes = {
     display: "Tools",
     description: itemTypeDescriptions.tools,
   },
-  light: {
-    id: "light",
+  lights: {
+    id: "lights",
     display: "Lights",
-    description: itemTypeDescriptions.light,
+    description: itemTypeDescriptions.lights,
   },
   junk: {
     id: "junk",
@@ -107,10 +107,10 @@ export const itemTypes = {
     display: "Photos",
     description: itemTypeDescriptions.photos,
   },
-  other: {
-    id: "other",
+  random: {
+    id: "random",
     display: "Other",
-    description: itemTypeDescriptions.other,
+    description: itemTypeDescriptions.random,
   },
 };
 
@@ -141,7 +141,7 @@ export const itemList = [
     displayShort: "Photo",
     category: itemCategories.starter,
     type: itemTypes.objectives,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "EMF Reader",
@@ -168,8 +168,8 @@ export const itemList = [
     display: "Flashlight",
     displayShort: "Light",
     category: itemCategories.starter,
-    type: itemTypes.light,
-    section: sectionTypes.light,
+    type: itemTypes.lights,
+    section: sectionTypes.lights,
   },
   {
     display: "Objective Board",
@@ -238,42 +238,42 @@ export const itemList = [
     display: "Candle",
     displayShort: "Candle",
     category: itemCategories.store,
-    type: itemTypes.light,
-    section: sectionTypes.light,
+    type: itemTypes.lights,
+    section: sectionTypes.lights,
   },
   {
     display: "Crucifix",
     displayShort: "Crucifix",
     category: itemCategories.store,
     type: itemTypes.tools,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "Glow Stick",
     displayShort: "Glow Stick",
     category: itemCategories.store,
     type: itemTypes.evidence,
-    section: sectionTypes.light,
+    section: sectionTypes.lights,
   },
   {
     display: "Head Mounted Camera",
     displayShort: "Head Cam",
     category: itemCategories.store,
     type: itemTypes.junk,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "Infrared Light Sensor",
     displayShort: "Light Sensor",
     category: itemCategories.store,
     type: itemTypes.junk,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "Lighter",
     displayShort: "Lighter",
     category: itemCategories.store,
-    type: itemTypes.light,
+    type: itemTypes.lights,
     section: sectionTypes.hidden,
   },
   {
@@ -281,49 +281,49 @@ export const itemList = [
     displayShort: "Motion Sensor",
     category: itemCategories.store,
     type: itemTypes.objectives,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "Parabolic Microphone",
     displayShort: "Parabolic",
     category: itemCategories.store,
     type: itemTypes.objectives,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "Salt Shaker",
     displayShort: "Salt",
     category: itemCategories.store,
     type: itemTypes.objectives,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "Sanity Pills",
     displayShort: "Pills",
     category: itemCategories.store,
     type: itemTypes.tools,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "Smudge Sticks",
     displayShort: "Smudge",
     category: itemCategories.store,
     type: itemTypes.objectives,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "Sound Sensor",
     displayShort: "Sound Sensor",
     category: itemCategories.store,
     type: itemTypes.junk,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "Strong Flashlight",
     displayShort: "Strong Light",
     category: itemCategories.store,
-    type: itemTypes.light,
-    section: sectionTypes.light,
+    type: itemTypes.lights,
+    section: sectionTypes.lights,
   },
   {
     display: "Thermometer",
@@ -337,14 +337,14 @@ export const itemList = [
     displayShort: "Tripod",
     category: itemCategories.store,
     type: itemTypes.junk,
-    section: sectionTypes.other,
+    section: sectionTypes.random,
   },
   {
     display: "None",
     displayShort: "None",
     category: itemCategories.hidden,
     type: itemTypes.junk,
-    section: sectionTypes.light,
+    section: sectionTypes.lights,
   },
 ].map((x) => ({
   ...x,
@@ -423,20 +423,20 @@ export const locationList = [
 export const initialState = {
   sectionItems: {
     location: locationList,
-    light: itemList.filter((x) => x.section.id === "light"),
+    lights: itemList.filter((x) => x.section.id === "lights"),
     evidence: itemList.filter((x) => x.section.id === "evidence"),
-    other: itemList.filter((x) => x.section.id === "other"),
+    random: itemList.filter((x) => x.section.id === "random"),
   },
   randomizedCounts: {
     location: 1,
-    light: 1,
+    lights: 1,
     evidence: 2,
-    other: 4,
+    random: 4,
   },
   randomized: {
     location: [],
-    light: [],
+    lights: [],
     evidence: [],
-    other: [],
+    random: [],
   },
 };
