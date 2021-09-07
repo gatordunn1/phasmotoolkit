@@ -22,8 +22,8 @@
     "bone": "Knochen",
     "close": "Schließen",
     "chooselanguage": "Sprache Wählen",
-    "deadBody": "Toter Körper",
-    "dirtyWater": "Schmutziges Wasser",
+    "deadbody": "Toter Körper",
+    "dirtywater": "Schmutziges Wasser",
     "evidence": "Beweis",
     "fingerprints": "Fingerabdrücke",
     "footsteps": "Schritte",
@@ -33,7 +33,7 @@
     "jobs": "Arbeitsplätze",
     "lights": "Beleuchtung",
     "location": "Standort",
-    "ouijaBoard": "Ouija-Brett",
+    "ouijaboard": "Ouija-Brett",
     "photocalculator": {
       "long": "Fotorechner",
       "short": "Fotorechner"

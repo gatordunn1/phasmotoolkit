@@ -158,7 +158,6 @@ export default function Header() {
               <SupervisedUserCircleIcon />
             </IconButton>
             <Accent size="0.8em" color="primary">
-              Phasmo RPG
               {t('apps.rpg.name')}
             </Accent>
           </React.Fragment>

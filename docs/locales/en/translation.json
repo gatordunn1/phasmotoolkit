@@ -23,8 +23,8 @@
     "close": "Close",
     "challenges": "Challenges",
     "chooselanguage": "Choose Language",
-    "deadBody": "Dead Body",
-    "dirtyWater": "Dirty Water",
+    "deadbody": "Dead Body",
+    "dirtywater": "Dirty Water",
     "evidence": "Evidence",
     "fingerprints": "Fingerprints",
     "footsteps": "Footsteps",
@@ -34,7 +34,7 @@
     "jobs": "Jobs",
     "lights": "Lights",
     "location": "Location",
-    "ouijaBoard": "Ouija Board",
+    "ouijaboard": "Ouija Board",
     "photocalculator": {
       "long": "Photo Calculator",
       "short": "Photo Calc"

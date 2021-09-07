@@ -203,7 +203,7 @@ export default function PhotoCalculator() {
             })}
             key={photoType.id}
           >
-            <span className={classes.photoTypes}>{photoType.display}</span>
+            <span className={classes.photoTypes}>{t(photoType.i18nKey)}</span>
             {/* <span className={classes.disablePhotoType}>
               {["bone", "ouijaboard"].includes(photoType.id) && (
                 <IconButton

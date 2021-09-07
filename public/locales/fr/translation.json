@@ -22,8 +22,8 @@
     "bone": "Bone",
     "chooselanguage": "Choisissez la Langue",
     "close": "Fermeture",
-    "deadBody": "Cadavre",
-    "dirtyWater": "Eau Sale",
+    "deadbody": "Cadavre",
+    "dirtywater": "Eau Sale",
     "evidence": "Preuve",
     "fingerprints": "Empreintes",
     "footsteps": "Trace de Pas",
@@ -33,7 +33,7 @@
     "jobs": "Travaux",
     "lights": "Lumières",
     "location": "Emplacement",
-    "ouijaBoard": "Planche Ouija",
+    "ouijaboard": "Planche Ouija",
     "photocalculator": {
       "long": "Calculatrice de Photos",
       "short": "Calculatrice"

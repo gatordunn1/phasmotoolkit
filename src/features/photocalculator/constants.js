@@ -44,41 +44,49 @@ export const photoValues = {
 export const photoDetails = [
   {
     id: "ghost",
+    i18nKey: "labels.ghost",
     display: "Ghost",
     limit: 1,
   },
   {
     id: "bone",
+    i18nKey: "labels.bone",
     display: "Bone",
     limit: 1,
   },
   {
     id: "ouijaboard",
+    i18nKey: "labels.ouijaboard",
     display: "Ouija Board",
     limit: 1,
   },
   {
     id: "fingerprints",
+    i18nKey: "labels.fingerprints",
     display: "Fingerprints",
     limit: 10,
   },
   {
     id: "interaction",
+    i18nKey: "labels.interaction",
     display: "Interaction",
     limit: 10,
   },
   {
     id: "footsteps",
+    i18nKey: "labels.footsteps",
     display: "Footsteps",
     limit: 10,
   },
   {
     id: "dirtywater",
+    i18nKey: "labels.dirtywater",
     display: "Dirty Water",
     limit: 10,
   },
   {
     id: "deadbody",
+    i18nKey: "labels.deadbody",
     display: "Dead Body",
     limit: 3,
   },
