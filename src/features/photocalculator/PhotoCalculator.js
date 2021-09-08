@@ -188,7 +188,7 @@ export default function PhotoCalculator() {
       </div>
       <div className={classes.subtitle}>
         <Readable>
-          Click the Stars to Collect Photos |{" "}
+          {t('labels.photocalculatorsubheading')} |{" "}
           <Accent>
             ${totalValue}
           </Accent>{" "}

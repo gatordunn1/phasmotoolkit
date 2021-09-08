@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Backdrop from "@material-ui/core/Backdrop";
 import Paper from "@material-ui/core/Paper";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 import { iconMap, selectExcluded, selectIncluded } from "../evidence/evidenceSlice";
 import { selectGhosts, selectSelected, setActiveGhost, updateGhosts } from "./ghostsSlice";
@@ -108,6 +109,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Ghosts() {
+  const { t } = useTranslation();
   const classes = useStyles();
   const dispatch = useDispatch();
   const ghosts = useSelector(selectGhosts);
@@ -139,7 +141,7 @@ export default function Ghosts() {
     <div className={classes.root}>
       <Paper square className={classes.ghosts}>
         {ghosts.map((ghost) => {
-          return <Ghost key={ghost.name} ghost={ghost} handleClick={handleClick} />;
+          return <Ghost key={ghost.id} ghost={ghost} handleClick={handleClick} />;
         })}
       </Paper>
       <Backdrop className={classes.backdrop} open={open} onClick={handleClose}>
@@ -150,7 +152,7 @@ export default function Ghosts() {
                 <div className={classes.ghostHeader}>
                   <span className={classes.ghostName}>
                     <Accent color="accent">
-                      <Readable>{selectedGhost.name}</Readable>
+                      <Readable>{t(`${selectedGhost.i18nKey}.name`)}</Readable>
                     </Accent>
                   </span>
                   <span className={classes.ghostIcons}>
@@ -166,20 +168,20 @@ export default function Ghosts() {
                   </span>
                 </div>
                 <div className={classes.description}>
-                  <Accent color="secondary">{selectedGhost.description}</Accent>
+                  <Accent color="secondary">{t(`${selectedGhost.i18nKey}.description`)}</Accent>
                 </div>
                 <div className={classes.labeled}>
-                  <Accent color="contrast">Unique Strengths</Accent>
-                  <span>{selectedGhost.strengths}</span>
+                  <Accent color="contrast">{t('labels.uniquestrengths')}</Accent>
+                  <span>{t(`${selectedGhost.i18nKey}.strengths`)}</span>
                 </div>
                 <div className={classes.labeled}>
-                  <Accent color="contrast">Weaknesses</Accent>
-                  <span>{selectedGhost.weaknesses}</span>
+                  <Accent color="contrast">{t('labels.weaknesses')}</Accent>
+                  <span>{t(`${selectedGhost.i18nKey}.weaknesses`)}</span>
                 </div>
-                {selectedGhost.secondaryEvidence.map((secondaryEvidence, index) => (
+                {selectedGhost.secondaryEvidencei18nKeys.map((secondaryEvidencei18nKey, index) => (
                   <div key={`secondaryEvidence_${index}`} className={classes.labeled}>
-                    <Accent color="contrast">Secondary Evidence</Accent>
-                    <span>{secondaryEvidence}</span>
+                    <Accent color="contrast">{t('labels.secondaryevidence')}</Accent>
+                    <span>{t(`phasmo.secondaryEvidence.${secondaryEvidencei18nKey}`)}</span>
                   </div>
                 ))}
               </div>

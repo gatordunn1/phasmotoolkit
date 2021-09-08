@@ -157,6 +157,7 @@ export default function SiteMenu() {
     dispatch(resetPhasmoRPG());
     setState({ ...state, right: false });
     localStorage.removeItem(LOCAL_STORAGE_KEY);
+    i18n.changeLanguage('en');
   };
 
   const clearEvidence = () => {

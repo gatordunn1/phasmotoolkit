@@ -73,7 +73,7 @@ export default function Ghost({ ghost, handleClick }) {
           [classes.selected]: isSelected,
         })}
       >
-        {t(`phasmo.ghosts.${ghost.id}`)}
+        {t(`${ghost.i18nKey}.name`)}
       </div>
       <div className={ghost.included ? classes.iconsValid : classes.iconsInvalid}>
         {ghost.evidence.map((ev) => (
