@@ -64,6 +64,13 @@ export const ghosts = [
     secondaryEvidencei18nKeys: ["myling1"],
   },
   {
+    id: "obake",
+    i18nKey: "phasmo.ghosts.obake",
+    name: "Obake",
+    evidence: ["emflevel5", "ghostorbs", "fingerprints"],
+    secondaryEvidencei18nKeys: ["obake1", "obake2"],
+  },
+  {
     id: "oni",
     i18nKey: "phasmo.ghosts.oni",
     name: "Oni",
@@ -85,6 +92,13 @@ export const ghosts = [
     secondaryEvidencei18nKeys: ["poltergeist1"],
   },
   {
+    id: "raiju",
+    i18nKey: "phasmo.ghosts.raiju",
+    name: "Raiju",
+    evidence: ["emflevel5", "ghostorbs", "dotsprojector"],
+    secondaryEvidencei18nKeys: ["raiju1"],
+  },
+  {
     id: "revenant",
     i18nKey: "phasmo.ghosts.revenant",
     name: "Revenant",
@@ -104,6 +118,13 @@ export const ghosts = [
     name: "Spirit",
     evidence: ["emflevel5", "ghostwriting", "spiritbox"],
     secondaryEvidencei18nKeys: ["spirit1"],
+  },
+  {
+    id: "thetwins",
+    i18nKey: "phasmo.ghosts.thetwins",
+    name: "The Twins",
+    evidence: ["emflevel5", "spiritbox", "freezingtemperatures"],
+    secondaryEvidencei18nKeys: ["oni1"],
   },
   {
     id: "wraith",

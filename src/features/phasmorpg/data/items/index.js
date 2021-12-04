@@ -227,7 +227,7 @@ const loot = [
     displayShort: "Mobile",
     category: categories.loot,
     type: "hqloot",
-    allowedMaps: ["tanglewood", "edgefield", "ridgeview", "willow"],
+    allowedMaps: ["tanglewood", "edgefield", "maplelodge", "ridgeview", "willow"],
   },
   {
     display: "Dirty Wallet",
@@ -283,7 +283,7 @@ const loot = [
     displayShort: "Moon Lamp",
     category: categories.loot,
     type: "hqloot",
-    allowedMaps: ["ridgeview"],
+    allowedMaps: ["ridgeview", "maplelodge"],
     dropChance: 0.15,
     pointValues: {
       buy: 99999,
@@ -302,7 +302,7 @@ const loot = [
     displayShort: "Voodoo Doll",
     category: categories.loot,
     type: "hqloot",
-    allowedMaps: ["grafton", "bleasdale", "willow"],
+    allowedMaps: ["grafton", "maplelodge", "bleasdale", "willow"],
     dropChance: 0.15,
     pointValues: {
       buy: 99999,
@@ -389,6 +389,18 @@ const loot = [
     pointValues: {
       buy: 99999,
       sell: 2000,
+    },
+  },
+  {
+    display: "Used Hockey Mask",
+    displayShort: "Hockey Mask",
+    category: categories.loot,
+    type: "hqloot",
+    allowedMaps: ["maplelodge"],
+    dropChance: 0.15,
+    pointValues: {
+      buy: 99999,
+      sell: 2500,
     },
   },
 ].map((x) => ({

@@ -35,6 +35,7 @@
     "lights": "Lights",
     "location": "Location",
     "ouijaboard": "Ouija Board",
+    "phasmorpg": "Phasmo RPG",
     "photocalculator": {
       "long": "Photo Calculator",
       "short": "Photo Calc"
@@ -88,10 +89,13 @@
       "mare2": "Can not hunt until 40% Average Sanity in the light.",
       "mare3": "Will not turn on lights or breaker.",
       "myling1": "Makes paranormal sounds, heard through paramic, more often than other ghosts.",
+      "obake1": "The Obake has 50% chance of creating handprints that has 6 fingers instead of the usual 5",
+      "obake2": "The Obake fingerprints may disappear in half the normal time",
       "oni1": "May throw objects at high speed and great distances.",
       "phantom1": "Will disappear when photo is taken outside of a hunt but continue manifesting.",
       "phantom2": "Blinks approximately twice as slow as other ghosts during hunts.",
       "poltergeist1": "May throw multiple objects at once.",
+      "raiju1": "Moves very quickly when near active electronics.",
       "revenant1": "Moves very quickly while it has line of sight on player during hunt.",
       "revenant2": "Moves very slowly during hunt when not targetting a player.",
       "spirit1": "Smudging prevents a hunt for 180 seconds (3 minutes) instead of 90 seconds like normal ghosts.",
@@ -158,6 +162,15 @@
         "strengths": "A Myling is known to be quieter when hunting.",
         "weaknesses": "Mylings more frequently make paranormal sounds."
       },
+      "obake": {
+        "id": "obake",
+        "name": "Obake",
+        "evidence": ["emflevel5", "ghostorbs", "fingerprints"],
+        "description": "Obake are terrifying shape-shifters, capable of taking on many forms. They have been seen taking on humanoid shapes to attract their prey.",
+        "secondaryEvidence": ["Fingerprints may disappear in half the normal time."],
+        "strengths": "Rarely leaves a trace when interacting with the environment.",
+        "weaknesses": "Sometimes leaves behind unique evidence. (Six-fingered fingerprints)"
+      },
       "oni": {
         "id": "oni",
         "name": "Oni",
@@ -187,6 +200,14 @@
         "secondaryEvidence": ["May throw multiple objects at once."],
         "strengths": "A Poltergeist can throw huge amounts of objects at once.",
         "weaknesses": "A Poltergeist is almost ineffective in an empty room."
+      },
+      "raiju": {
+        "id": "raiju",
+        "name": "Raiju",
+        "evidence": ["emflevel5", "ghostorbs", "dotsprojector"],
+        "description": "A Raiju is a demon that thrives on electrical current. While generally calm, they can become agitated when overwhelmed with power.",
+        "strengths": "A Raiju can siphon power from nearby electrical devices, making it move faster.",
+        "weaknesses": "Raiju are constantly disrupting electronic equipment when attacking, making it easier to track."
       },
       "revenant": {
         "id": "revenant",
@@ -219,6 +240,14 @@
         ],
         "strengths": "Nothing.",
         "weaknesses": "Using Smudge Sticks on a spirit will stop it attacking for a long period of time."
+      },
+      "thetwins": {
+        "id": "thetwins",
+        "name": "The Twins",
+        "evidence": ["emflevel5", "spiritbox", "freezingtemperatures"],
+        "description": "These ghosts have been reported to mimic each other's actions. They alternate their attacks to confuse their prey.",
+        "strengths": "Either Twin can be angered and initiate an attack on their prey.",
+        "weaknesses": "The Twins will often interact with the environment at the same time."
       },
       "wraith": {
         "id": "wraith",
@@ -258,12 +287,15 @@
       "jinn": "Jinn",
       "mare": "Mare",
       "myling": "Myling",
+      "obake": "Obake",
       "oni": "Oni",
       "phantom": "Phantom",
       "poltergeist": "Poltergeist",
+      "raiju": "Raiju",
       "revenant": "Revenant",
       "shade": "Shade",
       "spirit": "Spirit",
+      "thetwins": "The Twins",
       "wraith": "Wraith",
       "yokai": "Yokai",
       "yurei": "Yurei"

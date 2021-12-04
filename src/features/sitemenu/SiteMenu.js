@@ -14,6 +14,7 @@ import PhotoCameraIcon from "@material-ui/icons/PhotoCamera";
 import ReplayIcon from "@material-ui/icons/Replay";
 import SearchIcon from "@material-ui/icons/Search";
 import SportsKabaddiIcon from "@material-ui/icons/SportsKabaddi";
+import SupervisedUserCircleIcon from "@material-ui/icons/SupervisedUserCircle";
 import WorkIcon from "@material-ui/icons/Work";
 import { mdiMagnifyClose } from "@mdi/js";
 import Icon from "@mdi/react";
@@ -22,7 +23,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import Select from "react-select";
-import { resetApp, selectLanguage, selectViews, setLanguage, toggleModule } from "../../appSlice";
+import { resetApp, selectLanguage, selectViews, setLanguage, toggleModule, togglePhasmoRPG } from "../../appSlice";
 import Accent from "../../common/Accent";
 import Readable from "../../common/Readable";
 import { LOCAL_STORAGE_KEY } from "../../constants";
@@ -209,6 +210,11 @@ export default function SiteMenu() {
   );
 
   const menuActionItems = [
+    {
+      id: "phasmorpg",
+      onClick: () => dispatch(togglePhasmoRPG()) && setState({ ...state, right: false }),
+      icon: <SupervisedUserCircleIcon />
+    },
     {
       id: "resetapp",
       onClick: () => reset(),

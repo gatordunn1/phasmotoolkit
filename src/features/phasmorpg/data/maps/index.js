@@ -3,6 +3,7 @@ import GavelIcon from "@material-ui/icons/Gavel";
 import HomeIcon from "@material-ui/icons/Home";
 import { mdiTractor } from "@mdi/js";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
+import CabinIcon from '@mui/icons-material/Cabin';
 import Icon from "@mdi/react";
 
 const mapTypes = {
@@ -21,6 +22,11 @@ const mapTypes = {
     size: "Small",
     pointValue: 200,
   },
+  outdoor: {
+    display: "Outdoor",
+    size: "Medium",
+    pointValue: 300,
+  },
   school: {
     display: "School",
     size: "Medium",
@@ -36,6 +42,7 @@ const mapTypes = {
 export const iconMapMap = {
   tanglewood: <HomeIcon />,
   edgefield: <HomeIcon />,
+  maplelodge: <CabinIcon />,
   ridgeview: <HomeIcon />,
   willow: <HomeIcon />,
   grafton: <Icon path={mdiTractor} title="Grafton" size={1} aria-hidden={true} />,
@@ -87,6 +94,12 @@ const maps = [
     id: "brownstone",
     display: "High School",
     type: "school",
+    act: "act3",
+  },
+  {
+    id: "maplelodge",
+    display: "Maple Lodge",
+    type: "outdoor",
     act: "act3",
   },
   {

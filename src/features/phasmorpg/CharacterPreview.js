@@ -217,6 +217,7 @@ export default function CharacterPreview() {
     willow: React.useRef(null),
     bleasdale: React.useRef(null),
     grafton: React.useRef(null),
+    maplelodge: React.useRef(null),
     brownstone: React.useRef(null),
     prison: React.useRef(null),
     asylum: React.useRef(null),

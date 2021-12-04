@@ -362,6 +362,10 @@ export const locationTypes = {
     display: "",
     size: "Large",
   },
+  outdoor: {
+    display: "Outdoor",
+    size: "Medium",
+  },
   road: {
     display: "Road House",
     size: "Small",
@@ -404,6 +408,10 @@ export const locationList = [
   {
     display: "Brownstone High",
     type: locationTypes.school,
+  },
+  {
+    display: "Maple Lodge",
+    type: locationTypes.outdoor,
   },
   {
     display: "Prison",
